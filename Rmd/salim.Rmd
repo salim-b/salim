@@ -69,7 +69,7 @@ write_out_n <- function(n,
                                           "two"),
                      xfun::numbers_to_words(as.integer(n)))
     
-  } else if (lang == "en") {
+  } else if (lang == "de") {
     
     result <- switch(EXPR = n,
                      `0` = dplyr::if_else(use_singular,
