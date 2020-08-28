@@ -1,0 +1,279 @@
+---
+editor_options:
+  chunk_output_type: console
+---
+
+# INTERNAL
+
+## Avoid `R CMD check` notes about undefined global objects used in magrittr pipes
+
+cf. <https://github.com/tidyverse/magrittr/issues/29#issuecomment-74313262>
+
+```{r}
+utils::globalVariables(names = c("."))
+```
+
+## Constansts
+
+```{r}
+pkg <- utils::packageName()
+```
+
+# Spoken language
+
+## Multi-language
+
+### Write out a count
+
+Caveats:
+
+- German is only covered from 0 to 9.
+
+- No support for grammatical gender – articles of definite descriptors are always feminine.
+
+```{r}
+#' Write out a count
+#'
+#' @param n The count to write out in letters. A non-negative integer scalar.
+#' @param lang The language to write out `n` in.
+#' @param use_singular Use a definite descriptor for `n = 0` and `n = 1` instead of the indistinct number. A logical scalar.
+#' @param use_dual Use a definite descriptor for `n = 2` instead of the indistinct number. A logical scalar.
+#' @param strip_article Strip the definite article from the definite descriptors. Only relevant if at least one of `use_singular` or `use_dual` is `TRUE`. A
+#'   logical scalar.
+#'
+#' @return A character scalar.
+#' @export
+write_out_n <- function(n,
+                        lang = c("en", "de"),
+                        use_singular = FALSE,
+                        use_dual = FALSE,
+                        strip_article = use_dual) {
+  
+  n %<>% checkmate::assert_count() %>% as.character()
+  lang <- rlang::arg_match(lang)
+  checkmate::assert_flag(use_singular)
+  checkmate::assert_flag(use_dual)
+  checkmate::assert_flag(strip_article)
+  
+  if (lang == "en") {
+    
+    result <- switch(EXPR = n,
+                     `0` = dplyr::if_else(use_singular,
+                                          "no",
+                                          "zero"),
+                     `1` = dplyr::if_else(use_singular,
+                                          "the",
+                                          "one"),
+                     `2` = dplyr::if_else(use_dual,
+                                          "the two",
+                                          "two"),
+                     xfun::numbers_to_words(as.integer(n)))
+    
+  } else if (lang == "en") {
+    
+    result <- switch(EXPR = n,
+                     `0` = dplyr::if_else(use_singular,
+                                          "keine",
+                                          "null"),
+                     `1` = dplyr::if_else(use_singular,
+                                          "die",
+                                          "ein"),
+                     `2` = dplyr::if_else(use_dual,
+                                          "die beiden",
+                                          "zwei"),
+                     `3` = "drei",
+                     `4` = "vier",
+                     `5` = "f\u00fcnf",
+                     `6` = "sechs",
+                     `7` = "sieben",
+                     `8` = "acht",
+                     `9` = "neun")
+  }
+  
+  result %>% purrr::when(strip_article ~ stringr::str_remove(string = .,
+                                                             pattern = switch(EXPR = lang,
+                                                                              de = "^[Dd]ie ?",
+                                                                              en = "^[Tt]he ?")),
+                         ~ .)
+}
+```
+
+## German
+
+### Get the German definite article
+
+```{r}
+#' Get the German definite article
+#'
+#' @param gender The grammatical gender of the subject the definite article refers to.
+#' @param case The grammatical case of the subject the definite article refers to.
+#' @param pluralize Whether to return the plural form of the definite article. A logical scalar.
+#'
+#' @return A character scalar.
+#' @export
+definite_article_de <- function(gender = c("feminine",
+                                           "masculine",
+                                           "neuter"),
+                                case = c("accusative",
+                                         "nominative",
+                                         "dative",
+                                         "genitive"),
+                                pluralize = FALSE) {
+  
+  gender <- rlang::arg_match(gender)
+  case <- rlang::arg_match(case)
+  
+  if (checkmate::assert_flag(pluralize)) {
+    
+    switch(EXPR = case,
+           accusative = "die",
+           nominative = "die",
+           dative = "den",
+           genitive = "der")
+    
+  } else {
+    
+    switch(EXPR = case,
+           accusative = switch(EXPR = gender,
+                               feminine = "die",
+                               masculine = "der",
+                               neuter = "das"),
+           nominative = switch(EXPR = gender,
+                               feminine = "die",
+                               masculine = "den",
+                               neuter = "das"),
+           dative = switch(EXPR = gender,
+                           feminine = "der",
+                           "dem"),
+           genitive = switch(EXPR = gender,
+                             feminine = "der",
+                             "des"))
+  }
+}
+```
+
+### Decline the German definite article
+
+```{r}
+#' Decline the German definite article
+#'
+#' The declination of the German definite article [is a relative pronoun](https://de.wikipedia.org/wiki/Relativpronomen#Der,_die,_das).
+#'
+#' Note that the second singular feminine and plural genitive form `"derer"` is ignored by this function.
+#'
+#' @inheritParams definite_article_de
+#'
+#' @inherit definite_article_de return
+#' @export
+decline_definite_article_de <- function(gender = c("feminine",
+                                                   "masculine",
+                                                   "neuter"),
+                                        case = c("accusative",
+                                                 "nominative",
+                                                 "dative",
+                                                 "genitive"),
+                                        pluralize = FALSE) {
+  gender <- rlang::arg_match(gender)
+  case <- rlang::arg_match(case)
+  
+  if (checkmate::assert_flag(pluralize)) {
+    
+    switch(EXPR = case,
+           accusative = "die",
+           nominative = "die",
+           dative = "deren",
+           genitive = "deren")
+    
+  } else {
+    
+    switch(EXPR = case,
+           accusative = switch(EXPR = gender,
+                               feminine = "die",
+                               masculine = "den",
+                               neuter = "das"),
+           nominative = switch(EXPR = gender,
+                               feminine = "die",
+                               masculine = "der",
+                               neuter = "das"),
+           dative = switch(EXPR = gender,
+                           feminine = "der",
+                           "dem"),
+           genitive = switch(EXPR = gender,
+                             feminine = "deren",
+                             "dessen"))
+  }
+}
+```
+
+### Add the German definite article in dative case to a preposition
+
+```{r}
+#' Add the German definite article in dative case to a preposition
+#'
+#' @param preposition The preposition to add the German definite article in dative case to. A character scalar.
+#' @param gender The grammatical gender of the `preposition`.
+#'
+#' @inherit definite_article_de return
+#' @export
+add_definite_article_de <- function(preposition,
+                                    gender = c("feminine",
+                                               "masculine",
+                                               "neuter")) {
+  checkmate::assert_string(preposition)
+  gender <- rlang::arg_match(gender)
+  
+  if ( gender == "feminine" ) {
+    
+    preposition %>% purrr::when(stringr::str_to_lower(.) %in% c("zu") ~ paste0(., "r"),
+                                ~ paste0(., " ", definite_article_de(gender = "feminine",
+                                                                     case = "dative")))
+  } else {
+    
+    preposition %>% purrr::when(stringr::str_to_lower(.) %in% c("bei", "zu") ~ paste0(., "m"),
+                                stringr::str_to_lower(.) %in% c("in", "an") ~ stringr::str_replace(string = .,
+                                                                                                   pattern = "n$",
+                                                                                                   replacement = "m"),
+                                ~ paste0(., " ", definite_article_de(gender = "masculine",
+                                                                     case = "dative")))
+  }
+}
+```
+
+### Decline a German noun
+
+```{r}
+#' Decline a German noun
+#'
+#' Note that this function currently doesn't support the [special cases](https://deutsch.lingolia.com/de/grammatik/nomen/deklination/genitiv#a-besonderheiten)
+#' where a masculine noun gets an `n` or `en` ending attached in the accusative, dative and genitive cases.
+#'
+#' @param noun The noun to decline. A character scalar.
+#' @param gender The grammatical gender of the `noun`.
+#' @param case The grammatical case of the `noun`.
+#'
+#' @inherit definite_article_de return
+#' @export
+decline_noun_de <- function(noun,
+                            gender = c("feminine",
+                                       "masculine",
+                                       "neuter"),
+                            case = c("accusative",
+                                     "nominative",
+                                     "dative",
+                                     "genitive")) {
+  
+  gender <- rlang::arg_match(gender)
+  case <- rlang::arg_match(case)
+  result <- noun
+  
+  if (gender != "feminine" && case == "genitive") {
+    
+    result %<>% purrr::when(stringr::str_detect(string = ., pattern = "(ss|\U00DF|x|z)$") ~ paste0(., "es"),
+                            stringr::str_detect(string = ., pattern = "s$") ~ paste0(., "ses"),
+                            ~ paste0(., "s"))
+    
+  }
+  
+  result
+}
+```

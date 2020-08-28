@@ -1,0 +1,15 @@
+^data-raw$
+^pkgdown$
+^Rmd$
+^cran-comments\.md$
+^LICENSE$
+^README\.Rmd$
+^TODO\.md$
+^_output\.yaml$
+^_pkgdown\.yml$
+^\.ackrc$
+^\.github$
+^\.lintr$
+^\.travis\.yml$
+^.*\.Rproj$
+^\.Rproj\.user$
