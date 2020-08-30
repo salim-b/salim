@@ -7,8 +7,9 @@
 \title{salim: A Wild Mix of Functions Serving Various Purposes}
 \description{
 salim includes a diverse mix of functions
-    which have not found their home in a more suitable place yet. This
-    package will probably never be submitted to CRAN.
+    which have not found their home in a more suitable place yet. The
+    package kinda serves as an incubator for not yet fully matured code
+    and thus will most probably never be made available through CRAN.
 }
 \seealso{
 Useful links:
