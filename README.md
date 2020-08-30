@@ -1,6 +1,8 @@
 # salim: A Wild Mix of Functions Serving Various Purposes
 
-salim includes a diverse mix of functions which have not found their home in a more suitable place yet. This package will probably never be submitted to CRAN.
+salim includes a diverse mix of functions which have not found their home in a more suitable place yet. The package kinda serves as an incubator for not yet fully matured code and thus will most probably never be made available through CRAN.
+
+This is arguably a [*low-cohesion*](https://en.wikipedia.org/wiki/Cohesion_(computer_science)) package.
 
 ## Installation
 

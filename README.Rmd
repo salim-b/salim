@@ -6,6 +6,8 @@ output: pal::gitlab_document
 
 `r pal::desc_value("Description")`
 
+This is arguably a [_low-cohesion_](https://en.wikipedia.org/wiki/Cohesion_(computer_science)) package.
+
 ## Installation
 ```{r, install-snippet-dev, child = pkgsnip::snip_path("installation-notice_dev-version_gitlab.Rmd")}
 ```
