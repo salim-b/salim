@@ -27,9 +27,9 @@ pkg <- utils::packageName()
 
 Caveats:
 
-- German is only covered from 0 to 9.
+-   German is only covered from 0 to 9.
 
-- No support for grammatical gender – articles of definite descriptors are always feminine.
+-   No support for grammatical gender -- articles of definite descriptors are always feminine.
 
 ```{r}
 #' Write out a count

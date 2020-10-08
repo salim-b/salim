@@ -6,22 +6,25 @@ output: pal::gitlab_document
 
 `r pal::desc_value("Description")`
 
-This is arguably a [_low-cohesion_](https://en.wikipedia.org/wiki/Cohesion_(computer_science)) package.
+This is arguably a [*low-cohesion*](https://en.wikipedia.org/wiki/Cohesion_(computer_science)) package.
 
 ## Installation
+
 ```{r, install-snippet-dev, child = pkgsnip::snip_path("installation-notice_dev-version_gitlab.Rmd")}
 ```
 
 ## Development
 
 ### R Markdown format
+
 ```{r, rmd-pkg-snippet, child = pkgsnip::snip_path("rmd-package-notice.Rmd")}
 ```
 
 ### Coding style
+
 ```{r, coding-style-snippet, child = pkgsnip::snip_path("coding-style-notice.Rmd")}
 ```
 
 ## See also
+-   The [**pal**](https://gitlab.com/salim_b/r/pkgs/pal) package for a collection of more mature convenience/utility functions by the same author.
 
-- The [**pal**](https://gitlab.com/salim_b/r/pkgs/pal) package for a collection of more mature convenience/utility functions by the same author.
