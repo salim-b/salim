@@ -1,6 +1,6 @@
 Package: salim
 Title: A Wild Mix of Functions Serving Various Purposes
-Version: 0.0.9000
+Version: 0.0.9001
 Authors@R: 
     person(given = "Salim",
            family = "Brüggemann",
