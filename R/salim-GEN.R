@@ -181,9 +181,9 @@ add_definite_article_de <- function(preposition,
   checkmate::assert_string(preposition)
   gender <- rlang::arg_match(gender)
   
-  if ( gender == "feminine" ) {
+  if (gender == "feminine") {
     
-    preposition %>% purrr::when(stringr::str_to_lower(.) %in% c("zu") ~ paste0(., "r"),
+    preposition %>% purrr::when(stringr::str_to_lower(.) == "zu" ~ paste0(., "r"),
                                 ~ paste0(., " ", definite_article_de(gender = "feminine",
                                                                      case = "dative")))
   } else {
