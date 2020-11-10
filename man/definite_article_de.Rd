@@ -6,7 +6,7 @@
 \usage{
 definite_article_de(
   gender = c("feminine", "masculine", "neuter"),
-  case = c("accusative", "nominative", "dative", "genitive"),
+  case = c("nominative", "genitive", "dative", "accusative"),
   pluralize = FALSE
 )
 }

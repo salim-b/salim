@@ -158,10 +158,10 @@ write_out_n <- function(n,
 definite_article_de <- function(gender = c("feminine",
                                            "masculine",
                                            "neuter"),
-                                case = c("accusative",
-                                         "nominative",
+                                case = c("nominative",
+                                         "genitive",
                                          "dative",
-                                         "genitive"),
+                                         "accusative"),
                                 pluralize = FALSE) {
   
   gender <- rlang::arg_match(gender)
@@ -170,28 +170,28 @@ definite_article_de <- function(gender = c("feminine",
   if (checkmate::assert_flag(pluralize)) {
     
     switch(EXPR = case,
-           accusative = "die",
            nominative = "die",
+           genitive = "der",
            dative = "den",
-           genitive = "der")
+           accusative = "die")
     
   } else {
     
     switch(EXPR = case,
-           accusative = switch(EXPR = gender,
+           nominative = switch(EXPR = gender,
                                feminine = "die",
                                masculine = "der",
                                neuter = "das"),
-           nominative = switch(EXPR = gender,
-                               feminine = "die",
-                               masculine = "den",
-                               neuter = "das"),
+           genitive = switch(EXPR = gender,
+                             feminine = "der",
+                             "des"),
            dative = switch(EXPR = gender,
                            feminine = "der",
                            "dem"),
-           genitive = switch(EXPR = gender,
-                             feminine = "der",
-                             "des"))
+           accusative = switch(EXPR = gender,
+                               feminine = "die",
+                               masculine = "den",
+                               neuter = "das"))
   }
 }
 ```
@@ -209,42 +209,42 @@ definite_article_de <- function(gender = c("feminine",
 #'
 #' @inherit definite_article_de return
 #' @export
-decline_definite_article_de <- function(gender = c("feminine",
-                                                   "masculine",
-                                                   "neuter"),
-                                        case = c("accusative",
-                                                 "nominative",
-                                                 "dative",
-                                                 "genitive"),
-                                        pluralize = FALSE) {
+definite_article_de_declined <- function(gender = c("feminine",
+                                                    "masculine",
+                                                    "neuter"),
+                                         case = c("nominative",
+                                                  "genitive",
+                                                  "dative",
+                                                  "accusative"),
+                                         pluralize = FALSE) {
   gender <- rlang::arg_match(gender)
   case <- rlang::arg_match(case)
   
   if (checkmate::assert_flag(pluralize)) {
     
     switch(EXPR = case,
-           accusative = "die",
            nominative = "die",
+           genitive = "deren",
            dative = "deren",
-           genitive = "deren")
+           accusative = "die")
     
   } else {
     
     switch(EXPR = case,
-           accusative = switch(EXPR = gender,
-                               feminine = "die",
-                               masculine = "den",
-                               neuter = "das"),
            nominative = switch(EXPR = gender,
                                feminine = "die",
                                masculine = "der",
                                neuter = "das"),
+           genitive = switch(EXPR = gender,
+                             feminine = "deren",
+                             "dessen"),
            dative = switch(EXPR = gender,
                            feminine = "der",
                            "dem"),
-           genitive = switch(EXPR = gender,
-                             feminine = "deren",
-                             "dessen"))
+           accusative = switch(EXPR = gender,
+                               feminine = "die",
+                               masculine = "den",
+                               neuter = "das"))
   }
 }
 ```
@@ -301,10 +301,10 @@ decline_noun_de <- function(noun,
                             gender = c("feminine",
                                        "masculine",
                                        "neuter"),
-                            case = c("accusative",
-                                     "nominative",
+                            case = c("nominative",
+                                     "genitive",
                                      "dative",
-                                     "genitive")) {
+                                     "accusative")) {
   
   gender <- rlang::arg_match(gender)
   case <- rlang::arg_match(case)

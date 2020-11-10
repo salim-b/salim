@@ -7,7 +7,7 @@
 decline_noun_de(
   noun,
   gender = c("feminine", "masculine", "neuter"),
-  case = c("accusative", "nominative", "dative", "genitive")
+  case = c("nominative", "genitive", "dative", "accusative")
 )
 }
 \arguments{
