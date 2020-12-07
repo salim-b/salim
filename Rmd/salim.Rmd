@@ -35,11 +35,15 @@ regex_text_normalization <-
                  purpose = character(),
                  pattern = list(),
                  replacement = character()) %>%
-  # FOKUS Aargau
-  tibble::add_row(category = "fa",
-                  purpose = "standardize spelling of the _FOKUS Aargau_ project title",
+  # harmonize spelling
+  tibble::add_row(category = "harmonize_spelling",
+                  purpose = "harmonize spelling of the [_FOKUS Aargau_](https://fokus.ag/) project title",
                   pattern = list("Fokus(?=[ -]Aargau)"),
                   replacement = "FOKUS") %>%
+  tibble::add_row(category = "harmonize_spelling",
+                  purpose = "harmonize spelling of the [_smartvote_](https://smartvote.ch/) VAA",
+                  pattern = list("(?i)\\bsmartvote\\b"),
+                  replacement = "smartvote") %>%
   # harmonize punctuation
   tibble::add_row(category = "harmonize_punctuation",
                   purpose = "use typewriter double quotes (`\"`) as quotation marks",
