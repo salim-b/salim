@@ -31,45 +31,57 @@ mentioned in the book [R Packages](https://r-pkgs.org/data.html#data-data) (and 
 
 ```{r, purl = FALSE}
 regex_text_normalization <-
-  tibble::tibble(category = character(),
+  tibble::tibble(id = character(),
+                 category = character(),
                  purpose = character(),
                  pattern = list(),
                  replacement = character()) %>%
   # harmonize spelling
-  tibble::add_row(category = "harmonize_spelling",
+  tibble::add_row(id = "title_fa",
+                  category = "harmonize_spelling",
                   purpose = "harmonize spelling of the [_FOKUS Aargau_](https://fokus.ag/) project title",
                   pattern = list("Fokus(?=[ -]Aargau)"),
                   replacement = "FOKUS") %>%
-  tibble::add_row(category = "harmonize_spelling",
+  tibble::add_row(id = "title_smartvote",
+                  category = "harmonize_spelling",
                   purpose = "harmonize spelling of the [_smartvote_](https://smartvote.ch/) VAA",
                   pattern = list("(?i)\\bsmartvote\\b"),
                   replacement = "smartvote") %>%
   # harmonize punctuation
-  tibble::add_row(category = "harmonize_punctuation",
+  tibble::add_row(id = "uniform_quotation_marks",
+                  category = "harmonize_punctuation",
                   purpose = "use typewriter double quotes (`\"`) as quotation marks",
                   pattern = list("[“”„‟⹂]"),
                   replacement = "\"") %>%
-  tibble::add_row(category = "harmonize_punctuation",
+  tibble::add_row(id = "uniform_apostrophes",
+                  category = "harmonize_punctuation",
                   purpose = "use typewriter single quotes (`'`) as apostrophes",
                   pattern = list("[’‘‚‛]"),
                   replacement = "'") %>%
   # prettify punctuation
-  tibble::add_row(category = "prettify_punctuation",
+  tibble::add_row(id = "no_break_percentages",
+                  category = "prettify_punctuation",
                   purpose = "use narrow non-breaking space between numbers and percentage signs",
                   pattern = list("(\\d+) ?(\\\\?%|Prozent|percent|per cent)(?![\"'])"),
                   replacement = "\\1\u202f\\2") %>%
-  tibble::add_row(category = "prettify_punctuation",
+  tibble::add_row(id = "no_break_abbreviations",
+                  category = "prettify_punctuation",
                   purpose = "use narrow non-breaking space between characters of common abbreviations",
-                  pattern = list("(?i)(z\\.) ?(B\\.)", "(u\\.) ?(a\\.)", "(d\\.) ?(h\\.)"),
+                  pattern = list("(?i)\\b(z\\.) ?(B\\.)",
+                                 "(?i)\\b(u\\.) ?(a\\.)",
+                                 "(?i)\\b(d\\.) ?(h\\.)"),
                   replacement = "\\1\u202f\\2") %>%
-  tibble::add_row(category = "prettify_punctuation",
+  tibble::add_row(id = "no_break_equals_sign",
+                  category = "prettify_punctuation",
+                  purpose = "use narrow non-breaking space before and after certain assignments and equality comparisons (`=` and `==`)",
+                  pattern = list("(?<= \\(\\w{1,32})(?: ?)(==?)(?: ?)(?=\\d+)"),
+                  replacement = "\u202f\\1\u202f") %>%
+  # TODO: the pattern below doesn't really work as intended, fix it!
+  tibble::add_row(id = "en_dash_value_ranges",
+                  category = "prettify_punctuation",
                   purpose = "use [en dash](https://www.thepunctuationguide.com/en-dash.html) instead of hyphen in value ranges",
                   pattern = list("(?<!-)(\\d+)-(\\d+)(?!-)"),
-                  replacement = "\\1\u2013\\2") %>%
-  tibble::add_row(category = "prettify_punctuation",
-                  purpose = "use narrow non-breaking space before and after certain assignments and equality comparisons (`=` and `==`)",
-                  pattern = list("(?<= \\(\\w{1,32} ?)(==?)(?= ?\\d+)"),
-                  replacement = "\u202f\\1\u202f")
+                  replacement = "\\1\u2013\\2")
 ```
 
 ## Save data to `R/sysdata.rda`
