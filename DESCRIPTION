@@ -11,7 +11,7 @@ Description: salim includes a diverse mix of functions
     which have not found their home in a more suitable place yet. The
     package kinda serves as an incubator for not yet fully matured code
     and thus will most probably never be made available through CRAN.
-License: AGPL-3
+License: AGPL (>= 3)
 URL: https://gitlab.com/salim_b/r/pkgs/salim
 BugReports: https://gitlab.com/salim_b/r/pkgs/salim/issues
 Depends: 

@@ -2,9 +2,9 @@
 ^pkgdown$
 ^Rmd$
 ^cran-comments\.md$
-^LICENSE$
-^README\.Rmd$
 ^TODO\.md$
+^LICENSE(\.md)?$
+^README\.Rmd$
 ^_output\.yaml$
 ^_pkgdown\.yml$
 ^\.ackrc$
