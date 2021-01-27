@@ -1,6 +1,6 @@
 Package: salim
 Title: A Wild Mix of Functions Serving Various Purposes
-Version: 0.0.9003
+Version: 0.0.9004
 Authors@R: 
     person(given = "Salim",
            family = "Brüggemann",
@@ -19,6 +19,7 @@ Depends:
 Imports: 
     checkmate (>= 2.0.0),
     dplyr (>= 1.0.2),
+    fs (>= 1.5.0),
     magrittr (>= 1.5),
     pal (>= 0.0.9038),
     purrr (>= 0.3.4),
@@ -28,6 +29,9 @@ Imports:
     tidyr (>= 1.1.2),
     utils,
     xfun (>= 0.16)
+Suggests: 
+    gh (>= 1.2.0),
+    zip (>= 2.1.1)
 Remotes:
     gitlab::salim_b/r/pkgs/pal
 Encoding: UTF-8

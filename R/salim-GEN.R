@@ -2,9 +2,13 @@
 # See `README.md#r-markdown-format` for more information on the literature programming approach used applying the R Markdown format.
 
 utils::globalVariables(names = c(".",
+                                 "download_url",
+                                 "filename",
+                                 "id",
                                  "pattern",
                                  "regex_text_normalization",
-                                 "replacement"))
+                                 "replacement",
+                                 "version_nr"))
 
 pkg <- utils::packageName()
 
@@ -320,4 +324,171 @@ decline_noun_de <- function(noun,
   }
   
   result
+}
+
+#' Download Pandoc release binaries
+#'
+#' Downloads the executable program binary of a certain Pandoc release for Linux, macOS and Windows.
+#'
+#' @param os The operating systems for which Pandoc binaries should be downloaded. One of
+#'   `r pal::prose_ls_fn_param(param = "os", fn = "download_pandoc_binaries")`.
+#' @param path The filesystem path to which the binaries are saved to. A [path][fs::fs_path] or something coercible to.
+#' @param overwrite Whether to overwrite existing binaries under `path`.
+#' @inheritParams pandoc_release_assets
+#'
+#' @return `path` invisibly.
+#' @export
+download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
+                                     os = c("linux", "macos", "windows"),
+                                     path = "tools/",
+                                     overwrite = TRUE) {
+  pal::assert_pkg("zip")
+  checkmate::assert_count(release_id,
+                          positive = TRUE)
+  checkmate::assert_subset(os,
+                           choices = eval(formals()$os),
+                           empty.ok = FALSE)
+  checkmate::assert_path_for_output(path,
+                                    overwrite = TRUE)
+  checkmate::assert_flag(overwrite)
+  
+  path_tmp <- fs::path_temp()
+  
+  assets <-
+    pandoc_release_assets(release_id = release_id) %>%
+    dplyr::filter(stringr::str_detect(string = filename,
+                                      pattern = paste0("(?i)", pal::fuse_regex(os), "(-(amd64|x86_64))?\\.(zip|tar\\.gz)"))) %>%
+    dplyr::mutate(download_path = fs::path(path_tmp, filename))
+  
+  # download assets to tmp dir
+  purrr::walk2(.x = assets$download_url,
+               .y = assets$download_path,
+               .f = utils::download.file,
+               method = "auto",
+               mode = "wb",
+               cacheOK = TRUE,
+               quiet = TRUE)
+  
+  # extract binaries to tmp dir
+  assets %>%
+    dplyr::select(-download_url) %>%
+    as.list() %>%
+    purrr::pwalk(.f = function(filename, os, download_path) {
+      
+      path_os_tmp <- fs::path(path_tmp, "pandoc", os)
+      
+      # extract all files flat
+      if (stringr::str_detect(string = filename,
+                              pattern = "\\.zip$")) {
+        
+        zip::unzip(zipfile = download_path,
+                   exdir = path_os_tmp,
+                   junkpaths = TRUE)
+      } else {
+        
+        utils::untar(tarfile = download_path,
+                     exdir = path_os_tmp)
+        
+        # since `untar()` has no "junkpaths"-like option, we flatten the dir structure ourselves
+        fs::dir_ls(path = path_os_tmp,
+                   type = "file",
+                   recurse = TRUE,
+                   all = TRUE) %>%
+          fs::file_move(new_path = path_os_tmp)
+      }
+      
+      # delete archive and all extracted files but the Pandoc binary
+      fs::file_delete(download_path)
+      
+      fs::dir_ls(path = path_os_tmp,
+                 regexp = "[\\/]pandoc(\\.exe)?$",
+                 all = TRUE,
+                 invert = TRUE) %>%
+        fs::file_delete()
+    })
+  
+  # move binaries to final dir
+  fs::dir_create(path = fs::path(path, "pandoc"))
+  
+  path_tmp %>%
+    fs::path("pandoc") %T>%
+    fs::dir_copy(new_path = fs::path(path, "pandoc"),
+                 overwrite = overwrite) %>%
+    fs::dir_delete()
+  
+  invisible(path)
+}
+
+#' Get latest Pandoc release ID
+#'
+#' Uses [gh::gh()] to fetch the latest [Pandoc](https://pandoc.org/) release version number via [GitHub's REST
+#' API](https://docs.github.com/en/rest/reference/repos#get-the-latest-release) and returns it as a [numeric version][numeric_version()].
+#'
+#' @return An integer scalar.
+#' @export
+pandoc_release_id_latest <- function() {
+  
+  pal::assert_pkg("gh")
+  
+  gh::gh(endpoint = "/repos/{owner}/{repo}/releases/latest",
+         owner = "jgm",
+         repo = "pandoc",
+         .method = "GET") %$%
+    id
+}
+
+#' List all available Pandoc releases
+#'
+#' Uses [gh::gh()] to fetch all available [Pandoc](https://pandoc.org/) releases via [GitHub's REST
+#' API](https://docs.github.com/en/rest/reference/repos#list-releases) and returns them as a [tibble][tibble::tbl_df] containing the two columns `version_nr`
+#' and `release_id`.
+#'
+#' Values of the column `release_id` can be used as input to [download_pandoc_binaries()].
+#'
+#' @return `r pkgsnip::param_label("data")`
+#' @export
+pandoc_releases <- function() {
+  
+  pal::assert_pkg("gh")
+  
+  gh::gh(endpoint = "/repos/{owner}/{repo}/releases",
+         owner = "jgm",
+         repo = "pandoc",
+         .method = "GET",
+         .limit = Inf) %>%
+    purrr::map_dfr(~ tibble::tibble(version_nr =
+                                      .x$name %>%
+                                      stringr::str_extract(pattern = "\\d+(\\.\\d+)*") %>%
+                                      as.numeric_version(),
+                                    release_id = .x$id)) %>%
+    dplyr::arrange(version_nr)
+}
+
+#' List Pandoc release assets
+#'
+#' Uses [gh::gh()] to fetch filenames, corresponding operating systems and download URLs of a specific [Pandoc](https://pandoc.org/) release via [GitHub's REST
+#' API](https://docs.github.com/en/rest/reference/repos#list-release-assets) and returns them as a [tibble][tibble::tbl_df].
+#'
+#' @param release_id The GitHub release ID of the desired Pandoc release. Use [pandoc_releases()] to determine the release ID of a specific Pandoc version
+#'   number An integer scalar.
+#'
+#' @return `r pkgsnip::param_label("data")`
+#' @export
+pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
+  
+  pal::assert_pkg("gh")
+  
+  gh::gh(endpoint = "/repos/{owner}/{repo}/releases/{release_id}/assets",
+         owner = "jgm",
+         repo = "pandoc",
+         release_id = release_id,
+         .method = "GET") %>%
+    purrr::map_dfr(~ tibble::tibble(filename = .x$name,
+                                    os =
+                                      .x$name %>%
+                                      stringr::str_extract(pattern = "(?i)(linux|macos|windows|\\.deb$)") %>%
+                                      stringr::str_to_lower() %>%
+                                      stringr::str_replace(pattern = "\\.deb",
+                                                           replacement = "linux"),
+                                    download_url = .x$browser_download_url))
 }
