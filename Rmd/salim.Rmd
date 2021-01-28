@@ -14,6 +14,7 @@ utils::globalVariables(names = c(".",
                                  "download_url",
                                  "filename",
                                  "id",
+                                 "name",
                                  "pattern",
                                  "regex_text_normalization",
                                  "replacement",
@@ -460,9 +461,9 @@ decline_noun_de <- function(noun,
 ```{r}
 #' Download Pandoc release binaries
 #'
-#' Downloads the executable program binary of a certain Pandoc release for Linux, macOS and Windows.
+#' Downloads the executable program binaries of a certain Pandoc release for Linux, macOS and Windows.
 #'
-#' @param os The operating systems for which Pandoc binaries should be downloaded. One of
+#' @param os The operating systems for which Pandoc binaries should be downloaded. Any combination of
 #'   `r pal::prose_ls_fn_param(param = "os", fn = "download_pandoc_binaries")`.
 #' @param path The filesystem path to which the binaries are saved to. A [path][fs::fs_path] or something coercible to.
 #' @param overwrite Whether to overwrite existing binaries under `path`.
@@ -557,8 +558,8 @@ download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
 ```{r}
 #' Get latest Pandoc release ID
 #'
-#' Uses [gh::gh()] to fetch the latest [Pandoc](https://pandoc.org/) release version number via [GitHub's REST
-#' API](https://docs.github.com/en/rest/reference/repos#get-the-latest-release) and returns it as a [numeric version][numeric_version()].
+#' Uses [gh::gh()] to fetch the latest [Pandoc](https://pandoc.org/) release ID via [GitHub's REST
+#' API](https://docs.github.com/en/rest/reference/repos#get-the-latest-release).
 #'
 #' @return An integer scalar.
 #' @export
@@ -571,6 +572,30 @@ pandoc_release_id_latest <- function() {
          repo = "pandoc",
          .method = "GET") %$%
     id
+}
+```
+
+## Get latest Pandoc release version number
+
+```{r}
+#' Get latest Pandoc release version number
+#'
+#' Uses [gh::gh()] to fetch the latest [Pandoc](https://pandoc.org/) release version number via [GitHub's REST
+#' API](https://docs.github.com/en/rest/reference/repos#get-the-latest-release) and returns it as a [numeric version][numeric_version()].
+#'
+#' @return `r pkgsnip::param_label("version_nr")`
+#' @export
+pandoc_version_latest <- function() {
+  
+  pal::assert_pkg("gh")
+  
+  gh::gh(endpoint = "/repos/{owner}/{repo}/releases/latest",
+         owner = "jgm",
+         repo = "pandoc",
+         .method = "GET") %$%
+    name %>%
+    stringr::str_extract(pattern = "\\d+(\\.\\d+)*") %>%
+    as.numeric_version()
 }
 ```
 
@@ -614,7 +639,7 @@ pandoc_releases <- function() {
 #' API](https://docs.github.com/en/rest/reference/repos#list-release-assets) and returns them as a [tibble][tibble::tbl_df].
 #'
 #' @param release_id The GitHub release ID of the desired Pandoc release. Use [pandoc_releases()] to determine the release ID of a specific Pandoc version
-#'   number An integer scalar.
+#'   number. An integer scalar.
 #'
 #' @return `r pkgsnip::param_label("data")`
 #' @export

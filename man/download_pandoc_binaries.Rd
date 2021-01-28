@@ -13,9 +13,9 @@ download_pandoc_binaries(
 }
 \arguments{
 \item{release_id}{The GitHub release ID of the desired Pandoc release. Use \code{\link[=pandoc_releases]{pandoc_releases()}} to determine the release ID of a specific Pandoc version
-number An integer scalar.}
+number. An integer scalar.}
 
-\item{os}{The operating systems for which Pandoc binaries should be downloaded. One of
+\item{os}{The operating systems for which Pandoc binaries should be downloaded. Any combination of
 \code{"linux"},\code{"macos"} or \code{"windows"})`.}
 
 \item{path}{The filesystem path to which the binaries are saved to. A \link[fs:fs_path]{path} or something coercible to.}
@@ -26,5 +26,5 @@ number An integer scalar.}
 \code{path} invisibly.
 }
 \description{
-Downloads the executable program binary of a certain Pandoc release for Linux, macOS and Windows.
+Downloads the executable program binaries of a certain Pandoc release for Linux, macOS and Windows.
 }

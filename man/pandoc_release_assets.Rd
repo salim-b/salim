@@ -8,7 +8,7 @@ pandoc_release_assets(release_id = pandoc_release_id_latest())
 }
 \arguments{
 \item{release_id}{The GitHub release ID of the desired Pandoc release. Use \code{\link[=pandoc_releases]{pandoc_releases()}} to determine the release ID of a specific Pandoc version
-number An integer scalar.}
+number. An integer scalar.}
 }
 \value{
 A \link[tibble:tbl_df-class]{tibble}.
