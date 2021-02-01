@@ -7,7 +7,7 @@
 download_pandoc_binaries(
   release_id = pandoc_release_id_latest(),
   os = c("linux", "macos", "windows"),
-  path = "tools/",
+  path = "bin/",
   overwrite = TRUE
 )
 }

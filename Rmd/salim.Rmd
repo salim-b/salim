@@ -447,7 +447,6 @@ decline_noun_de <- function(noun,
     result %<>% purrr::when(stringr::str_detect(string = ., pattern = "(ss|\U00DF|x|z)$") ~ paste0(., "es"),
                             stringr::str_detect(string = ., pattern = "s$") ~ paste0(., "ses"),
                             ~ paste0(., "s"))
-    
   }
   
   result
@@ -473,7 +472,7 @@ decline_noun_de <- function(noun,
 #' @export
 download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
                                      os = c("linux", "macos", "windows"),
-                                     path = "tools/",
+                                     path = "bin/",
                                      overwrite = TRUE) {
   pal::assert_pkg("zip")
   checkmate::assert_count(release_id,
