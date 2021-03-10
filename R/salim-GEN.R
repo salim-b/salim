@@ -38,9 +38,9 @@ pkg <- utils::packageName()
 #'   in [stringi::stringi-search-regex()]. Replacements are interpreted as-is, except that references of the form `\1`, `\2`, etc. will be replaced with the
 #'   contents of the respective matched group (created in patterns using `()`). Pattern-replacement pairs are processed in the order given, meaning that first
 #'   listed pairs are applied before later listed ones.
-#' @inheritParams pal::str_replace_file
+#' @inheritParams yay::str_replace_file
 #'
-#' @inherit pal::str_replace_file return
+#' @inherit yay::str_replace_file return
 #' @seealso [regex_text_normalization]
 #' @export
 str_normalize <- function(path,
@@ -49,11 +49,13 @@ str_normalize <- function(path,
                           process_line_by_line = FALSE,
                           n_context_chrs = 20L,
                           verbose = TRUE) {
+  pal::assert_pkg("yay")
+  
   rules %>%
     tidyr::unnest_longer(col = pattern) %$%
     magrittr::set_names(x = replacement,
                         value = pattern) %>%
-    pal::str_replace_file(path = path,
+    yay::str_replace_file(path = path,
                           n_context_chrs = n_context_chrs,
                           process_line_by_line = process_line_by_line,
                           verbose = verbose,
@@ -331,7 +333,7 @@ decline_noun_de <- function(noun,
 #' Downloads the executable program binaries of a certain Pandoc release for Linux, macOS and Windows.
 #'
 #' @param os The operating systems for which Pandoc binaries should be downloaded. Any combination of
-#'   `r pal::prose_ls_fn_param(param = "os", fn = "download_pandoc_binaries")`.
+#'   `r pal::prose_ls_fn_param(param = "os", fn = download_pandoc_binaries, last_separator = " and ")`.
 #' @param path The filesystem path to which the binaries are saved to. A [path][fs::fs_path] or something coercible to.
 #' @param overwrite Whether to overwrite existing binaries under `path`.
 #' @inheritParams pandoc_release_assets

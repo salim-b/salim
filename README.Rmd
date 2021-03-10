@@ -28,5 +28,3 @@ This is arguably a [*low-cohesion*](https://en.wikipedia.org/wiki/Cohesion_(comp
 ## See also
 
 -   The [**pal**](https://gitlab.com/salim_b/r/pkgs/pal) package for a collection of more mature convenience/utility functions by the same author.
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------

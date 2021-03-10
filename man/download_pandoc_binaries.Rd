@@ -16,7 +16,7 @@ download_pandoc_binaries(
 number. An integer scalar.}
 
 \item{os}{The operating systems for which Pandoc binaries should be downloaded. Any combination of
-\code{"linux"},\code{"macos"} or \code{"windows"})`.}
+\code{"linux"},\code{"macos"} and \code{"windows"})`.}
 
 \item{path}{The filesystem path to which the binaries are saved to. A \link[fs:fs_path]{path} or something coercible to.}
 

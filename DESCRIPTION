@@ -1,16 +1,16 @@
 Package: salim
 Title: A Wild Mix of Functions Serving Various Purposes
-Version: 0.0.9006
+Version: 0.0.9007
 Authors@R: 
     person(given = "Salim",
            family = "Brüggemann",
            role = c("aut", "cre"),
            email = "salim-b@pm.me",
            comment = c(ORCID = "0000-0002-5329-5987"))
-Description: salim includes a diverse mix of functions
-    which have not found their home in a more suitable place yet. The
-    package kinda serves as an incubator for not yet fully matured code
-    and thus will most probably never be made available through CRAN.
+Description: salim includes a diverse mix of functions which have not
+    found their home in a more suitable place yet. The package kinda
+    serves as an incubator for not yet fully matured code and thus will
+    most probably never be made available through CRAN.
 License: AGPL (>= 3)
 URL: https://gitlab.com/salim_b/r/pkgs/salim
 BugReports: https://gitlab.com/salim_b/r/pkgs/salim/issues
@@ -21,7 +21,7 @@ Imports:
     dplyr (>= 1.0.2),
     fs (>= 1.5.0),
     magrittr (>= 1.5),
-    pal (>= 0.0.9038),
+    pal (>= 0.0.9052),
     purrr (>= 0.3.4),
     rlang (>= 0.4.7),
     stringr (>= 1.4.0),
@@ -31,10 +31,11 @@ Imports:
     xfun (>= 0.16)
 Suggests: 
     gh (>= 1.2.0),
+    yay (>= 0.0.9001),
     zip (>= 2.1.1)
 Remotes:
     gitlab::salim_b/r/pkgs/pal
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.1.9001
