@@ -514,3 +514,39 @@ pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
                                                            replacement = "linux"),
                                     download_url = .x$browser_download_url))
 }
+
+#' Update [Salim B's R packages](https://gitlab.com/salim_b/r/pkgs)
+#'
+#' @param pkgs The R pkgs to be updated. A subset of:
+#'   `r pal::prose_ls_fn_param(fn = "update_salims_pkgs", param = "pkgs", last_separator = " and ", as_scalar = FALSE) %>% pal::as_md_list()`
+#'
+#' @return `pkgs`, invisibly.
+#' @export
+update_salims_pkgs <- function(pkgs = c("c2d4u",
+                                        "pal",
+                                        "pkgpins",
+                                        "pkgpurl",
+                                        "pkgsnip",
+                                        "rstd",
+                                        "salim",
+                                        "swissmuni",
+                                        "swissparty",
+                                        "tocr",
+                                        "yay")) {
+  pal::assert_pkg("remotes")
+  
+  checkmate::assert_subset(x = pkgs,
+                           choices = as.character(formals()$pkgs)) %>%
+    purrr::walk(~ {
+      
+      if (pal::is_pkg_cran(.x)) {
+        utils::install.packages(pkgs = .x,
+                                repos = "https://cloud.r-project.org/")
+      } else {
+        remotes::install_gitlab(repo = paste0("salim_b/r/pkgs/", .x),
+                                upgrade = FALSE)
+      }
+    })
+  
+  invisible(pkgs)
+}

@@ -1,6 +1,6 @@
 Package: salim
 Title: A Wild Mix of Functions Serving Various Purposes
-Version: 0.0.9007
+Version: 0.0.9008
 Authors@R: 
     person(given = "Salim",
            family = "Brüggemann",
@@ -31,10 +31,12 @@ Imports:
     xfun (>= 0.16)
 Suggests: 
     gh (>= 1.2.0),
+    remotes (>= 2.3.0),
     yay (>= 0.0.9001),
     zip (>= 2.1.1)
 Remotes:
-    gitlab::salim_b/r/pkgs/pal
+    gitlab::salim_b/r/pkgs/pal,
+    gitlab::salim_b/r/pkgs/yay
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
