@@ -40,5 +40,5 @@ Applies a set of regular-expression-based text normalization rules to one or mor
 without actually modifying any files. Set \code{run_dry = FALSE} to apply the changes.
 }
 \seealso{
-\link{regex_text_normalization}
+\code{\link{regex_text_normalization}}
 }

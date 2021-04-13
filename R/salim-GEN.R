@@ -17,16 +17,29 @@ pkg <- utils::packageName()
 
 
 
+
+
 #' Regular expression patterns and replacements for text normalization
 #'
 #' @format `r pkgsnip::return_label("data")`
-#' @seealso [str_normalize()]
+#' @seealso [`regex_file_normalization`] [str_normalize()]
 #'
 #' @examples
 #' # unnest the pattern column
 #' tidyr::unnest_longer(data = regex_text_normalization,
 #'                      col = pattern)
 "regex_text_normalization"
+
+#' Regular expression patterns and replacements for file normalization
+#'
+#' @format `r pkgsnip::return_label("data")`
+#' @seealso [`regex_text_normalization`] [str_normalize()]
+#'
+#' @examples
+#' # unnest the pattern column
+#' tidyr::unnest_longer(data = regex_text_normalization,
+#'                      col = pattern)
+"regex_file_normalization"
 
 #' Apply regular-expression-based text normalization to any files
 #'
@@ -41,7 +54,7 @@ pkg <- utils::packageName()
 #' @inheritParams yay::str_replace_file
 #'
 #' @inherit yay::str_replace_file return
-#' @seealso [regex_text_normalization]
+#' @seealso [`regex_text_normalization`]
 #' @export
 str_normalize <- function(path,
                           rules = salim::regex_text_normalization,

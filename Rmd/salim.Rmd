@@ -32,7 +32,9 @@ pkg <- utils::packageName()
 Note that although the datasets defined below are saved as "internal data" in `R/sysdata.rda`, they are still exported later on, something not explicitly
 mentioned in the book [R Packages](https://r-pkgs.org/data.html#data-data) (and maybe a CRAN violation?).
 
-## Regular expressions for text normalization
+## Define data
+
+### Regular expressions for text normalization
 
 ```{r, purl = FALSE}
 regex_text_normalization <-
@@ -90,10 +92,28 @@ regex_text_normalization <-
                   replacement = "\\1\u2013\\2")
 ```
 
+### Regular expressions for file normalization
+
+```{r, purl = FALSE}
+regex_file_normalization <-
+  tibble::tibble(id = character(),
+                 category = character(),
+                 purpose = character(),
+                 pattern = list(),
+                 replacement = character()) %>%
+  # ensure terminating newline
+  tibble::add_row(id = "terminating_newline",
+                  category = "posix",
+                  purpose = "ensure file ends with the [POSIX-standard newline control character `LF`](https://en.wikipedia.org/wiki/Newline) (aka `\n`) ",
+                  pattern = list("(.)(?!\\n)\\Z"),
+                  replacement = "\\1\n")
+```
+
 ## Save data to `R/sysdata.rda`
 
 ```{r, purl = FALSE}
 usethis::use_data(regex_text_normalization,
+                  regex_file_normalization,
                   internal = FALSE,
                   overwrite = TRUE,
                   compress = "xz",
@@ -106,13 +126,24 @@ usethis::use_data(regex_text_normalization,
 #' Regular expression patterns and replacements for text normalization
 #'
 #' @format `r pkgsnip::return_label("data")`
-#' @seealso [str_normalize()]
+#' @seealso [`regex_file_normalization`] [str_normalize()]
 #'
 #' @examples
 #' # unnest the pattern column
 #' tidyr::unnest_longer(data = regex_text_normalization,
 #'                      col = pattern)
 "regex_text_normalization"
+
+#' Regular expression patterns and replacements for file normalization
+#'
+#' @format `r pkgsnip::return_label("data")`
+#' @seealso [`regex_text_normalization`] [str_normalize()]
+#'
+#' @examples
+#' # unnest the pattern column
+#' tidyr::unnest_longer(data = regex_text_normalization,
+#'                      col = pattern)
+"regex_file_normalization"
 ```
 
 # Spoken language
@@ -135,7 +166,7 @@ usethis::use_data(regex_text_normalization,
 #' @inheritParams yay::str_replace_file
 #'
 #' @inherit yay::str_replace_file return
-#' @seealso [regex_text_normalization]
+#' @seealso [`regex_text_normalization`]
 #' @export
 str_normalize <- function(path,
                           rules = salim::regex_text_normalization,
