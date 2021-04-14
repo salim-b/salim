@@ -106,7 +106,18 @@ regex_file_normalization <-
                   category = "posix",
                   purpose = "ensure file ends with the [POSIX-standard newline control character `LF`](https://en.wikipedia.org/wiki/Newline) (aka `\n`) ",
                   pattern = list("(.)(?!\\n)\\Z"),
-                  replacement = "\\1\n")
+                  replacement = "\\1\n") %>%
+  # lint [Go template](https://golang.org/pkg/text/template/) syntax
+  tibble::add_row(id = "go_template_opening_double_brace_space",
+                  category = "go_template",
+                  purpose = "ensure there's a space after opening double braces in Go templates",
+                  pattern = list("\\{\\{(?!( |- |%|<|/\\*))"),
+                  replacement = "{{ ") %>%
+  tibble::add_row(id = "go_template_closing_double_brace_space",
+                  category = "go_template",
+                  purpose = "ensure there's a space before closing double braces in Go templates",
+                  pattern = list("([^-%>/ ]|[^ ]-)\\}\\}"),
+                  replacement = "\\1 }}")
 ```
 
 ## Save data to `R/sysdata.rda`
