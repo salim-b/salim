@@ -17,3 +17,12 @@ A character scalar.
 \description{
 Convert an integer into spelled abbreviated English or German rank
 }
+\seealso{
+Other spoken language functions:
+\code{\link{add_definite_article_de}()},
+\code{\link{decline_noun_de}()},
+\code{\link{definite_article_de_declined}()},
+\code{\link{definite_article_de}()},
+\code{\link{write_out_n}()}
+}
+\concept{spoken}

@@ -24,3 +24,12 @@ A character scalar.
 Note that this function currently doesn't support the \href{https://deutsch.lingolia.com/de/grammatik/nomen/deklination/genitiv#a-besonderheiten}{special cases}
 where a masculine noun gets an \code{n} or \code{en} ending attached in the accusative, dative and genitive cases.
 }
+\seealso{
+Other spoken language functions:
+\code{\link{add_definite_article_de}()},
+\code{\link{definite_article_de_declined}()},
+\code{\link{definite_article_de}()},
+\code{\link{rank_nr}()},
+\code{\link{write_out_n}()}
+}
+\concept{spoken}

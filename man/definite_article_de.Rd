@@ -23,3 +23,12 @@ A character scalar.
 \description{
 Get the German definite article
 }
+\seealso{
+Other spoken language functions:
+\code{\link{add_definite_article_de}()},
+\code{\link{decline_noun_de}()},
+\code{\link{definite_article_de_declined}()},
+\code{\link{rank_nr}()},
+\code{\link{write_out_n}()}
+}
+\concept{spoken}

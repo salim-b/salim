@@ -30,3 +30,12 @@ A character scalar.
 \description{
 Write out a count
 }
+\seealso{
+Other spoken language functions:
+\code{\link{add_definite_article_de}()},
+\code{\link{decline_noun_de}()},
+\code{\link{definite_article_de_declined}()},
+\code{\link{definite_article_de}()},
+\code{\link{rank_nr}()}
+}
+\concept{spoken}

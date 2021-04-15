@@ -6,9 +6,6 @@ utils::globalVariables(names = c(".",
                                  "filename",
                                  "id",
                                  "name",
-                                 "pattern",
-                                 "regex_text_normalization",
-                                 "replacement",
                                  "version_nr"))
 
 pkg <- utils::packageName()
@@ -17,63 +14,16 @@ pkg <- utils::packageName()
 
 
 
-
-
-#' Regular expression patterns and replacements for text normalization
+#' Regular expression patterns and replacements for spelling normalization
 #'
 #' @format `r pkgsnip::return_label("data")`
-#' @seealso [`regex_file_normalization`] [str_normalize()]
+#' @seealso [`yay::regex_text_normalization`] [`yay::regex_file_normalization`] [yay::str_normalize()]
 #'
 #' @examples
 #' # unnest the pattern column
-#' tidyr::unnest_longer(data = regex_text_normalization,
+#' tidyr::unnest_longer(data = regex_spelling_normalization,
 #'                      col = pattern)
-"regex_text_normalization"
-
-#' Regular expression patterns and replacements for file normalization
-#'
-#' @format `r pkgsnip::return_label("data")`
-#' @seealso [`regex_text_normalization`] [str_normalize()]
-#'
-#' @examples
-#' # unnest the pattern column
-#' tidyr::unnest_longer(data = regex_text_normalization,
-#'                      col = pattern)
-"regex_file_normalization"
-
-#' Apply regular-expression-based text normalization to any files
-#'
-#' Applies a set of regular-expression-based text normalization rules to one or more files given in `path`. By default, changes are shown on the console only,
-#' without actually modifying any files. Set `run_dry = FALSE` to apply the changes.
-#'
-#' @param rules A [tibble][tibble::tibble()] of regular expression patterns and replacements. It must have the columns `pattern` and `replacement`. `pattern`
-#'   can optionally be a list column condensing multiple patterns to the same replacement rule. Patterns are interpreted as regular expressions as described
-#'   in [stringi::stringi-search-regex()]. Replacements are interpreted as-is, except that references of the form `\1`, `\2`, etc. will be replaced with the
-#'   contents of the respective matched group (created in patterns using `()`). Pattern-replacement pairs are processed in the order given, meaning that first
-#'   listed pairs are applied before later listed ones.
-#' @inheritParams yay::str_replace_file
-#'
-#' @inherit yay::str_replace_file return
-#' @seealso [`regex_text_normalization`]
-#' @export
-str_normalize <- function(path,
-                          rules = salim::regex_text_normalization,
-                          run_dry = TRUE,
-                          process_line_by_line = FALSE,
-                          n_context_chrs = 20L,
-                          verbose = TRUE) {
-  pal::assert_pkg("yay")
-  
-  rules %>%
-    tidyr::unnest_longer(col = pattern) %$%
-    magrittr::set_names(x = replacement,
-                        value = pattern) %>%
-    yay::str_replace_file(path = path,
-                          n_context_chrs = n_context_chrs,
-                          process_line_by_line = process_line_by_line,
-                          verbose = verbose,
-                          run_dry = run_dry)
-}
+"regex_spelling_normalization"
 
 #' Convert an integer into spelled abbreviated English or German rank
 #'
@@ -81,6 +31,7 @@ str_normalize <- function(path,
 #' @param lang The language to write the rank in.
 #'
 #' @return A character scalar.
+#' @family spoken
 #' @export
 rank_nr <- function(x,
                     lang = c("en", "de")) {
@@ -125,6 +76,7 @@ rank_nr <- function(x,
 #'   logical scalar.
 #'
 #' @return A character scalar.
+#' @family spoken
 #' @export
 write_out_n <- function(n,
                         lang = c("en", "de"),
@@ -187,6 +139,7 @@ write_out_n <- function(n,
 #' @param pluralize Whether to return the plural form of the definite article. A logical scalar.
 #'
 #' @return A character scalar.
+#' @family spoken
 #' @export
 definite_article_de <- function(gender = c("feminine",
                                            "masculine",
@@ -237,6 +190,7 @@ definite_article_de <- function(gender = c("feminine",
 #' @inheritParams definite_article_de
 #'
 #' @inherit definite_article_de return
+#' @family spoken
 #' @export
 definite_article_de_declined <- function(gender = c("feminine",
                                                     "masculine",
@@ -283,6 +237,7 @@ definite_article_de_declined <- function(gender = c("feminine",
 #' @param gender The grammatical gender of the `preposition`.
 #'
 #' @inherit definite_article_de return
+#' @family spoken
 #' @export
 add_definite_article_de <- function(preposition,
                                     gender = c("feminine",
@@ -317,6 +272,7 @@ add_definite_article_de <- function(preposition,
 #' @param case The grammatical case of the `noun`.
 #'
 #' @inherit definite_article_de return
+#' @family spoken
 #' @export
 decline_noun_de <- function(noun,
                             gender = c("feminine",

@@ -26,3 +26,12 @@ The declination of the German definite article \href{https://de.wikipedia.org/wi
 \details{
 Note that the second singular feminine and plural genitive form \code{"derer"} is ignored by this function.
 }
+\seealso{
+Other spoken language functions:
+\code{\link{add_definite_article_de}()},
+\code{\link{decline_noun_de}()},
+\code{\link{definite_article_de}()},
+\code{\link{rank_nr}()},
+\code{\link{write_out_n}()}
+}
+\concept{spoken}

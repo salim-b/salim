@@ -20,3 +20,12 @@ A character scalar.
 \description{
 Add the German definite article in dative case to a preposition
 }
+\seealso{
+Other spoken language functions:
+\code{\link{decline_noun_de}()},
+\code{\link{definite_article_de_declined}()},
+\code{\link{definite_article_de}()},
+\code{\link{rank_nr}()},
+\code{\link{write_out_n}()}
+}
+\concept{spoken}
