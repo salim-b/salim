@@ -29,6 +29,7 @@ Other spoken language functions:
 \code{\link{add_definite_article_de}()},
 \code{\link{definite_article_de_declined}()},
 \code{\link{definite_article_de}()},
+\code{\link{n_ify}()},
 \code{\link{rank_nr}()},
 \code{\link{write_out_n}()}
 }

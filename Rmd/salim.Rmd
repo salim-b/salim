@@ -205,6 +205,40 @@ write_out_n <- function(n,
 }
 ```
 
+## English
+
+### Append `"n"` to indefinite article where indicated
+
+```{r}
+#' Append `"n"` to indefinite article where indicated
+#'
+#' Appends an `"n"` to the indefinite article "a" if required by English language rules.
+#'
+#' Note that this function only covers part of all cases where "an" instead of "a" is indicated. Since the choice of _a_ or _an_ [depends on sound, not 
+#' spelling](http://www.butte.edu/departments/cas/tipsheets/grammar/articles.html), it's not trivial to implement a universal solution.
+#'
+#' For example, this function doesn't properly append an `"n"` to the indefinite article in the following situations:
+#' - A word starting with the letter "u" where it is pronounced as a vowel, e.g. _**unhappy**_. Note that most English words starting with letter "u" are
+#'   pronounced differently like _universum_ and thus require the indefinite article _a_, not _an_.
+#' - A word starting with a consonant that is pronounced as a vowel, e.g. _**hour**_.
+#'
+#' @param x A character vector.
+#'
+#' @return A character vector.
+#' @family spoken
+#' @export
+#'
+#' @examples
+#' n_ify("This is a absolute disaster, such a error.")
+n_ify <- function(x) {
+  
+  purrr::map_chr(.x = x,
+                 .f = stringr::str_replace_all,
+                 pattern = "(^[Aa]| a)(?= [AaEeOoIi]\\w+)",
+                 replacement = "\\1n")
+}
+```
+
 ## German
 
 ### Get the German definite article

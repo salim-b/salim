@@ -36,6 +36,7 @@ Other spoken language functions:
 \code{\link{decline_noun_de}()},
 \code{\link{definite_article_de_declined}()},
 \code{\link{definite_article_de}()},
+\code{\link{n_ify}()},
 \code{\link{rank_nr}()}
 }
 \concept{spoken}
