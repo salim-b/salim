@@ -18,12 +18,6 @@ utils::globalVariables(names = c(".",
                                  "version_nr"))
 ```
 
-## Constansts
-
-```{r}
-pkg <- utils::packageName()
-```
-
 # DATA
 
 Note that although the datasets defined below are saved as "internal data" in `R/sysdata.rda`, they are still exported later on, something not explicitly
