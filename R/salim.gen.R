@@ -46,33 +46,39 @@ rank_nr <- function(x,
                     lang = c("en", "de")) {
   
   lang <- rlang::arg_match(lang)
+  result <- "?"
   
-  if (lang == "de") {
-    switch(EXPR = as.character(as.integer(x)),
-           "1" = "erste",
-           "2" = "zweite",
-           "3" = "dritte",
-           "4" = "vierte",
-           "5" = "f\u00fcnfte",
-           "6" = "sechste",
-           "7" = "siebte",
-           "8" = "achte",
-           "9" = "neunte",
-           "?")
+  if (length(x)) {
     
-  } else if (lang == "en") {
-    switch(EXPR = as.character(as.integer(x)),
-           "1" = "1st",
-           "2" = "2nd",
-           "3" = "3rd",
-           "4" = "4th",
-           "5" = "5th",
-           "6" = "6th",
-           "7" = "7th",
-           "8" = "8th",
-           "9" = "9th",
-           "?")
+    if (lang == "de") {
+      result <- switch(EXPR = as.character(as.integer(x)),
+                       "1" = "erste",
+                       "2" = "zweite",
+                       "3" = "dritte",
+                       "4" = "vierte",
+                       "5" = "f\u00fcnfte",
+                       "6" = "sechste",
+                       "7" = "siebte",
+                       "8" = "achte",
+                       "9" = "neunte",
+                       "?")
+      
+    } else if (lang == "en") {
+      result <- switch(EXPR = as.character(as.integer(x)),
+                       "1" = "1st",
+                       "2" = "2nd",
+                       "3" = "3rd",
+                       "4" = "4th",
+                       "5" = "5th",
+                       "6" = "6th",
+                       "7" = "7th",
+                       "8" = "8th",
+                       "9" = "9th",
+                       "?")
+    }
   }
+  
+  result
 }
 
 #' Write out a count
