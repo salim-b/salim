@@ -21,7 +21,7 @@ Imports:
     dplyr (>= 1.0.2),
     fs (>= 1.5.0),
     magrittr (>= 1.5),
-    pal (>= 0.0.9052),
+    pal (>= 0.0.9077),
     purrr (>= 0.3.4),
     rlang (>= 0.4.7),
     stringr (>= 1.4.0),

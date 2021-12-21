@@ -345,7 +345,7 @@ decline_noun_de <- function(noun,
 #' Downloads the executable program binaries of a certain Pandoc release for Linux, macOS and Windows.
 #'
 #' @param os The operating systems for which Pandoc binaries should be downloaded. Any combination of
-#'   `r pal::prose_ls_fn_param(param = "os", fn = download_pandoc_binaries, last_separator = " and ")`.
+#'   `r pal::prose_ls_fn_param(param = "os", fn = download_pandoc_binaries, last_sep = " and ")`.
 #' @param path The filesystem path to which the binaries are saved to. A [path][fs::fs_path] or something coercible to.
 #' @param overwrite Whether to overwrite existing binaries under `path`.
 #' @inheritParams pandoc_release_assets
@@ -530,7 +530,7 @@ pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
 #' Update [Salim B's R packages](https://gitlab.com/salim_b/r/pkgs)
 #'
 #' @param pkgs The R pkgs to be updated. A subset of:
-#'   `r pal::prose_ls_fn_param(fn = "update_salims_pkgs", param = "pkgs", last_separator = " and ", as_scalar = FALSE) %>% pal::as_md_list()`
+#'   `r pal::prose_ls_fn_param(fn = "update_salims_pkgs", param = "pkgs", last_sep = " and ", as_scalar = FALSE) %>% pal::as_md_list()`
 #'
 #' @return `pkgs`, invisibly.
 #' @export
