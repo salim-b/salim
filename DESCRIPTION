@@ -21,7 +21,7 @@ Imports:
     dplyr (>= 1.0.2),
     fs (>= 1.5.0),
     magrittr (>= 1.5),
-    pal (>= 0.0.9077),
+    pal (>= 0.0.9079),
     purrr (>= 0.3.4),
     rlang (>= 0.4.7),
     stringr (>= 1.4.0),
@@ -32,11 +32,12 @@ Imports:
 Suggests: 
     gh (>= 1.2.0),
     remotes (>= 2.3.0),
-    yay (>= 0.0.9001),
+    yay (>= 0.0.9008),
     zip (>= 2.1.1)
 Remotes:
     gitlab::salim_b/r/pkgs/pal,
     gitlab::salim_b/r/pkgs/yay
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

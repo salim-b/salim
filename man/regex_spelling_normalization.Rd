@@ -15,10 +15,10 @@ Regular expression patterns and replacements for spelling normalization
 }
 \examples{
 # unnest the pattern column
-tidyr::unnest_longer(data = regex_spelling_normalization,
-                     col = pattern)
+salim::regex_spelling_normalization |> tidyr::unnest_longer(col = pattern)
 }
 \seealso{
-\code{\link[yay:regex_text_normalization]{yay::regex_text_normalization}} \code{\link[yay:regex_file_normalization]{yay::regex_file_normalization}} \code{\link[yay:str_normalize]{yay::str_normalize()}}
+Other regular expression rules: \code{\link[yay:regex_text_normalization]{yay::regex_text_normalization}} \code{\link[yay:regex_file_normalization]{yay::regex_file_normalization}}
+String normalization functions: \code{\link[yay:str_normalize]{yay::str_normalize()}} \code{\link[yay:str_normalize]{yay::str_normalize()}}
 }
 \keyword{datasets}

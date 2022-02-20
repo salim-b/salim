@@ -18,67 +18,13 @@ utils::globalVariables(names = c(".",
                                  "version_nr"))
 ```
 
-# DATA
+# EXPORTED
 
-Note that although the datasets defined below are saved as "internal data" in `R/sysdata.rda`, they are still exported later on, something not explicitly
-mentioned in the book [R Packages](https://r-pkgs.org/data.html#data-data) (and maybe a CRAN violation?).
+## Spoken language
 
-## Define data
+### Multi-language
 
-### Regular expression rules for spelling normalization
-
-These rules are tailored to projects of the [Centre for Democracy Studies Aarau (ZDA)](https://www.zdaarau.ch/).
-
-```{r, purl = FALSE}
-regex_spelling_normalization <-
-  tibble::tibble(id = character(),
-                 category = character(),
-                 purpose = character(),
-                 pattern = list(),
-                 replacement = character()) %>%
-  # harmonize spelling
-  tibble::add_row(id = "title_fa",
-                  category = "harmonize_spelling",
-                  purpose = "harmonize spelling of the [_FOKUS Aargau_](https://fokus.ag/) project title",
-                  pattern = list("Fokus(?=[ -]Aargau)"),
-                  replacement = "FOKUS") %>%
-  tibble::add_row(id = "title_smartvote",
-                  category = "harmonize_spelling",
-                  purpose = "harmonize spelling of the [_smartvote_](https://smartvote.ch/) VAA",
-                  pattern = list("\\bSmartvote\\b"),
-                  replacement = "smartvote")
-```
-
-## Save data to `R/sysdata.rda`
-
-```{r, purl = FALSE}
-usethis::use_data(regex_spelling_normalization,
-                  internal = FALSE,
-                  overwrite = TRUE,
-                  compress = "xz",
-                  version = 3L)
-```
-
-## Document data
-
-```{r}
-#' Regular expression patterns and replacements for spelling normalization
-#'
-#' @format `r pkgsnip::return_label("data")`
-#' @seealso [`yay::regex_text_normalization`] [`yay::regex_file_normalization`] [yay::str_normalize()]
-#'
-#' @examples
-#' # unnest the pattern column
-#' tidyr::unnest_longer(data = regex_spelling_normalization,
-#'                      col = pattern)
-"regex_spelling_normalization"
-```
-
-# Spoken language
-
-## Multi-language
-
-### Convert an integer into spelled abbreviated English or German rank
+#### `rank_nr`
 
 ```{r}
 #' Convert an integer into spelled abbreviated English or German rank
@@ -129,7 +75,7 @@ rank_nr <- function(x,
 }
 ```
 
-### Write out a count
+#### `write_out_n`
 
 Caveats:
 
@@ -205,9 +151,9 @@ write_out_n <- function(n,
 }
 ```
 
-## English
+### English
 
-### Append `"n"` to indefinite article where indicated
+#### `n_ify`
 
 ```{r}
 #' Append `"n"` to indefinite article where indicated
@@ -239,9 +185,9 @@ n_ify <- function(x) {
 }
 ```
 
-## German
+### German
 
-### Get the German definite article
+#### `definite_article_de`
 
 ```{r}
 #' Get the German definite article
@@ -294,7 +240,7 @@ definite_article_de <- function(gender = c("feminine",
 }
 ```
 
-### Decline the German definite article
+#### `definite_article_de_declined`
 
 ```{r}
 #' Decline the German definite article
@@ -348,7 +294,7 @@ definite_article_de_declined <- function(gender = c("feminine",
 }
 ```
 
-### Add the German definite article in dative case to a preposition
+#### `add_definite_article_de`
 
 ```{r}
 #' Add the German definite article in dative case to a preposition
@@ -383,7 +329,7 @@ add_definite_article_de <- function(preposition,
 }
 ```
 
-### Decline a German noun
+#### `decline_noun_de`
 
 ```{r}
 #' Decline a German noun
@@ -422,11 +368,28 @@ decline_noun_de <- function(noun,
 }
 ```
 
-# Pandoc
+## Regular expression rules
+
+### `regex_spelling_normalization`
+
+```{r}
+#' Regular expression patterns and replacements for spelling normalization
+#'
+#' @format `r pkgsnip::return_label("data")`
+#' @seealso Other regular expression rules: [`yay::regex_text_normalization`] [`yay::regex_file_normalization`]
+#' String normalization functions: [yay::str_normalize()] [yay::str_normalize()]
+#'
+#' @examples
+#' # unnest the pattern column
+#' salim::regex_spelling_normalization |> tidyr::unnest_longer(col = pattern)
+"regex_spelling_normalization"
+```
+
+## Pandoc
 
 TODO: Move these fns to dedicated pkg *pndc*?
 
-## Download Pandoc release binaries
+### `download_pandoc_binaries`
 
 ```{r}
 #' Download Pandoc release binaries
@@ -523,7 +486,7 @@ download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
 }
 ```
 
-## Get latest Pandoc release ID
+### `pandoc_release_id_latest`
 
 ```{r}
 #' Get latest Pandoc release ID
@@ -545,7 +508,7 @@ pandoc_release_id_latest <- function() {
 }
 ```
 
-## Get latest Pandoc release version number
+### `pandoc_version_latest`
 
 ```{r}
 #' Get latest Pandoc release version number
@@ -569,7 +532,7 @@ pandoc_version_latest <- function() {
 }
 ```
 
-## List all available Pandoc releases
+### `pandoc_releases`
 
 ```{r}
 #' List all available Pandoc releases
@@ -600,7 +563,7 @@ pandoc_releases <- function() {
 }
 ```
 
-## List Pandoc release assets
+### `pandoc_release_assets`
 
 ```{r}
 #' List Pandoc release assets
@@ -633,9 +596,9 @@ pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
 }
 ```
 
-# Other
+## Other
 
-## Update Salim B's R packages
+### `update_salims_pkgs`
 
 ```{r}
 #' Update [Salim B's R packages](https://gitlab.com/salim_b/r/pkgs)

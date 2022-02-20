@@ -2,7 +2,7 @@
 # See `README.md#r-markdown-format` for more information on the literate programming approach used applying the R Markdown format.
 
 # salim: A Wild Mix of Functions Serving Various Purposes
-# Copyright (C) 2021 Salim Brüggemann
+# Copyright (C) 2022 Salim Brüggemann
 # 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or any later version.
@@ -18,21 +18,6 @@ utils::globalVariables(names = c(".",
                                  "id",
                                  "name",
                                  "version_nr"))
-
-
-
-
-
-#' Regular expression patterns and replacements for spelling normalization
-#'
-#' @format `r pkgsnip::return_label("data")`
-#' @seealso [`yay::regex_text_normalization`] [`yay::regex_file_normalization`] [yay::str_normalize()]
-#'
-#' @examples
-#' # unnest the pattern column
-#' tidyr::unnest_longer(data = regex_spelling_normalization,
-#'                      col = pattern)
-"regex_spelling_normalization"
 
 #' Convert an integer into spelled abbreviated English or German rank
 #'
@@ -339,6 +324,17 @@ decline_noun_de <- function(noun,
   
   result
 }
+
+#' Regular expression patterns and replacements for spelling normalization
+#'
+#' @format `r pkgsnip::return_label("data")`
+#' @seealso Other regular expression rules: [`yay::regex_text_normalization`] [`yay::regex_file_normalization`]
+#' String normalization functions: [yay::str_normalize()] [yay::str_normalize()]
+#'
+#' @examples
+#' # unnest the pattern column
+#' salim::regex_spelling_normalization |> tidyr::unnest_longer(col = pattern)
+"regex_spelling_normalization"
 
 #' Download Pandoc release binaries
 #'

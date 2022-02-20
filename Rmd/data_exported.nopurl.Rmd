@@ -1,0 +1,55 @@
+---
+editor_options:
+  chunk_output_type: console
+---
+
+NOTES:
+
+-   This file is *not* included in the [source package](https://r-pkgs.org/package-structure-state.html#source-package) because of the [`.nopurl` suffix in the
+    filename](https://rpkg.dev/pkgpurl/reference/purl_rmd.html#-rmd-files-excluded-from-purling).
+
+-   The chunks below have to be manually executed in order to regenerate the package data.
+
+# Exported data
+
+NOTES:
+
+-   When used internally, other than internal data, exported data must always be referred to by its explicit namespace, i.e. e.g.
+    `salim::regex_spelling_normalization`.
+
+## `regex_spelling_normalization`
+
+Regular expression rules for spelling normalization tailored to projects of the [Centre for Democracy Studies Aarau (ZDA)](https://www.zdaarau.ch/).
+
+```{r}
+regex_spelling_normalization <-
+  tibble::tibble(id = character(),
+                 category = character(),
+                 purpose = character(),
+                 pattern = list(),
+                 replacement = character()) %>%
+  # harmonize spelling
+  tibble::add_row(id = "title_fa",
+                  category = "harmonize_spelling",
+                  purpose = "harmonize spelling of the [_FOKUS Aargau_](https://fokus.ag/) project title",
+                  pattern = list("Fokus(?=[ -]Aargau)"),
+                  replacement = "FOKUS") %>%
+  tibble::add_row(id = "title_smartvote",
+                  category = "harmonize_spelling",
+                  purpose = "harmonize spelling of the [_smartvote_](https://smartvote.ch/) VAA",
+                  pattern = list("\\bSmartvote\\b"),
+                  replacement = "smartvote")
+```
+
+## Write data
+
+Save all the bigger data objects to separate files under `data/*.rda`. Note that when documenting them, they mustn't be explicitly `@export`ed since they're
+already automatically exported and thus available to package users.
+
+```{r}
+usethis::use_data(regex_spelling_normalization,
+                  internal = FALSE,
+                  overwrite = TRUE,
+                  compress = "xz",
+                  version = 3L)
+```
