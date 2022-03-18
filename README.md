@@ -4,6 +4,10 @@ salim includes a diverse mix of functions which have not found their home in a m
 
 This is arguably a [*low-cohesion*](https://en.wikipedia.org/wiki/Cohesion_(computer_science)) package.
 
+## Documentation
+
+The documentation of this package is found [here](https://rpkg.dev/salim).
+
 ## Installation
 
 To install the latest development version of salim, run the following in R:
