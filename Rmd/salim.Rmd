@@ -675,6 +675,19 @@ lvl_up_r <- function(path_min_vrsn,
 #' If `update_min_vrsn` is set to `TRUE` and the file `path_min_vrsn` doesn't exist or contains an RStudio version string that's lower than the currently
 #' running version of RStudio, `path_min_vrsn` is overwritten with the currently running RStudio version string.
 #'
+#' Note that since RStudio must be running for `lvl_up_rstudio()` to have any effect, it can't be directly called in an `.Rprofile` startup script. Instead, the
+#' [`rstudio.sessionInit`](https://docs.rstudio.com/ide/server-pro/r_sessions/session_startup_scripts.html) hook can be used. Example:
+#' 
+#' ```r
+#' setHook(hookName = "rstudio.sessionInit",
+#'         value = function(newSession) {
+#'             if (newSession)
+#'                 salim::lvl_up_rstudio(path_min_vrsn = ".RStudio_version",
+#'                                       update_min_vrsn = TRUE)
+#'         },
+#'         action = "append")
+#' ```
+#'
 #' @param path_min_vrsn Path to the cached RStudio version string.
 #' @param update_min_vrsn Whether or not to overwrite `path_min_vrsn` with the currently running RStudio version string *iff* the latter is higher than the
 #'   former.
