@@ -328,7 +328,8 @@ decline_noun_de <- function(noun,
 #' Regular expression patterns and replacements for spelling normalization
 #'
 #' @format `r pkgsnip::return_label("data")`
-#' @seealso Other regular expression rules: [`yay::regex_text_normalization`] [`yay::regex_file_normalization`]
+#' @seealso
+#' Other regular expression rules: [`yay::regex_text_normalization`] [`yay::regex_file_normalization`]
 #' String normalization functions: [yay::str_normalize()] [yay::str_normalize()]
 #'
 #' @examples
@@ -347,6 +348,7 @@ decline_noun_de <- function(noun,
 #' @inheritParams pandoc_release_assets
 #'
 #' @return `path` invisibly.
+#' @family pandoc
 #' @export
 download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
                                      os = c("linux", "macos", "windows"),
@@ -435,6 +437,7 @@ download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
 #' API](https://docs.github.com/en/rest/reference/repos#get-the-latest-release).
 #'
 #' @return An integer scalar.
+#' @family pandoc
 #' @export
 pandoc_release_id_latest <- function() {
   
@@ -453,6 +456,7 @@ pandoc_release_id_latest <- function() {
 #' API](https://docs.github.com/en/rest/reference/repos#get-the-latest-release) and returns it as a [numeric version][numeric_version()].
 #'
 #' @return `r pkgsnip::param_label("version_nr")`
+#' @family pandoc
 #' @export
 pandoc_version_latest <- function() {
   
@@ -476,6 +480,7 @@ pandoc_version_latest <- function() {
 #' Values of the column `release_id` can be used as input to [download_pandoc_binaries()].
 #'
 #' @return `r pkgsnip::param_label("data")`
+#' @family pandoc
 #' @export
 pandoc_releases <- function() {
   
@@ -503,6 +508,7 @@ pandoc_releases <- function() {
 #'   number. An integer scalar.
 #'
 #' @return `r pkgsnip::param_label("data")`
+#' @family pandoc
 #' @export
 pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
   
@@ -523,12 +529,124 @@ pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
                                     download_url = .x$browser_download_url))
 }
 
+#' Level up R
+#'
+#' Checks whether the installed R version is >= a cached reference version. Intended to level up the R version in use between multiple users of the same code
+#' (e.g. contributors to a specific R project).
+#'
+#' If the file `path_min_vrsn` exists, it is checked whether the installed R version is greater than or equal to the version number stored in that file, and if
+#' not, an alert is displayed.
+#' 
+#' If `update_min_vrsn` is set to `TRUE` and the file `path_min_vrsn` doesn't exist or contains an R version string that's lower than the currently installed
+#' version of R, `path_min_vrsn` is overwritten with the currently installed R version string.
+#'
+#' @param path_min_vrsn Path to the cached R version string.
+#' @param update_min_vrsn Whether or not to overwrite `path_min_vrsn` with the currently installed R version string *iff* the latter is higher than the former.
+#'
+#' @return Currently installed R version as a [numeric version][as.package_version], invisibly.
+#' @family dev_env
+#' @export
+lvl_up_r <- function(path_min_vrsn,
+                     update_min_vrsn = FALSE) {
+  
+  if (fs::file_exists(path_min_vrsn)) {
+    
+    min_vrsn <-
+      path_min_vrsn %>%
+      brio::read_lines(n = 1L) %>%
+      as.package_version()
+    
+  } else {
+    min_vrsn <- as.package_version("0.0")
+  }
+  
+  current_vrsn <-
+    R.Version() %$%
+    glue::glue("{major}.{minor}") %>%
+    as.package_version()
+  
+  if (isTRUE(current_vrsn < min_vrsn)) {
+    
+    cli::cli_alert_warning(
+      "Your version of {.pkg R} is out of date. Please update to version {.val {min_vrsn}} or above. The latest stable release can be downloaded from: ",
+      "{.url https://cloud.r-project.org/}"
+    )
+  }
+  
+  if (update_min_vrsn && current_vrsn > min_vrsn) {
+    
+    brio::write_lines(text = current_vrsn,
+                      path = path_min_vrsn)
+  }
+  
+  invisible(current_vrsn)
+}
+
+#' Level up RStudio
+#'
+#' Checks whether the currently running RStudio version is >= a cached reference version. Intended to level up the RStudio version in use between multiple users
+#' of the same code (e.g. contributors to a specific R project).
+#'
+#' If the file `path_min_vrsn` exists, it is checked whether RStudio is running, and if so whether its version is greater than or equal to the version number
+#' stored in that file, and if not, an alert is displayed.
+#' 
+#' If `update_min_vrsn` is set to `TRUE` and the file `path_min_vrsn` doesn't exist or contains an RStudio version string that's lower than the currently
+#' running version of RStudio, `path_min_vrsn` is overwritten with the currently running RStudio version string.
+#'
+#' @param path_min_vrsn Path to the cached RStudio version string.
+#' @param update_min_vrsn Whether or not to overwrite `path_min_vrsn` with the currently running RStudio version string *iff* the latter is higher than the
+#'   former.
+#'
+#' @return Currently running RStudio version as a [numeric version][as.package_version], or `NULL` if RStudio is not running, invisibly.
+#' @family dev_env
+#' @export
+lvl_up_rstudio <- function(path_min_vrsn,
+                           update_min_vrsn = FALSE) {
+  
+  pal::assert_pkg("rstudioapi")
+  current_vrsn <- NULL
+  
+  # skip if RStudio is not running
+  if (rstudioapi::isAvailable()) {
+    
+    if (fs::file_exists(path_min_vrsn)) {
+      
+      min_vrsn <-
+        path_min_vrsn %>%
+        brio::read_lines(n = 1L) %>%
+        as.package_version()
+      
+    } else {
+      min_vrsn <- as.package_version("0.0")
+    }
+    
+    current_vrsn <- rstudioapi::versionInfo() %>% purrr::chuck("version")
+    
+    if (isTRUE(current_vrsn < min_vrsn)) {
+      
+      cli::cli_alert_warning(
+        "Your version of {.pkg RStudio} is out of date. Please update to version {.val {min_vrsn}} or above. The latest version can be downloaded from: ",
+        "{.url https://rstudio.com/products/rstudio/download/#download}"
+      )
+    }
+    
+    if (update_min_vrsn && current_vrsn > min_vrsn) {
+      
+      brio::write_lines(text = current_vrsn,
+                        path = path_min_vrsn)
+    }
+  }
+  
+  invisible(current_vrsn)
+}
+
 #' Update [Salim B's R packages](https://gitlab.com/salim_b/r/pkgs)
 #'
 #' @param pkgs The R pkgs to be updated. A subset of:
 #'   `r pal::prose_ls_fn_param(fn = "update_salims_pkgs", param = "pkgs", last_sep = " and ", as_scalar = FALSE) %>% pal::as_md_list()`
 #'
 #' @return `pkgs`, invisibly.
+#' @family dev_env
 #' @export
 update_salims_pkgs <- function(pkgs = c("c2d4u",
                                         "pal",

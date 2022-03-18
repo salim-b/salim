@@ -16,3 +16,11 @@ A \link[tibble:tbl_df-class]{tibble}.
 \description{
 Uses \code{\link[gh:gh]{gh::gh()}} to fetch filenames, corresponding operating systems and download URLs of a specific \href{https://pandoc.org/}{Pandoc} release via \href{https://docs.github.com/en/rest/reference/repos#list-release-assets}{GitHub's REST API} and returns them as a \link[tibble:tbl_df-class]{tibble}.
 }
+\seealso{
+Other Pandoc-related functions:
+\code{\link{download_pandoc_binaries}()},
+\code{\link{pandoc_release_id_latest}()},
+\code{\link{pandoc_releases}()},
+\code{\link{pandoc_version_latest}()}
+}
+\concept{pandoc}

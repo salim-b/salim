@@ -1,11 +1,8 @@
 Package: salim
 Title: A Wild Mix of Functions Serving Various Purposes
-Version: 0.0.9011
+Version: 0.0.9012
 Authors@R: 
-    person(given = "Salim",
-           family = "Brüggemann",
-           role = c("aut", "cre"),
-           email = "salim-b@pm.me",
+    person("Salim", "Brüggemann", , "salim-b@pm.me", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5329-5987"))
 Description: salim includes a diverse mix of functions which have not
     found their home in a more suitable place yet. The package kinda
@@ -17,9 +14,12 @@ BugReports: https://gitlab.com/salim_b/r/pkgs/salim/issues
 Depends: 
     R (>= 3.5.0)
 Imports: 
+    brio (>= 1.1.3),
     checkmate (>= 2.0.0),
+    cli (>= 3.2.0),
     dplyr (>= 1.0.2),
     fs (>= 1.5.0),
+    glue (>= 1.6.2),
     magrittr (>= 1.5),
     pal (>= 0.0.9079),
     purrr (>= 0.3.4),
@@ -32,6 +32,7 @@ Imports:
 Suggests: 
     gh (>= 1.2.0),
     remotes (>= 2.3.0),
+    rstudioapi (>= 0.13),
     yay (>= 0.0.9008),
     zip (>= 2.1.1)
 Remotes:

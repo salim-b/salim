@@ -28,3 +28,11 @@ number. An integer scalar.}
 \description{
 Downloads the executable program binaries of a certain Pandoc release for Linux, macOS and Windows.
 }
+\seealso{
+Other Pandoc-related functions:
+\code{\link{pandoc_release_assets}()},
+\code{\link{pandoc_release_id_latest}()},
+\code{\link{pandoc_releases}()},
+\code{\link{pandoc_version_latest}()}
+}
+\concept{pandoc}

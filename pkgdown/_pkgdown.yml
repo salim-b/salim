@@ -1,0 +1,43 @@
+development:
+  mode: auto
+template:
+  opengraph:
+    twitter:
+      card: summary
+      creator: '@2BSalim'
+  params:
+    analytics:
+      goatcounter:
+        endpoint: https://rpkg-dev.goatcounter.com/count
+    bootswatch: yeti
+    mathjax: no
+    selfhost_assets: yes
+url: https://rpkg.dev/salim
+reference:
+- title: Spoken language
+- subtitle: Multi-language
+- contents:
+  - rank_nr
+  - write_out_n
+- subtitle: English
+- contents: n_ify
+- subtitle: German
+- contents:
+  - definite_article_de
+  - definite_article_de_declined
+  - add_definite_article_de
+  - decline_noun_de
+- title: Regular expression rules
+- contents: regex_spelling_normalization
+- title: Pandoc
+- contents:
+  - download_pandoc_binaries
+  - pandoc_release_id_latest
+  - pandoc_version_latest
+  - pandoc_releases
+  - pandoc_release_assets
+- title: Development environment currentness
+- contents:
+  - lvl_up_r
+  - lvl_up_rstudio
+  - update_salims_pkgs
