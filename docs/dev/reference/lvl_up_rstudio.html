@@ -144,12 +144,14 @@ former.</p></td>
     <p>Currently running RStudio version as a <a href='https://rdrr.io/r/base/numeric_version.html'>numeric version</a>, or <code>NULL</code> if RStudio is not running, invisibly.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>If the file <code>path_min_vrsn</code> exists, it is checked whether RStudio is running, and if so whether its version is greater than or equal to the version number
-stored in that file, and if not, an alert is displayed.</p>
+    <p>If the file <code>path_min_vrsn</code> exists, it is checked whether RStudio is running, and if so, whether its version number is greater than or equal to the version
+number stored in that file. If this is not the case, an alert is displayed.</p>
 <p>If <code>update_min_vrsn</code> is set to <code>TRUE</code> and the file <code>path_min_vrsn</code> doesn't exist or contains an RStudio version string that's lower than the currently
 running version of RStudio, <code>path_min_vrsn</code> is overwritten with the currently running RStudio version string.</p>
-<p>Note that since RStudio must be running for <code>lvl_up_rstudio()</code> to have any effect, it can't be directly called in an <code>.Rprofile</code> startup script. Instead, the
-<a href='https://docs.rstudio.com/ide/server-pro/r_sessions/session_startup_scripts.html'><code>rstudio.sessionInit</code></a> hook can be used. Example:<div class="sourceCode r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/userhooks.html'>setHook</a></span><span class='op'>(</span>hookName <span class='op'>=</span> <span class='st'>"rstudio.sessionInit"</span>,
+<p>Note that since <strong>RStudio must be running for <code>lvl_up_rstudio()</code> to have any effect</strong>, it can't be directly called in a (project-level)
+<a href='https://support.rstudio.com/hc/en-us/articles/360047157094-Managing-R-with-Rprofile-Renviron-Rprofile-site-Renviron-site-rsession-conf-and-repos-conf'><code>.Rprofile</code></a>
+startup script. Instead, the <a href='https://docs.rstudio.com/ide/server-pro/r_sessions/session_startup_scripts.html'><code>rstudio.sessionInit</code></a> hook can be used.
+Example:<div class="sourceCode r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/userhooks.html'>setHook</a></span><span class='op'>(</span>hookName <span class='op'>=</span> <span class='st'>"rstudio.sessionInit"</span>,
         value <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>newSession</span><span class='op'>)</span> <span class='op'>{</span>
             <span class='kw'>if</span> <span class='op'>(</span><span class='va'>newSession</span><span class='op'>)</span>
                 <span class='fu'>salim</span><span class='fu'>::</span><span class='fu'>lvl_up_rstudio</span><span class='op'>(</span>path_min_vrsn <span class='op'>=</span> <span class='st'>".RStudio_version"</span>,

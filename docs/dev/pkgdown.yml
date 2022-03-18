@@ -2,7 +2,7 @@ pandoc: 2.17.1.1
 pkgdown: 1.6.1.9000
 pkgdown_sha: 7e9bb083e7d476e27baaad7e5328ec0ae94f8c36
 articles: {}
-last_built: 2022-03-18T03:47Z
+last_built: 2022-03-18T15:27Z
 urls:
   reference: https://rpkg.dev/salim/reference
   article: https://rpkg.dev/salim/articles

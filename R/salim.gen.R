@@ -587,14 +587,16 @@ lvl_up_r <- function(path_min_vrsn,
 #' Checks whether the currently running RStudio version is >= a cached reference version. Intended to level up the RStudio version in use between multiple users
 #' of the same code (e.g. contributors to a specific R project).
 #'
-#' If the file `path_min_vrsn` exists, it is checked whether RStudio is running, and if so whether its version is greater than or equal to the version number
-#' stored in that file, and if not, an alert is displayed.
+#' If the file `path_min_vrsn` exists, it is checked whether RStudio is running, and if so, whether its version number is greater than or equal to the version
+#' number stored in that file. If this is not the case, an alert is displayed.
 #' 
 #' If `update_min_vrsn` is set to `TRUE` and the file `path_min_vrsn` doesn't exist or contains an RStudio version string that's lower than the currently
 #' running version of RStudio, `path_min_vrsn` is overwritten with the currently running RStudio version string.
 #'
-#' Note that since RStudio must be running for `lvl_up_rstudio()` to have any effect, it can't be directly called in an `.Rprofile` startup script. Instead, the
-#' [`rstudio.sessionInit`](https://docs.rstudio.com/ide/server-pro/r_sessions/session_startup_scripts.html) hook can be used. Example:
+#' Note that since **RStudio must be running for `lvl_up_rstudio()` to have any effect**, it can't be directly called in a (project-level)
+#' [`.Rprofile`](https://support.rstudio.com/hc/en-us/articles/360047157094-Managing-R-with-Rprofile-Renviron-Rprofile-site-Renviron-site-rsession-conf-and-repos-conf)
+#' startup script. Instead, the [`rstudio.sessionInit`](https://docs.rstudio.com/ide/server-pro/r_sessions/session_startup_scripts.html) hook can be used.
+#' Example:
 #' 
 #' ```r
 #' setHook(hookName = "rstudio.sessionInit",

@@ -20,14 +20,16 @@ Checks whether the currently running RStudio version is >= a cached reference ve
 of the same code (e.g. contributors to a specific R project).
 }
 \details{
-If the file \code{path_min_vrsn} exists, it is checked whether RStudio is running, and if so whether its version is greater than or equal to the version number
-stored in that file, and if not, an alert is displayed.
+If the file \code{path_min_vrsn} exists, it is checked whether RStudio is running, and if so, whether its version number is greater than or equal to the version
+number stored in that file. If this is not the case, an alert is displayed.
 
 If \code{update_min_vrsn} is set to \code{TRUE} and the file \code{path_min_vrsn} doesn't exist or contains an RStudio version string that's lower than the currently
 running version of RStudio, \code{path_min_vrsn} is overwritten with the currently running RStudio version string.
 
-Note that since RStudio must be running for \code{lvl_up_rstudio()} to have any effect, it can't be directly called in an \code{.Rprofile} startup script. Instead, the
-\href{https://docs.rstudio.com/ide/server-pro/r_sessions/session_startup_scripts.html}{\code{rstudio.sessionInit}} hook can be used. Example:\if{html}{\out{<div class="sourceCode r">}}\preformatted{setHook(hookName = "rstudio.sessionInit",
+Note that since \strong{RStudio must be running for \code{lvl_up_rstudio()} to have any effect}, it can't be directly called in a (project-level)
+\href{https://support.rstudio.com/hc/en-us/articles/360047157094-Managing-R-with-Rprofile-Renviron-Rprofile-site-Renviron-site-rsession-conf-and-repos-conf}{\code{.Rprofile}}
+startup script. Instead, the \href{https://docs.rstudio.com/ide/server-pro/r_sessions/session_startup_scripts.html}{\code{rstudio.sessionInit}} hook can be used.
+Example:\if{html}{\out{<div class="sourceCode r">}}\preformatted{setHook(hookName = "rstudio.sessionInit",
         value = function(newSession) \{
             if (newSession)
                 salim::lvl_up_rstudio(path_min_vrsn = ".RStudio_version",
