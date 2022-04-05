@@ -567,10 +567,10 @@ lvl_up_r <- function(path_min_vrsn,
   
   if (isTRUE(current_vrsn < min_vrsn)) {
     
-    cli::cli_alert_warning(
+    cli::cli_alert_warning(paste0(
       "Your version of {.pkg R} is out of date. Please update to version {.val {min_vrsn}} or above. The latest stable release can be downloaded from: ",
       "{.url https://cloud.r-project.org/}"
-    )
+    ))
   }
   
   if (update_min_vrsn && current_vrsn > min_vrsn) {
@@ -641,10 +641,10 @@ lvl_up_rstudio <- function(path_min_vrsn,
     
     if (isTRUE(current_vrsn < min_vrsn)) {
       
-      cli::cli_alert_warning(
+      cli::cli_alert_warning(paste0(
         "Your version of {.pkg RStudio} is out of date. Please update to version {.val {min_vrsn}} or above. The latest version can be downloaded from: ",
         "{.url https://rstudio.com/products/rstudio/download/#download}"
-      )
+      ))
     }
     
     if (update_min_vrsn && current_vrsn > min_vrsn) {
