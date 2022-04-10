@@ -19,6 +19,36 @@ utils::globalVariables(names = c(".",
                                  "name",
                                  "version_nr"))
 
+#' Prettify date
+#'
+#' Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...
+#'
+#' @param date Date to be prettified. A [date][base::Date] or something coercible to.
+#' @param locale Locale the date should be prettified for. Currently only `"en"`/`"en-US"` and `"de"`/`"de-CH"` are implemented.
+#'
+#' @return A character scalar.
+#' @export
+#'
+#' @examples
+#' salim::prettify_date("2021-12-21")
+prettify_date <- function(date,
+                          locale = c("en", "de", "en-US", "de-CH")) {
+
+  locale <- rlang::arg_match(locale)
+
+  withr::with_locale(new = c("LC_TIME" = purrr::when(. = locale,
+                                                     . %in% c("en", "en-US") ~ "C",
+                                                     . %in% c("de", "de-CH") ~ "de_CH.utf8")),
+                     code =
+                       locale %>%
+                       purrr::when(. %in% c("en", "en-US") ~
+                                     "%B %d, %Y",
+                                   . %in% c("de", "de-CH") ~
+                                     "%d. %B %Y",
+                                   ~ cli::cli_abort("Specified {.arg locale} not implemented yet.")) %>%
+                       format(x = lubridate::as_date(date)))
+}
+
 #' Convert an integer into spelled abbreviated English or German rank
 #'
 #' @param x An integer scalar or something coercible to.

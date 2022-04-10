@@ -19,7 +19,7 @@ remotes::install_gitlab(repo = "salim_b/r/pkgs/salim")
 
 ## Usage
 
-The (function) reference is found [here](https:/rpkg.dev/salim/reference).
+The (function) reference is found [here](https://rpkg.dev/salim/reference).
 
 ## Development
 

@@ -24,6 +24,52 @@ utils::globalVariables(names = c(".",
 
 ### Multi-language
 
+#### `prettify_date`
+
+TODO:
+
+-   This fn somehow acts very strangely during FOKUS questionnaire generation: Although we use `salim::prettify_date(ballot_date, locale = 'de')`, it results in
+    `October 18, 2020`, i.e. doesn't even use the proper format string.
+
+-   Investigate if there's a more sophisticated pkg available fulfilling this task (ideally in a system-locale-independent way).
+
+NOTES:
+
+-   Relevant SO question: [What is a reliable way of getting allowed locale names in
+    R?](https://stackoverflow.com/questions/20960821/what-is-a-reliable-way-of-getting-allowed-locale-names-in-r)
+
+```{r}
+#' Prettify date
+#'
+#' Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...
+#'
+#' @param date Date to be prettified. A [date][base::Date] or something coercible to.
+#' @param locale Locale the date should be prettified for. Currently only `"en"`/`"en-US"` and `"de"`/`"de-CH"` are implemented.
+#'
+#' @return A character scalar.
+#' @export
+#'
+#' @examples
+#' salim::prettify_date("2021-12-21")
+prettify_date <- function(date,
+                          locale = c("en", "de", "en-US", "de-CH")) {
+
+  locale <- rlang::arg_match(locale)
+
+  withr::with_locale(new = c("LC_TIME" = purrr::when(. = locale,
+                                                     . %in% c("en", "en-US") ~ "C",
+                                                     . %in% c("de", "de-CH") ~ "de_CH.utf8")),
+                     code =
+                       locale %>%
+                       purrr::when(. %in% c("en", "en-US") ~
+                                     "%B %d, %Y",
+                                   . %in% c("de", "de-CH") ~
+                                     "%d. %B %Y",
+                                   ~ cli::cli_abort("Specified {.arg locale} not implemented yet.")) %>%
+                       format(x = lubridate::as_date(date)))
+}
+```
+
 #### `rank_nr`
 
 ```{r}

@@ -17,6 +17,7 @@ reference:
 - title: Spoken language
 - subtitle: Multi-language
 - contents:
+  - prettify_date
   - rank_nr
   - write_out_n
 - subtitle: English

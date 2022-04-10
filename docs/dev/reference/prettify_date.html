@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get latest Pandoc release ID — pandoc_release_id_latest • salim</title>
+<title>Prettify date — prettify_date • salim</title>
 
 
 
@@ -42,9 +42,9 @@
 <script src="../pkgdown.js"></script>
 
 
-<meta property="og:title" content="Get latest Pandoc release ID — pandoc_release_id_latest" />
-<meta name="description" content="Uses gh::gh() to fetch the latest Pandoc release ID via GitHub's REST API.">
-<meta property="og:description" content="Uses gh::gh() to fetch the latest Pandoc release ID via GitHub's REST API." />
+<meta property="og:title" content="Prettify date — prettify_date" />
+<meta name="description" content="Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...">
+<meta property="og:description" content="Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA..." />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@2BSalim" />
 <meta name="twitter:site" content="@2BSalim" />
@@ -113,29 +113,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get latest Pandoc release ID</h1>
+    <h1>Prettify date</h1>
     <small class="dont-index">Source: <a href='https://gitlab.com/salim_b/r/pkgs/salim/blob/master/R/salim.gen.R'><code>R/salim.gen.R</code></a></small>
-    <div class="hidden name"><code>pandoc_release_id_latest.Rd</code></div>
+    <div class="hidden name"><code>prettify_date.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Uses <code><a href='https://gh.r-lib.org/reference/gh.html'>gh::gh()</a></code> to fetch the latest <a href='https://pandoc.org/'>Pandoc</a> release ID via <a href='https://docs.github.com/en/rest/reference/repos#get-the-latest-release'>GitHub's REST API</a>.</p>
+    <p>Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pandoc_release_id_latest</span><span class='op'>(</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>prettify_date</span><span class='op'>(</span><span class='va'>date</span>, locale <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"en"</span>, <span class='st'>"de"</span>, <span class='st'>"en-US"</span>, <span class='st'>"de-CH"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>date</th>
+      <td><p>Date to be prettified. A <a href='https://rdrr.io/r/base/Dates.html'>date</a> or something coercible to.</p></td>
+    </tr>
+    <tr>
+      <th>locale</th>
+      <td><p>Locale the date should be prettified for. Currently only <code>"en"</code>/<code>"en-US"</code> and <code>"de"</code>/<code>"de-CH"</code> are implemented.</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An integer scalar.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <p>A character scalar.</p>
 
-    <div class='dont-index'><p>Other Pandoc-related functions:
-<code><a href='download_pandoc_binaries.html'>download_pandoc_binaries</a>()</code>,
-<code><a href='pandoc_release_assets.html'>pandoc_release_assets</a>()</code>,
-<code><a href='pandoc_releases.html'>pandoc_releases</a>()</code>,
-<code><a href='pandoc_version_latest.html'>pandoc_version_latest</a>()</code></p></div>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='r-in'><span class='fu'>salim</span><span class='fu'>::</span><span class='fu'>prettify_date</span><span class='op'>(</span><span class='st'>"2021-12-21"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "December 21, 2021"</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
