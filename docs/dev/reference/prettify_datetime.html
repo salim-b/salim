@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Append "n" to indefinite article where indicated — n_ify • salim</title>
+<title>Prettify datetime — prettify_datetime • salim</title>
 
 
 
@@ -42,9 +42,9 @@
 <script src="../pkgdown.js"></script>
 
 
-<meta property="og:title" content="Append "n" to indefinite article where indicated — n_ify" />
-<meta name="description" content="Appends an &quot;n&quot; to the indefinite article &quot;a&quot; if required by English language rules.">
-<meta property="og:description" content="Appends an &quot;n&quot; to the indefinite article &quot;a&quot; if required by English language rules." />
+<meta property="og:title" content="Prettify datetime — prettify_datetime" />
+<meta name="description" content="Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...">
+<meta property="og:description" content="Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA..." />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@2BSalim" />
 <meta name="twitter:site" content="@2BSalim" />
@@ -113,38 +113,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Append <code>"n"</code> to indefinite article where indicated</h1>
+    <h1>Prettify datetime</h1>
     <small class="dont-index">Source: <a href='https://gitlab.com/salim_b/r/pkgs/salim/blob/master/R/salim.gen.R'><code>R/salim.gen.R</code></a></small>
-    <div class="hidden name"><code>n_ify.Rd</code></div>
+    <div class="hidden name"><code>prettify_datetime.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Appends an <code>"n"</code> to the indefinite article "a" if required by English language rules.</p>
+    <p>Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...</p>
     </div>
 
-    <pre class="usage"><span class='fu'>n_ify</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>prettify_datetime</span><span class='op'>(</span><span class='va'>datetime</span>, locale <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"en"</span>, <span class='st'>"de"</span>, <span class='st'>"en-US"</span>, <span class='st'>"de-CH"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A character vector.</p></td>
+      <th>datetime</th>
+      <td><p>Datetime to be prettified. A <a href='https://rdrr.io/r/base/DateTimeClasses.html'>datetime</a> or something coercible to.</p></td>
+    </tr>
+    <tr>
+      <th>locale</th>
+      <td><p>Locale the datetime should be prettified for. Currently only <code>"en"</code>/<code>"en-US"</code> and <code>"de"</code>/<code>"de-CH"</code> are implemented.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character vector.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Note that this function only covers part of all cases where "an" instead of "a" is indicated. Since the choice of <em>a</em> or <em>an</em> <a href='http://www.butte.edu/departments/cas/tipsheets/grammar/articles.html'>depends on sound, not spelling</a>, it's not trivial to implement a universal solution.</p>
-<p>For example, this function doesn't properly append an <code>"n"</code> to the indefinite article in the following situations:</p><ul>
-<li><p>A word starting with the letter "u" where it is pronounced as a vowel, e.g. <em><strong>unhappy</strong></em>. Note that most English words starting with letter "u" are
-pronounced differently like <em>universum</em> and thus require the indefinite article <em>a</em>, not <em>an</em>.</p></li>
-<li><p>A word starting with a consonant that is pronounced as a vowel, e.g. <em><strong>hour</strong></em>.</p></li>
-</ul>
-
+    <p>A character scalar.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other spoken language functions:
@@ -152,14 +147,14 @@ pronounced differently like <em>universum</em> and thus require the indefinite a
 <code><a href='decline_noun_de.html'>decline_noun_de</a>()</code>,
 <code><a href='definite_article_de_declined.html'>definite_article_de_declined</a>()</code>,
 <code><a href='definite_article_de.html'>definite_article_de</a>()</code>,
-<code><a href='prettify_datetime.html'>prettify_datetime</a>()</code>,
+<code><a href='n_ify.html'>n_ify</a>()</code>,
 <code><a href='prettify_date.html'>prettify_date</a>()</code>,
 <code><a href='rank_nr.html'>rank_nr</a>()</code>,
 <code><a href='write_out_n.html'>write_out_n</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='fu'>n_ify</span><span class='op'>(</span><span class='st'>"This is a absolute disaster, such a error."</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "This is an absolute disaster, such an error."</span>
+    <pre class="examples"><span class='r-in'><span class='fu'>salim</span><span class='fu'>::</span><span class='fu'>prettify_datetime</span><span class='op'>(</span><span class='st'>"2021-12-21T00:00:01Z"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "December 21, 2021, 12:00 AM"</span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

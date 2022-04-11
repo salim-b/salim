@@ -20,6 +20,7 @@ Imports:
     dplyr (>= 1.0.2),
     fs (>= 1.5.0),
     glue (>= 1.6.2),
+    lubridate (>= 1.8.0),
     magrittr (>= 1.5),
     pal (>= 0.0.9079),
     purrr (>= 0.3.4),
@@ -28,6 +29,7 @@ Imports:
     tibble (>= 3.0.4),
     tidyr (>= 1.1.2),
     utils,
+    withr (>= 2.5.0),
     xfun (>= 0.16)
 Suggests: 
     gh (>= 1.2.0),
