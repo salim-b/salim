@@ -12,7 +12,7 @@ License: AGPL (>= 3)
 URL: https://gitlab.com/salim_b/r/pkgs/salim
 BugReports: https://gitlab.com/salim_b/r/pkgs/salim/issues
 Depends: 
-    R (>= 3.5.0)
+    R (>= 4.1)
 Imports: 
     brio (>= 1.1.3),
     checkmate (>= 2.0.0),
@@ -22,12 +22,11 @@ Imports:
     glue (>= 1.6.2),
     lubridate (>= 1.8.0),
     magrittr (>= 1.5),
-    pal (>= 0.0.9079),
+    pal (>= 0.0.9083),
     purrr (>= 0.3.4),
     rlang (>= 0.4.7),
     stringr (>= 1.4.0),
     tibble (>= 3.0.4),
-    tidyr (>= 1.1.2),
     utils,
     withr (>= 2.5.0),
     xfun (>= 0.16)
@@ -35,7 +34,8 @@ Suggests:
     gh (>= 1.2.0),
     remotes (>= 2.3.0),
     rstudioapi (>= 0.13),
-    yay (>= 0.0.9008),
+    tidyr (>= 1.1.2),
+    yay (>= 0.0.9010),
     zip (>= 2.1.1)
 Remotes:
     gitlab::salim_b/r/pkgs/pal,

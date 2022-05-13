@@ -15,6 +15,11 @@ prettify_date(date, locale = c("en", "de", "en-US", "de-CH"))
 A character scalar.
 }
 \description{
+DEPRECATED: Instead use \code{\link[stringi:stri_datetime_format]{stringi::stri_datetime_format()}}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{stringi::stri_datetime_format(format = c("date_short", "date_medium", "date_long", "date_full"),
+                              locale = "de-CH")
+}\if{html}{\out{</div>}}
+}
+\details{
 Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...
 }
 \examples{

@@ -21,6 +21,15 @@ utils::globalVariables(names = c(".",
 
 #' Prettify date
 #'
+#' @description
+#' DEPRECATED: Instead use [stringi::stri_datetime_format()]:
+#' 
+#' ```r
+#' stringi::stri_datetime_format(format = c("date_short", "date_medium", "date_long", "date_full"),
+#'                               locale = "de-CH")
+#' ```
+#'
+#' @details
 #' Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...
 #'
 #' @param date Date to be prettified. A [date][base::Date] or something coercible to.
@@ -52,6 +61,15 @@ prettify_date <- function(date,
 
 #' Prettify datetime
 #'
+#' @description
+#' DEPRECATED: Instead use [stringi::stri_datetime_format()]:
+#' 
+#' ```r
+#' stringi::stri_datetime_format(format = c("date_short", "date_medium", "date_long", "date_full"),
+#'                               locale = "de-CH")
+#' ```
+#'
+#' @details
 #' Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...
 #'
 #' @param datetime Datetime to be prettified. A [datetime][base::DateTimeClasses] or something coercible to.
@@ -155,29 +173,29 @@ write_out_n <- function(n,
   if (lang == "en") {
     
     result <- switch(EXPR = n,
-                     `0` = dplyr::if_else(use_singular,
-                                          "no",
-                                          "zero"),
-                     `1` = dplyr::if_else(use_singular,
-                                          "the",
-                                          "one"),
-                     `2` = dplyr::if_else(use_dual,
-                                          "the two",
-                                          "two"),
+                     `0` = ifelse(use_singular,
+                                  "no",
+                                  "zero"),
+                     `1` = ifelse(use_singular,
+                                  "the",
+                                  "one"),
+                     `2` = ifelse(use_dual,
+                                  "the two",
+                                  "two"),
                      xfun::numbers_to_words(as.integer(n)))
     
   } else if (lang == "de") {
     
     result <- switch(EXPR = n,
-                     `0` = dplyr::if_else(use_singular,
-                                          "keine",
-                                          "null"),
-                     `1` = dplyr::if_else(use_singular,
-                                          "die",
-                                          "ein"),
-                     `2` = dplyr::if_else(use_dual,
-                                          "die beiden",
-                                          "zwei"),
+                     `0` = ifelse(use_singular,
+                                  "keine",
+                                  "null"),
+                     `1` = ifelse(use_singular,
+                                  "die",
+                                  "ein"),
+                     `2` = ifelse(use_dual,
+                                  "die beiden",
+                                  "zwei"),
                      `3` = "drei",
                      `4` = "vier",
                      `5` = "f\u00fcnf",

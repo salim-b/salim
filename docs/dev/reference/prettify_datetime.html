@@ -43,8 +43,8 @@
 
 
 <meta property="og:title" content="Prettify datetime — prettify_datetime" />
-<meta name="description" content="Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...">
-<meta property="og:description" content="Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA..." />
+<meta name="description" content="DEPRECATED: Instead use stringi::stri_datetime_format():stringi::stri_datetime_format(format = c(&quot;date_short&quot;, &quot;date_medium&quot;, &quot;date_long&quot;, &quot;date_full&quot;), locale = &quot;de-CH&quot;)">
+<meta property="og:description" content="DEPRECATED: Instead use stringi::stri_datetime_format():stringi::stri_datetime_format(format = c(&quot;date_short&quot;, &quot;date_medium&quot;, &quot;date_long&quot;, &quot;date_full&quot;), locale = &quot;de-CH&quot;)" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@2BSalim" />
 <meta name="twitter:site" content="@2BSalim" />
@@ -119,7 +119,9 @@
     </div>
 
     <div class="ref-description">
-    <p>Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...</p>
+    <p>DEPRECATED: Instead use <code><a href='https://rdrr.io/pkg/stringi/man/stri_datetime_format.html'>stringi::stri_datetime_format()</a></code>:<div class="sourceCode r"></p><pre><span class='fu'>stringi</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/stringi/man/stri_datetime_format.html'>stri_datetime_format</a></span><span class='op'>(</span>format <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"date_short"</span>, <span class='st'>"date_medium"</span>, <span class='st'>"date_long"</span>, <span class='st'>"date_full"</span><span class='op'>)</span>,
+                              locale <span class='op'>=</span> <span class='st'>"de-CH"</span><span class='op'>)</span>
+</pre><p></div></p>
     </div>
 
     <pre class="usage"><span class='fu'>prettify_datetime</span><span class='op'>(</span><span class='va'>datetime</span>, locale <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"en"</span>, <span class='st'>"de"</span>, <span class='st'>"en-US"</span>, <span class='st'>"de-CH"</span><span class='op'>)</span><span class='op'>)</span></pre>
@@ -140,6 +142,9 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A character scalar.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other spoken language functions:
