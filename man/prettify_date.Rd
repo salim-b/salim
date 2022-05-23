@@ -15,15 +15,19 @@ prettify_date(date, locale = c("en", "de", "en-US", "de-CH"))
 A character scalar.
 }
 \description{
-DEPRECATED: Instead use \code{\link[stringi:stri_datetime_format]{stringi::stri_datetime_format()}}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{stringi::stri_datetime_format(format = c("date_short", "date_medium", "date_long", "date_full"),
-                              locale = "de-CH")
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+Use \code{\link[stringi:stri_datetime_format]{stringi::stri_datetime_format()}} instead:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{stringi::stri_datetime_format(format = c("date_short", "date_medium", "date_long", "date_full"),
+                              locale = "en")
 }\if{html}{\out{</div>}}
 }
 \details{
 Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...
 }
 \examples{
-salim::prettify_date("2021-12-21")
+salim:::prettify_date("2021-12-21")
 }
 \seealso{
 Other spoken language functions:
@@ -37,3 +41,4 @@ Other spoken language functions:
 \code{\link{write_out_n}()}
 }
 \concept{spoken}
+\keyword{internal}

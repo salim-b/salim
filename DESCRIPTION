@@ -1,6 +1,6 @@
 Package: salim
 Title: A Wild Mix of Functions Serving Various Purposes
-Version: 0.0.9014
+Version: 0.0.9015
 Authors@R: 
     person("Salim", "Brüggemann", , "salim-b@pm.me", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5329-5987"))
@@ -20,6 +20,7 @@ Imports:
     dplyr (>= 1.0.2),
     fs (>= 1.5.0),
     glue (>= 1.6.2),
+    lifecycle (>= 1.0.1),
     lubridate (>= 1.8.0),
     magrittr (>= 1.5),
     pal (>= 0.0.9083),
@@ -32,6 +33,7 @@ Imports:
     xfun (>= 0.16)
 Suggests: 
     gh (>= 1.2.0),
+    quarto (>= 1.1),
     remotes (>= 2.3.0),
     rstudioapi (>= 0.13),
     tidyr (>= 1.1.2),
@@ -44,4 +46,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0

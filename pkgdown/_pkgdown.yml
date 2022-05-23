@@ -42,4 +42,5 @@ reference:
 - contents:
   - lvl_up_r
   - lvl_up_rstudio
+  - lvl_up_quarto
   - update_salims_pkgs

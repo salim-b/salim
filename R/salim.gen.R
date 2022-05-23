@@ -22,11 +22,13 @@ utils::globalVariables(names = c(".",
 #' Prettify date
 #'
 #' @description
-#' DEPRECATED: Instead use [stringi::stri_datetime_format()]:
+#' `r lifecycle::badge("deprecated")`
+#' 
+#' Use [stringi::stri_datetime_format()] instead:
 #' 
 #' ```r
 #' stringi::stri_datetime_format(format = c("date_short", "date_medium", "date_long", "date_full"),
-#'                               locale = "de-CH")
+#'                               locale = "en")
 #' ```
 #'
 #' @details
@@ -37,13 +39,18 @@ utils::globalVariables(names = c(".",
 #'
 #' @return A character scalar.
 #' @family spoken
-#' @export
+#' @keywords internal
 #'
 #' @examples
-#' salim::prettify_date("2021-12-21")
+#' salim:::prettify_date("2021-12-21")
 prettify_date <- function(date,
                           locale = c("en", "de", "en-US", "de-CH")) {
 
+  lifecycle::deprecate_warn(when = "0.0.9015",
+                            what = "prettify_date()",
+                            details = paste0('Use the more powerful and more robust `stringi::stri_datetime_format(format = c("date_short", "date_medium", ',
+                                             '"date_long", "date_full"), locale = "en")` function instead.'))
+  
   locale <- rlang::arg_match(locale)
 
   withr::with_locale(new = c("LC_TIME" = purrr::when(. = locale,
@@ -62,11 +69,13 @@ prettify_date <- function(date,
 #' Prettify datetime
 #'
 #' @description
-#' DEPRECATED: Instead use [stringi::stri_datetime_format()]:
+#' `r lifecycle::badge("deprecated")`
+#' 
+#' Use [stringi::stri_datetime_format()] instead:
 #' 
 #' ```r
-#' stringi::stri_datetime_format(format = c("date_short", "date_medium", "date_long", "date_full"),
-#'                               locale = "de-CH")
+#' stringi::stri_datetime_format(format = c("datetime_short", "datetime_medium", "datetime_long", "datetime_full"),
+#'                               locale = "en")
 #' ```
 #'
 #' @details
@@ -77,12 +86,17 @@ prettify_date <- function(date,
 #'
 #' @return A character scalar.
 #' @family spoken
-#' @export
+#' @keywords internal
 #'
 #' @examples
-#' salim::prettify_datetime("2021-12-21T00:00:01Z")
+#' salim:::prettify_datetime("2021-12-21T00:00:01Z")
 prettify_datetime <- function(datetime,
                               locale = c("en", "de", "en-US", "de-CH")) {
+
+  lifecycle::deprecate_warn(when = "0.0.9015",
+                            what = "prettify_datetime()",
+                            details = paste0('Use the more powerful and more robust `stringi::stri_datetime_format(format = c("datetime_short", ',
+                                             '"datetime_medium", "datetime_long", "datetime_full"), locale = "en")` function instead.'))
 
   locale <- rlang::arg_match(locale)
 
@@ -629,6 +643,8 @@ pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
 lvl_up_r <- function(path_min_vrsn,
                      update_min_vrsn = FALSE) {
   
+  checkmate::assert_flag(update_min_vrsn)
+  
   if (fs::file_exists(path_min_vrsn)) {
     
     min_vrsn <-
@@ -664,8 +680,8 @@ lvl_up_r <- function(path_min_vrsn,
 
 #' Level up RStudio
 #'
-#' Checks whether the currently running RStudio version is >= a cached reference version. Intended to level up the RStudio version in use between multiple users
-#' of the same code (e.g. contributors to a specific R project).
+#' Checks whether the currently running [RStudio](https://rstudio.com/products/rstudio/) version is >= a cached reference version. Intended to level up the 
+#' RStudio version in use between multiple users of the same code (e.g. contributors to a specific R project).
 #'
 #' If the file `path_min_vrsn` exists, it is checked whether RStudio is running, and if so, whether its version number is greater than or equal to the version
 #' number stored in that file. If this is not the case, an alert is displayed.
@@ -698,6 +714,7 @@ lvl_up_r <- function(path_min_vrsn,
 lvl_up_rstudio <- function(path_min_vrsn,
                            update_min_vrsn = FALSE) {
   
+  checkmate::assert_flag(update_min_vrsn)
   pal::assert_pkg("rstudioapi")
   current_vrsn <- NULL
   
@@ -732,6 +749,59 @@ lvl_up_rstudio <- function(path_min_vrsn,
       brio::write_lines(text = current_vrsn,
                         path = path_min_vrsn)
     }
+  }
+  
+  invisible(current_vrsn)
+}
+
+#' Level up Quarto
+#'
+#' Checks whether the installed [Quarto](https://quarto.org/) version is >= a cached reference version. Intended to level up the Quarto version in use between
+#' multiple users of the same code (e.g. contributors to a specific Quarto project).
+#'
+#' @param path_min_vrsn Path to the cached Quarto version string.
+#' @param update_min_vrsn Whether or not to overwrite `path_min_vrsn` with the currently installed Quarto version string *iff* the latter is higher than the
+#'   former.
+#'
+#' @return Currently installed Quarto version as a [numeric version][numeric_version], invisibly.
+#' @family dev_env
+#' @export
+lvl_up_quarto <- function(path_min_vrsn,
+                          update_min_vrsn = FALSE) {
+  
+  checkmate::assert_flag(update_min_vrsn)
+  pal::assert_pkg("quarto")
+  
+  if (fs::file_exists(path_min_vrsn)) {
+    
+    min_vrsn <-
+      path_min_vrsn %>%
+      brio::read_lines(n = 1L) %>%
+      as.package_version()
+    
+  } else {
+    min_vrsn <- as.package_version("0.0")
+  }
+  
+  current_vrsn <-
+    quarto::quarto_path() %>%
+    system2(args = "--version",
+            stdout = TRUE,
+            stderr = TRUE) %>%
+    as.package_version()
+  
+  if (isTRUE(current_vrsn < min_vrsn)) {
+    
+    cli::cli_alert_warning(paste0(
+      "Your version of {.pkg Quarto} is out of date. Please update to version {.val {min_vrsn}} or above. The latest stable release can be downloaded from: ",
+      "{.url https://quarto.org/docs/get-started/}"
+    ))
+  }
+  
+  if (update_min_vrsn && current_vrsn > min_vrsn) {
+    
+    brio::write_lines(text = current_vrsn,
+                      path = path_min_vrsn)
   }
   
   invisible(current_vrsn)

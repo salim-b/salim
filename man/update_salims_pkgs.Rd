@@ -33,6 +33,7 @@ Update \href{https://gitlab.com/salim_b/r/pkgs}{Salim B's R packages}
 }
 \seealso{
 Other development environment currentness functions:
+\code{\link{lvl_up_quarto}()},
 \code{\link{lvl_up_rstudio}()},
 \code{\link{lvl_up_r}()}
 }

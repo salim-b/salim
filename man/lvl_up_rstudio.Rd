@@ -16,8 +16,8 @@ former.}
 Currently running RStudio version as a \link[=as.package_version]{numeric version}, or \code{NULL} if RStudio is not running, invisibly.
 }
 \description{
-Checks whether the currently running RStudio version is >= a cached reference version. Intended to level up the RStudio version in use between multiple users
-of the same code (e.g. contributors to a specific R project).
+Checks whether the currently running \href{https://rstudio.com/products/rstudio/}{RStudio} version is >= a cached reference version. Intended to level up the
+RStudio version in use between multiple users of the same code (e.g. contributors to a specific R project).
 }
 \details{
 If the file \code{path_min_vrsn} exists, it is checked whether RStudio is running, and if so, whether its version number is greater than or equal to the version
@@ -29,7 +29,9 @@ running version of RStudio, \code{path_min_vrsn} is overwritten with the current
 Note that since \strong{RStudio must be running for \code{lvl_up_rstudio()} to have any effect}, it can't be directly called in a (project-level)
 \href{https://support.rstudio.com/hc/en-us/articles/360047157094-Managing-R-with-Rprofile-Renviron-Rprofile-site-Renviron-site-rsession-conf-and-repos-conf}{\code{.Rprofile}}
 startup script. Instead, the \href{https://docs.rstudio.com/ide/server-pro/r_sessions/session_startup_scripts.html}{\code{rstudio.sessionInit}} hook can be used.
-Example:\if{html}{\out{<div class="sourceCode r">}}\preformatted{setHook(hookName = "rstudio.sessionInit",
+Example:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{setHook(hookName = "rstudio.sessionInit",
         value = function(newSession) \{
             if (newSession)
                 salim::lvl_up_rstudio(path_min_vrsn = ".RStudio_version",
@@ -40,6 +42,7 @@ Example:\if{html}{\out{<div class="sourceCode r">}}\preformatted{setHook(hookNam
 }
 \seealso{
 Other development environment currentness functions:
+\code{\link{lvl_up_quarto}()},
 \code{\link{lvl_up_r}()},
 \code{\link{update_salims_pkgs}()}
 }

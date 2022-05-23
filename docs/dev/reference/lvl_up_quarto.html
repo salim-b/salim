@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List all available Pandoc releases — pandoc_releases • salim</title>
+<title>Level up Quarto — lvl_up_quarto • salim</title>
 
 
 
@@ -42,9 +42,9 @@
 <script src="../pkgdown.js"></script>
 
 
-<meta property="og:title" content="List all available Pandoc releases — pandoc_releases" />
-<meta name="description" content="Uses gh::gh() to fetch all available Pandoc releases via GitHub's REST API and returns them as a tibble containing the two columns version_nr and release_id.">
-<meta property="og:description" content="Uses gh::gh() to fetch all available Pandoc releases via GitHub's REST API and returns them as a tibble containing the two columns version_nr and release_id." />
+<meta property="og:title" content="Level up Quarto — lvl_up_quarto" />
+<meta name="description" content="Checks whether the installed Quarto version is &amp;gt;= a cached reference version. Intended to level up the Quarto version in use between multiple users of the same code (e.g. contributors to a specific Quarto project).">
+<meta property="og:description" content="Checks whether the installed Quarto version is &amp;gt;= a cached reference version. Intended to level up the Quarto version in use between multiple users of the same code (e.g. contributors to a specific Quarto project)." />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@2BSalim" />
 <meta name="twitter:site" content="@2BSalim" />
@@ -113,32 +113,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>List all available Pandoc releases</h1>
+    <h1>Level up Quarto</h1>
     <small class="dont-index">Source: <a href='https://gitlab.com/salim_b/r/pkgs/salim/blob/master/R/salim.gen.R'><code>R/salim.gen.R</code></a></small>
-    <div class="hidden name"><code>pandoc_releases.Rd</code></div>
+    <div class="hidden name"><code>lvl_up_quarto.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Uses <code><a href='https://gh.r-lib.org/reference/gh.html'>gh::gh()</a></code> to fetch all available <a href='https://pandoc.org/'>Pandoc</a> releases via <a href='https://docs.github.com/en/rest/reference/repos#list-releases'>GitHub's REST API</a> and returns them as a <a href='https://tibble.tidyverse.org/reference/tbl_df-class.html'>tibble</a> containing the two columns <code>version_nr</code>
-and <code>release_id</code>.</p>
+    <p>Checks whether the installed <a href='https://quarto.org/'>Quarto</a> version is &gt;= a cached reference version. Intended to level up the Quarto version in use between
+multiple users of the same code (e.g. contributors to a specific Quarto project).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pandoc_releases</span><span class='op'>(</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>lvl_up_quarto</span><span class='op'>(</span><span class='va'>path_min_vrsn</span>, update_min_vrsn <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>path_min_vrsn</th>
+      <td><p>Path to the cached Quarto version string.</p></td>
+    </tr>
+    <tr>
+      <th>update_min_vrsn</th>
+      <td><p>Whether or not to overwrite <code>path_min_vrsn</code> with the currently installed Quarto version string <em>iff</em> the latter is higher than the
+former.</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <a href='https://tibble.tidyverse.org/reference/tbl_df-class.html'>tibble</a>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Values of the column <code>release_id</code> can be used as input to <code><a href='download_pandoc_binaries.html'>download_pandoc_binaries()</a></code>.</p>
+    <p>Currently installed Quarto version as a <a href='https://rdrr.io/r/base/numeric_version.html'>numeric version</a>, invisibly.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Pandoc-related functions:
-<code><a href='download_pandoc_binaries.html'>download_pandoc_binaries</a>()</code>,
-<code><a href='pandoc_release_assets.html'>pandoc_release_assets</a>()</code>,
-<code><a href='pandoc_release_id_latest.html'>pandoc_release_id_latest</a>()</code>,
-<code><a href='pandoc_version_latest.html'>pandoc_version_latest</a>()</code></p></div>
+    <div class='dont-index'><p>Other development environment currentness functions:
+<code><a href='lvl_up_rstudio.html'>lvl_up_rstudio</a>()</code>,
+<code><a href='lvl_up_r.html'>lvl_up_r</a>()</code>,
+<code><a href='update_salims_pkgs.html'>update_salims_pkgs</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

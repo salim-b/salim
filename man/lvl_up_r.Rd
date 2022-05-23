@@ -27,6 +27,7 @@ version of R, \code{path_min_vrsn} is overwritten with the currently installed R
 }
 \seealso{
 Other development environment currentness functions:
+\code{\link{lvl_up_quarto}()},
 \code{\link{lvl_up_rstudio}()},
 \code{\link{update_salims_pkgs}()}
 }
