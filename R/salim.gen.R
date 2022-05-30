@@ -19,6 +19,42 @@ utils::globalVariables(names = c(".",
                                  "name",
                                  "version_nr"))
 
+pkg_mgr_hint <- function(software = names(pkg_mgr_software)) {
+  
+  software <- rlang::arg_match(software)
+  
+  result <- ""
+  
+  if (xfun::is_macos()) {
+    result %<>% paste0(pkg_mgr_prose(software = software,
+                                     pkg_mgrs = "brew"))
+    
+  } else if (xfun::is_windows()) {
+    result %<>% paste0(pkg_mgr_prose(software = software,
+                                     pkg_mgrs = c("scoop", "choco")))
+  }
+  
+  result
+}
+
+pkg_mgr_prose <- function(software,
+                          pkg_mgrs = c("brew", "scoop", "choco")) {
+  pkg_mgr_names <-
+    pkg_mgrs %>%
+    dplyr::recode(brew = "Homebrew",
+                  scoop = "Scoop",
+                  choco = "Chocolatey")
+  
+  pkg_mgr_software %>%
+    purrr::chuck(software) %>%
+    pal::list_keep(keep = pkg_mgrs) %>%
+    purrr::map2_chr(.y = pkg_mgr_names,
+                    .f = ~ paste0(.y, " ({.code ", .x$cmd, "})")) %>%
+    pal::prose_ls(last_sep = " or ") %>%
+    purrr::when(length(.) > 0L ~ paste0(" ", software, " is also available via ", ., "."),
+                ~ "")
+}
+
 #' Prettify date
 #'
 #' @description
@@ -664,8 +700,8 @@ lvl_up_r <- function(path_min_vrsn,
   if (isTRUE(current_vrsn < min_vrsn)) {
     
     cli::cli_alert_warning(paste0(
-      "Your version of {.pkg R} is out of date. Please update to version {.val {min_vrsn}} or above. The latest stable release can be downloaded from: ",
-      "{.url https://cloud.r-project.org/}"
+      "Your version of {.pkg R} is out of date. Please update to version {.val {min_vrsn}} or above. The latest stable release is available at ",
+      "{.url https://cloud.r-project.org/}.", pkg_mgr_hint("R")
     ))
   }
   
@@ -739,8 +775,8 @@ lvl_up_rstudio <- function(path_min_vrsn,
     if (isTRUE(current_vrsn < min_vrsn)) {
       
       cli::cli_alert_warning(paste0(
-        "Your version of {.pkg RStudio} is out of date. Please update to version {.val {min_vrsn}} or above. The latest version can be downloaded from: ",
-        "{.url https://rstudio.com/products/rstudio/download/#download}"
+        "Your version of {.pkg RStudio} is out of date. Please update to version {.val {min_vrsn}} or above. The latest version is available at ",
+        "{.url https://rstudio.com/products/rstudio/download/#download}.", pkg_mgr_hint("RStudio")
       ))
     }
     
@@ -793,8 +829,8 @@ lvl_up_quarto <- function(path_min_vrsn,
   if (isTRUE(current_vrsn < min_vrsn)) {
     
     cli::cli_alert_warning(paste0(
-      "Your version of {.pkg Quarto} is out of date. Please update to version {.val {min_vrsn}} or above. The latest stable release can be downloaded from: ",
-      "{.url https://quarto.org/docs/get-started/}"
+      "Your version of {.pkg Quarto} is out of date. Please update to version {.val {min_vrsn}} or above. The latest stable release is available at ",
+      "{.url https://quarto.org/docs/get-started/}.", pkg_mgr_hint("Quarto")
     ))
   }
   
