@@ -9,7 +9,7 @@ Description: salim includes a diverse mix of functions which have not
     serves as an incubator for not yet fully matured code and thus will
     most probably never be made available through CRAN.
 License: AGPL (>= 3)
-URL: https://gitlab.com/salim_b/r/pkgs/salim
+URL: https://salim.rpkg.dev, https://gitlab.com/salim_b/r/pkgs/salim
 BugReports: https://gitlab.com/salim_b/r/pkgs/salim/issues
 Depends: 
     R (>= 4.1)
@@ -23,7 +23,7 @@ Imports:
     lifecycle (>= 1.0.1),
     lubridate (>= 1.8.0),
     magrittr (>= 1.5),
-    pal (>= 0.0.9083),
+    pal (>= 0.0.9090),
     purrr (>= 0.3.4),
     rlang (>= 0.4.7),
     stringr (>= 1.4.0),
@@ -37,7 +37,7 @@ Suggests:
     remotes (>= 2.3.0),
     rstudioapi (>= 0.13),
     tidyr (>= 1.1.2),
-    yay (>= 0.0.9010),
+    yay (>= 0.0.9011),
     zip (>= 2.1.1)
 Remotes:
     gitlab::salim_b/r/pkgs/pal,
@@ -46,4 +46,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.2

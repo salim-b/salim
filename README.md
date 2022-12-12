@@ -1,12 +1,16 @@
 # salim: A Wild Mix of Functions Serving Various Purposes
 
+<a href="https://cran.r-project.org/package=salim" class="pkgdown-release"><img src="https://r-pkg.org/badges/version/salim" alt="CRAN Status" /></a>
+
 salim includes a diverse mix of functions which have not found their home in a more suitable place yet. The package kinda serves as an incubator for not yet fully matured code and thus will most probably never be made available through CRAN.
 
 This is arguably a [*low-cohesion*](https://en.wikipedia.org/wiki/Cohesion_(computer_science)) package.
 
 ## Documentation
 
-The documentation of this package is found [here](https://rpkg.dev/salim).
+[![Netlify Status](https://api.netlify.com/api/v1/badges/51591b8f-b0a5-4e8e-81e0-e0ab5e274a57/deploy-status)](https://app.netlify.com/sites/salim-rpkg-dev/deploys)
+
+The documentation of this package is found [here](https://salim.rpkg.dev).
 
 ## Installation
 

@@ -11,6 +11,7 @@ salim includes a diverse mix of functions which have not found their home in a m
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://salim.rpkg.dev}
   \item \url{https://gitlab.com/salim_b/r/pkgs/salim}
   \item Report bugs at \url{https://gitlab.com/salim_b/r/pkgs/salim/issues}
 }

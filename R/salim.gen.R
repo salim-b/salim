@@ -163,7 +163,7 @@ rank_nr <- function(x,
   lang <- rlang::arg_match(lang)
   result <- "?"
   
-  if (length(x)) {
+  if (length(x) > 0L) {
     
     if (lang == "de") {
       result <- switch(EXPR = as.character(as.integer(x)),
@@ -845,6 +845,8 @@ lvl_up_quarto <- function(path_min_vrsn,
 
 #' Update [Salim B's R packages](https://gitlab.com/salim_b/r/pkgs)
 #'
+#' Updates all of [Salim B's R packages](https://gitlab.com/salim_b/r/pkgs) to the latest development version.
+#'
 #' @param pkgs The R pkgs to be updated. A subset of:
 #'   `r pal::prose_ls_fn_param(fn = "update_salims_pkgs", param = "pkgs", last_sep = " and ", as_scalar = FALSE) %>% pal::as_md_list()`
 #'
@@ -856,6 +858,7 @@ update_salims_pkgs <- function(pkgs = c("c2d4u",
                                         "pkgpins",
                                         "pkgpurl",
                                         "pkgsnip",
+                                        "qstnr",
                                         "rstd",
                                         "salim",
                                         "swissmuni",

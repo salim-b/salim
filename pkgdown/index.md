@@ -1,5 +1,7 @@
 # salim: A Wild Mix of Functions Serving Various Purposes
 
+[![CRAN Status](https://r-pkg.org/badges/version/salim)](https://cran.r-project.org/package=salim){.pkgdown-release}
+
 salim includes a diverse mix of functions which have not found their home in a more suitable place yet. The package kinda serves as an incubator for not yet fully matured code and thus will most probably never be made available through CRAN.
 
 This is arguably a [*low-cohesion*](https://en.wikipedia.org/wiki/Cohesion_(computer_science)) package.
@@ -19,7 +21,7 @@ remotes::install_gitlab(repo = "salim_b/r/pkgs/salim")
 
 ## Usage
 
-The (function) reference is found [here](https://rpkg.dev/salim/reference).
+The (function) reference is found [here](reference).
 
 ## Development
 

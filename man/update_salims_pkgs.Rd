@@ -5,7 +5,7 @@
 \title{Update \href{https://gitlab.com/salim_b/r/pkgs}{Salim B's R packages}}
 \usage{
 update_salims_pkgs(
-  pkgs = c("c2d4u", "pal", "pkgpins", "pkgpurl", "pkgsnip", "rstd", "salim",
+  pkgs = c("c2d4u", "pal", "pkgpins", "pkgpurl", "pkgsnip", "qstnr", "rstd", "salim",
     "swissmuni", "swissparty", "tocr", "yay")
 )
 }
@@ -17,19 +17,20 @@ update_salims_pkgs(
 \item \code{"pkgpins"}
 \item \code{"pkgpurl"}
 \item \code{"pkgsnip"}
+\item \code{"qstnr"}
 \item \code{"rstd"}
 \item \code{"salim"}
 \item \code{"swissmuni"}
 \item \code{"swissparty"}
 \item \code{"tocr"}
-\item \code{"yay"} )`
+\item \code{"yay"}
 }}
 }
 \value{
 \code{pkgs}, invisibly.
 }
 \description{
-Update \href{https://gitlab.com/salim_b/r/pkgs}{Salim B's R packages}
+Updates all of \href{https://gitlab.com/salim_b/r/pkgs}{Salim B's R packages} to the latest development version.
 }
 \seealso{
 Other development environment currentness functions:
