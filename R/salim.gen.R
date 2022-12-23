@@ -51,8 +51,8 @@ pkg_mgr_prose <- function(software,
     purrr::map2_chr(.y = pkg_mgr_names,
                     .f = ~ paste0(.y, " ({.code ", .x$cmd, "})")) %>%
     pal::prose_ls(last_sep = " or ") %>%
-    purrr::when(length(.) > 0L ~ paste0(" ", software, " is also available via ", ., "."),
-                ~ "")
+    pal::when(length(.) > 0L ~ paste0(" ", software, " is also available via ", ., "."),
+              ~ "")
 }
 
 #' Prettify date
@@ -89,16 +89,16 @@ prettify_date <- function(date,
   
   locale <- rlang::arg_match(locale)
 
-  withr::with_locale(new = c("LC_TIME" = purrr::when(. = locale,
-                                                     . %in% c("en", "en-US") ~ "C",
-                                                     . %in% c("de", "de-CH") ~ "de_CH.utf8")),
+  withr::with_locale(new = c("LC_TIME" = pal::when(. = locale,
+                                                   . %in% c("en", "en-US") ~ "C",
+                                                   . %in% c("de", "de-CH") ~ "de_CH.utf8")),
                      code =
                        locale %>%
-                       purrr::when(. %in% c("en", "en-US") ~
-                                     "%B %d, %Y",
-                                   . %in% c("de", "de-CH") ~
-                                     "%d. %B %Y",
-                                   ~ cli::cli_abort("Specified {.arg locale} not implemented yet.")) %>%
+                       pal::when(. %in% c("en", "en-US") ~
+                                   "%B %d, %Y",
+                                 . %in% c("de", "de-CH") ~
+                                   "%d. %B %Y",
+                                 ~ cli::cli_abort("Specified {.arg locale} not implemented yet.")) %>%
                        format(x = lubridate::as_date(date)))
 }
 
@@ -136,16 +136,16 @@ prettify_datetime <- function(datetime,
 
   locale <- rlang::arg_match(locale)
 
-  withr::with_locale(new = c("LC_TIME" = purrr::when(. = locale,
-                                                     . %in% c("en", "en-US") ~ "C",
-                                                     . %in% c("de", "de-CH") ~ "de_CH.utf8")),
+  withr::with_locale(new = c("LC_TIME" = pal::when(. = locale,
+                                                   . %in% c("en", "en-US") ~ "C",
+                                                   . %in% c("de", "de-CH") ~ "de_CH.utf8")),
                      code =
                        locale %>%
-                       purrr::when(. %in% c("en", "en-US") ~
-                                     "%B %d, %Y, %I:%M %p",
-                                   . %in% c("de", "de-CH") ~
-                                     "%d. %B %Y, %H:%M Uhr",
-                                   ~ cli::cli_abort("Specified {.arg locale} not implemented yet.")) %>%
+                       pal::when(. %in% c("en", "en-US") ~
+                                   "%B %d, %Y, %I:%M %p",
+                                 . %in% c("de", "de-CH") ~
+                                   "%d. %B %Y, %H:%M Uhr",
+                                 ~ cli::cli_abort("Specified {.arg locale} not implemented yet.")) %>%
                        format(x = lubridate::as_datetime(datetime)))
 }
 
@@ -255,11 +255,13 @@ write_out_n <- function(n,
                      `9` = "neun")
   }
   
-  result %>% purrr::when(strip_article ~ stringr::str_remove(string = .,
-                                                             pattern = switch(EXPR = lang,
-                                                                              de = "^[Dd]ie ?",
-                                                                              en = "^[Tt]he ?")),
-                         ~ .)
+  if (strip_article) {
+    result %<>% stringr::str_remove(pattern = switch(EXPR = lang,
+                                                     de = "^[Dd]ie ?",
+                                                     en = "^[Tt]he ?"))
+  }
+  
+  result
 }
 
 #' Append `"n"` to indefinite article where indicated
@@ -406,17 +408,17 @@ add_definite_article_de <- function(preposition,
   
   if (gender == "feminine") {
     
-    preposition %>% purrr::when(stringr::str_to_lower(.) == "zu" ~ paste0(., "r"),
-                                ~ paste0(., " ", definite_article_de(gender = "feminine",
-                                                                     case = "dative")))
+    preposition %>% pal::when(stringr::str_to_lower(.) == "zu" ~ paste0(., "r"),
+                              ~ paste0(., " ", definite_article_de(gender = "feminine",
+                                                                   case = "dative")))
   } else {
     
-    preposition %>% purrr::when(stringr::str_to_lower(.) %in% c("bei", "zu") ~ paste0(., "m"),
-                                stringr::str_to_lower(.) %in% c("in", "an") ~ stringr::str_replace(string = .,
-                                                                                                   pattern = "n$",
-                                                                                                   replacement = "m"),
-                                ~ paste0(., " ", definite_article_de(gender = "masculine",
-                                                                     case = "dative")))
+    preposition %>% pal::when(stringr::str_to_lower(.) %in% c("bei", "zu") ~ paste0(., "m"),
+                              stringr::str_to_lower(.) %in% c("in", "an") ~ stringr::str_replace(string = .,
+                                                                                                 pattern = "n$",
+                                                                                                 replacement = "m"),
+                              ~ paste0(., " ", definite_article_de(gender = "masculine",
+                                                                   case = "dative")))
   }
 }
 
@@ -447,9 +449,9 @@ decline_noun_de <- function(noun,
   
   if (gender != "feminine" && case == "genitive") {
     
-    result %<>% purrr::when(stringr::str_detect(string = ., pattern = "(ss|\U00DF|x|z)$") ~ paste0(., "es"),
-                            stringr::str_detect(string = ., pattern = "s$") ~ paste0(., "ses"),
-                            ~ paste0(., "s"))
+    result %<>% pal::when(stringr::str_detect(string = ., pattern = "(ss|\U00DF|x|z)$") ~ paste0(., "es"),
+                          stringr::str_detect(string = ., pattern = "s$") ~ paste0(., "ses"),
+                          ~ paste0(., "s"))
   }
   
   result
