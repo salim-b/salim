@@ -47,7 +47,7 @@ pkg_mgr_prose <- function(software,
   
   pkg_mgr_software %>%
     purrr::chuck(software) %>%
-    pal::list_keep(keep = pkg_mgrs) %>%
+    purrr::keep_at(at = pkg_mgrs) %>%
     purrr::map2_chr(.y = pkg_mgr_names,
                     .f = ~ paste0(.y, " ({.code ", .x$cmd, "})")) %>%
     pal::prose_ls(last_sep = " or ") %>%
