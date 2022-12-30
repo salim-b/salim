@@ -623,11 +623,12 @@ pandoc_releases <- function() {
          repo = "pandoc",
          .method = "GET",
          .limit = Inf) %>%
-    purrr::map_dfr(~ tibble::tibble(version_nr =
-                                      .x$name %>%
-                                      stringr::str_extract(pattern = "\\d+(\\.\\d+)*") %>%
-                                      as.numeric_version(),
-                                    release_id = .x$id)) %>%
+    purrr::map(~ tibble::tibble(version_nr =
+                                  .x$name %>%
+                                  stringr::str_extract(pattern = "\\d+(\\.\\d+)*") %>%
+                                  as.numeric_version(),
+                                release_id = .x$id)) %>%
+    purrr::list_rbind() %>%
     dplyr::arrange(version_nr)
 }
 
@@ -651,14 +652,15 @@ pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
          repo = "pandoc",
          release_id = release_id,
          .method = "GET") %>%
-    purrr::map_dfr(~ tibble::tibble(filename = .x$name,
-                                    os =
-                                      .x$name %>%
-                                      stringr::str_extract(pattern = "(?i)(linux|macos|windows|\\.deb$)") %>%
-                                      stringr::str_to_lower() %>%
-                                      stringr::str_replace(pattern = "\\.deb",
-                                                           replacement = "linux"),
-                                    download_url = .x$browser_download_url))
+    purrr::map(~ tibble::tibble(filename = .x$name,
+                                os =
+                                  .x$name %>%
+                                  stringr::str_extract(pattern = "(?i)(linux|macos|windows|\\.deb$)") %>%
+                                  stringr::str_to_lower() %>%
+                                  stringr::str_replace(pattern = "\\.deb",
+                                                       replacement = "linux"),
+                                download_url = .x$browser_download_url)) %>%
+    purrr::list_rbind()
 }
 
 #' Level up R
