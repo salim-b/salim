@@ -2,7 +2,7 @@
 % Please edit documentation in R/salim.gen.R
 \name{update_salims_pkgs}
 \alias{update_salims_pkgs}
-\title{Update \href{https://gitlab.com/salim_b/r/pkgs}{Salim B's R packages}}
+\title{Update Salim B's R packages}
 \usage{
 update_salims_pkgs(
   pkgs = c("c2d4u", "pal", "pkgpins", "pkgpurl", "pkgsnip", "qstnr", "rstd", "salim",
@@ -10,7 +10,7 @@ update_salims_pkgs(
 )
 }
 \arguments{
-\item{pkgs}{The R pkgs to be updated. A subset of:
+\item{pkgs}{R pkgs to be updated. A subset of:
 \itemize{
 \item \code{"c2d4u"}
 \item \code{"pal"}
@@ -30,12 +30,13 @@ update_salims_pkgs(
 \code{pkgs}, invisibly.
 }
 \description{
-Updates all of \href{https://gitlab.com/salim_b/r/pkgs}{Salim B's R packages} to the latest development version.
+Installs/updates all of \href{https://gitlab.com/salim_b/r/pkgs}{Salim B's R packages} to the latest development version.
 }
 \seealso{
 Other development environment currentness functions:
 \code{\link{lvl_up_quarto}()},
 \code{\link{lvl_up_rstudio}()},
-\code{\link{lvl_up_r}()}
+\code{\link{lvl_up_r}()},
+\code{\link{update_zdaarau_pkgs}()}
 }
 \concept{dev_env}

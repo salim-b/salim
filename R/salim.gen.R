@@ -2,7 +2,7 @@
 # See `README.md#r-markdown-format` for more information on the literate programming approach used applying the R Markdown format.
 
 # salim: A Wild Mix of Functions Serving Various Purposes
-# Copyright (C) 2022 Salim Brüggemann
+# Copyright (C) 2023 Salim Brüggemann
 # 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or any later version.
@@ -450,7 +450,7 @@ decline_noun_de <- function(noun,
   if (gender != "feminine" && case == "genitive") {
     
     result %<>% pal::when(stringr::str_detect(string = ., pattern = "(ss|\U00DF|x|z)$") ~ paste0(., "es"),
-                          stringr::str_detect(string = ., pattern = "s$") ~ paste0(., "ses"),
+                          endsWith(., "s") ~ paste0(., "ses"),
                           ~ paste0(., "s"))
   }
   
@@ -522,8 +522,7 @@ download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
       path_os_tmp <- fs::path(path_tmp, "pandoc", os)
       
       # extract all files flat
-      if (stringr::str_detect(string = filename,
-                              pattern = "\\.zip$")) {
+      if (endsWith(filename, ".zip")) {
         
         zip::unzip(zipfile = download_path,
                    exdir = path_os_tmp,
@@ -575,7 +574,7 @@ pandoc_release_id_latest <- function() {
   
   pal::assert_pkg("gh")
   
-  gh::gh(endpoint = "/repos/{owner}/{repo}/releases/latest",
+  gh::gh(endpoint = "/repos/{owner}/{repo}/releases/latest", # nolint
          owner = "jgm",
          repo = "pandoc",
          .method = "GET") %$%
@@ -594,7 +593,7 @@ pandoc_version_latest <- function() {
   
   pal::assert_pkg("gh")
   
-  gh::gh(endpoint = "/repos/{owner}/{repo}/releases/latest",
+  gh::gh(endpoint = "/repos/{owner}/{repo}/releases/latest", # nolint
          owner = "jgm",
          repo = "pandoc",
          .method = "GET") %$%
@@ -618,7 +617,7 @@ pandoc_releases <- function() {
   
   pal::assert_pkg("gh")
   
-  gh::gh(endpoint = "/repos/{owner}/{repo}/releases",
+  gh::gh(endpoint = "/repos/{owner}/{repo}/releases", # nolint
          owner = "jgm",
          repo = "pandoc",
          .method = "GET",
@@ -647,7 +646,7 @@ pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
   
   pal::assert_pkg("gh")
   
-  gh::gh(endpoint = "/repos/{owner}/{repo}/releases/{release_id}/assets",
+  gh::gh(endpoint = "/repos/{owner}/{repo}/releases/{release_id}/assets", # nolint
          owner = "jgm",
          repo = "pandoc",
          release_id = release_id,
@@ -847,11 +846,11 @@ lvl_up_quarto <- function(path_min_vrsn,
   invisible(current_vrsn)
 }
 
-#' Update [Salim B's R packages](https://gitlab.com/salim_b/r/pkgs)
+#' Update Salim B's R packages
 #'
-#' Updates all of [Salim B's R packages](https://gitlab.com/salim_b/r/pkgs) to the latest development version.
+#' Installs/updates all of [Salim B's R packages](https://gitlab.com/salim_b/r/pkgs) to the latest development version.
 #'
-#' @param pkgs The R pkgs to be updated. A subset of:
+#' @param pkgs R pkgs to be updated. A subset of:
 #'   `r pal::prose_ls_fn_param(fn = "update_salims_pkgs", param = "pkgs", last_sep = " and ", as_scalar = FALSE) %>% pal::as_md_list()`
 #'
 #' @return `pkgs`, invisibly.
@@ -880,6 +879,39 @@ update_salims_pkgs <- function(pkgs = c("c2d4u",
                                 repos = "https://cloud.r-project.org/")
       } else {
         remotes::install_gitlab(repo = paste0("salim_b/r/pkgs/", .x),
+                                upgrade = FALSE)
+      }
+    })
+  
+  invisible(pkgs)
+}
+
+#' Update R packages from the Centre for Democracy Studies Aarau (ZDA)
+#'
+#' Installs/updates all of the [R packages from the Centre for Democracy Studies Aarau (ZDA)](https://gitlab.com/zdaarau/rpkgs) to the latest development
+#' version.
+#'
+#' @param pkgs R pkgs to be updated. A subset of:
+#'   `r pal::prose_ls_fn_param(fn = "update_zdaarau_pkgs", param = "pkgs", last_sep = " and ", as_scalar = FALSE) %>% pal::as_md_list()`
+#'
+#' @return `pkgs`, invisibly.
+#' @family dev_env
+#' @export
+update_zdaarau_pkgs <- function(pkgs = c("c2d",
+                                         "c2d.report",
+                                         "fokus",
+                                         "swissevote")) {
+  pal::assert_pkg("remotes")
+  
+  checkmate::assert_subset(x = pkgs,
+                           choices = as.character(formals()$pkgs)) %>%
+    purrr::walk(~ {
+      
+      if (pal::is_pkg_cran(.x)) {
+        utils::install.packages(pkgs = .x,
+                                repos = "https://cloud.r-project.org/")
+      } else {
+        remotes::install_gitlab(repo = paste0("zdaarau/rpkgs/", .x),
                                 upgrade = FALSE)
       }
     })
