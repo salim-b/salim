@@ -10,7 +10,8 @@ pandoc_version_latest()
 A \link[=numeric_version]{numeric version}.
 }
 \description{
-Uses \code{\link[gh:gh]{gh::gh()}} to fetch the latest \href{https://pandoc.org/}{Pandoc} release version number via \href{https://docs.github.com/en/rest/reference/repos#get-the-latest-release}{GitHub's REST API} and returns it as a \link[=numeric_version]{numeric version}.
+Uses \code{\link[gh:gh]{gh::gh()}} to fetch \href{https://pandoc.org/}{Pandoc}'s latest \href{https://docs.github.com/repositories/releasing-projects-on-github}{GitHub release} version
+number via \href{https://docs.github.com/en/rest/reference/repos#get-the-latest-release}{GitHub's REST API} and returns it as a \link[=numeric_version]{numeric version}.
 }
 \seealso{
 Other Pandoc-related functions:

@@ -53,7 +53,7 @@ This package borrows a lot of the [Tidyverse](https://www.tidyverse.org/) design
                                   arguments = "some of which may be long")
     ```
 
-    This yields to less vertical and more horizontal spread of the code and better readability in pipes.
+    This results in less vertical and more horizontal spread of the code and better readability in pipes.
 
 -   Usage of [magrittr's compound assignment pipe-operator `%<>%`](https://magrittr.tidyverse.org/reference/compound.html) is desirable[^2].
 

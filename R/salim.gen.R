@@ -41,9 +41,9 @@ pkg_mgr_prose <- function(software,
                           pkg_mgrs = c("brew", "scoop", "choco")) {
   pkg_mgr_names <-
     pkg_mgrs %>%
-    dplyr::recode(brew = "Homebrew",
-                  scoop = "Scoop",
-                  choco = "Chocolatey")
+    dplyr::case_match("brew" ~ "Homebrew",
+                      "scoop" ~ "Scoop",
+                      "choco" ~ "Chocolatey")
   
   pkg_mgr_software %>%
     purrr::chuck(software) %>%
@@ -469,11 +469,12 @@ decline_noun_de <- function(noun,
 #' salim::regex_spelling_normalization |> tidyr::unnest_longer(col = pattern)
 "regex_spelling_normalization"
 
-#' Download Pandoc release binaries
+#' Download Pandoc release
 #'
-#' Downloads the executable program binaries of a certain Pandoc release for Linux, macOS and Windows.
+#' Downloads the [assets][pandoc_release_assets] and extracts the executable program binaries for Linux, macOS and Windows of a certain [Pandoc
+#' release][pandoc_releases].
 #'
-#' @param os The operating systems for which Pandoc binaries should be downloaded. Any combination of
+#' @param os The operating system(s) for which Pandoc binaries should be downloaded. Any combination of
 #'   `r pal::prose_ls_fn_param(param = "os", fn = download_pandoc_binaries, last_sep = " and ")`.
 #' @param path The filesystem path to which the binaries are saved to. A [path][fs::fs_path] or something coercible to.
 #' @param overwrite Whether to overwrite existing binaries under `path`.
@@ -564,8 +565,8 @@ download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
 
 #' Get latest Pandoc release ID
 #'
-#' Uses [gh::gh()] to fetch the latest [Pandoc](https://pandoc.org/) release ID via [GitHub's REST
-#' API](https://docs.github.com/en/rest/reference/repos#get-the-latest-release).
+#' Uses [gh::gh()] to fetch [Pandoc](https://pandoc.org/)'s latest [GitHub release](https://docs.github.com/repositories/releasing-projects-on-github) ID via 
+#' [GitHub's REST API](https://docs.github.com/en/rest/reference/repos#get-the-latest-release).
 #'
 #' @return An integer scalar.
 #' @family pandoc
@@ -583,8 +584,9 @@ pandoc_release_id_latest <- function() {
 
 #' Get latest Pandoc release version number
 #'
-#' Uses [gh::gh()] to fetch the latest [Pandoc](https://pandoc.org/) release version number via [GitHub's REST
-#' API](https://docs.github.com/en/rest/reference/repos#get-the-latest-release) and returns it as a [numeric version][numeric_version()].
+#' Uses [gh::gh()] to fetch [Pandoc](https://pandoc.org/)'s latest [GitHub release](https://docs.github.com/repositories/releasing-projects-on-github) version
+#' number via [GitHub's REST API](https://docs.github.com/en/rest/reference/repos#get-the-latest-release) and returns it as a [numeric
+#' version][numeric_version()].
 #'
 #' @return `r pkgsnip::param_label("version_nr")`
 #' @family pandoc
@@ -604,9 +606,9 @@ pandoc_version_latest <- function() {
 
 #' List all available Pandoc releases
 #'
-#' Uses [gh::gh()] to fetch all available [Pandoc](https://pandoc.org/) releases via [GitHub's REST
-#' API](https://docs.github.com/en/rest/reference/repos#list-releases) and returns them as a [tibble][tibble::tbl_df] containing the two columns `version_nr`
-#' and `release_id`.
+#' Uses [gh::gh()] to fetch all available [GitHub releases](https://docs.github.com/repositories/releasing-projects-on-github) of [Pandoc](https://pandoc.org/)
+#' via [GitHub's REST API](https://docs.github.com/en/rest/reference/repos#list-releases) and returns them as a [tibble][tibble::tbl_df] containing the two
+#' columns `version_nr` and `release_id`.
 #'
 #' Values of the column `release_id` can be used as input to [download_pandoc_binaries()].
 #'
@@ -633,7 +635,8 @@ pandoc_releases <- function() {
 
 #' List Pandoc release assets
 #'
-#' Uses [gh::gh()] to fetch filenames, corresponding operating systems and download URLs of a specific [Pandoc](https://pandoc.org/) release via [GitHub's REST
+#' Uses [gh::gh()] to fetch filenames, corresponding operating systems and download URLs of a specific [GitHub
+#' release](https://docs.github.com/repositories/releasing-projects-on-github) of [Pandoc](https://pandoc.org/) via [GitHub's REST
 #' API](https://docs.github.com/en/rest/reference/repos#list-release-assets) and returns them as a [tibble][tibble::tbl_df].
 #'
 #' @param release_id The GitHub release ID of the desired Pandoc release. Use [pandoc_releases()] to determine the release ID of a specific Pandoc version

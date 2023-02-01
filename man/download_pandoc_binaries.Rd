@@ -2,7 +2,7 @@
 % Please edit documentation in R/salim.gen.R
 \name{download_pandoc_binaries}
 \alias{download_pandoc_binaries}
-\title{Download Pandoc release binaries}
+\title{Download Pandoc release}
 \usage{
 download_pandoc_binaries(
   release_id = pandoc_release_id_latest(),
@@ -15,7 +15,7 @@ download_pandoc_binaries(
 \item{release_id}{The GitHub release ID of the desired Pandoc release. Use \code{\link[=pandoc_releases]{pandoc_releases()}} to determine the release ID of a specific Pandoc version
 number. An integer scalar.}
 
-\item{os}{The operating systems for which Pandoc binaries should be downloaded. Any combination of
+\item{os}{The operating system(s) for which Pandoc binaries should be downloaded. Any combination of
 \code{"linux"},\code{"macos"} and \code{"windows"}.}
 
 \item{path}{The filesystem path to which the binaries are saved to. A \link[fs:fs_path]{path} or something coercible to.}
@@ -26,7 +26,7 @@ number. An integer scalar.}
 \code{path} invisibly.
 }
 \description{
-Downloads the executable program binaries of a certain Pandoc release for Linux, macOS and Windows.
+Downloads the \link[=pandoc_release_assets]{assets} and extracts the executable program binaries for Linux, macOS and Windows of a certain \link[=pandoc_releases]{Pandoc release}.
 }
 \seealso{
 Other Pandoc-related functions:

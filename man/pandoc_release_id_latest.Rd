@@ -10,7 +10,8 @@ pandoc_release_id_latest()
 An integer scalar.
 }
 \description{
-Uses \code{\link[gh:gh]{gh::gh()}} to fetch the latest \href{https://pandoc.org/}{Pandoc} release ID via \href{https://docs.github.com/en/rest/reference/repos#get-the-latest-release}{GitHub's REST API}.
+Uses \code{\link[gh:gh]{gh::gh()}} to fetch \href{https://pandoc.org/}{Pandoc}'s latest \href{https://docs.github.com/repositories/releasing-projects-on-github}{GitHub release} ID via
+\href{https://docs.github.com/en/rest/reference/repos#get-the-latest-release}{GitHub's REST API}.
 }
 \seealso{
 Other Pandoc-related functions:

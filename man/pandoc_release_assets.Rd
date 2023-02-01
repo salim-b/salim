@@ -14,7 +14,7 @@ number. An integer scalar.}
 A \link[tibble:tbl_df-class]{tibble}.
 }
 \description{
-Uses \code{\link[gh:gh]{gh::gh()}} to fetch filenames, corresponding operating systems and download URLs of a specific \href{https://pandoc.org/}{Pandoc} release via \href{https://docs.github.com/en/rest/reference/repos#list-release-assets}{GitHub's REST API} and returns them as a \link[tibble:tbl_df-class]{tibble}.
+Uses \code{\link[gh:gh]{gh::gh()}} to fetch filenames, corresponding operating systems and download URLs of a specific \href{https://docs.github.com/repositories/releasing-projects-on-github}{GitHub release} of \href{https://pandoc.org/}{Pandoc} via \href{https://docs.github.com/en/rest/reference/repos#list-release-assets}{GitHub's REST API} and returns them as a \link[tibble:tbl_df-class]{tibble}.
 }
 \seealso{
 Other Pandoc-related functions:
