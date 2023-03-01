@@ -900,7 +900,7 @@ update_salims_pkgs <- function(pkgs = c("c2d4u",
 #' @return `pkgs`, invisibly.
 #' @family dev_env
 #' @export
-update_zdaarau_pkgs <- function(pkgs = c("c2d.report",
+update_zdaarau_pkgs <- function(pkgs = c("rdb.report",
                                          "fokus",
                                          "rdb",
                                          "swissevote")) {

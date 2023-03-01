@@ -4,12 +4,12 @@
 \alias{update_zdaarau_pkgs}
 \title{Update R packages from the Centre for Democracy Studies Aarau (ZDA)}
 \usage{
-update_zdaarau_pkgs(pkgs = c("c2d.report", "fokus", "rdb", "swissevote"))
+update_zdaarau_pkgs(pkgs = c("rdb.report", "fokus", "rdb", "swissevote"))
 }
 \arguments{
 \item{pkgs}{R pkgs to be updated. A subset of:
 \itemize{
-\item \code{"c2d.report"}
+\item \code{"rdb.report"}
 \item \code{"fokus"}
 \item \code{"rdb"}
 \item \code{"swissevote"}
