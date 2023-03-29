@@ -5,8 +5,8 @@
 \title{Update Salim B's R packages}
 \usage{
 update_salims_pkgs(
-  pkgs = c("c2d4u", "pal", "pkgpins", "pkgpurl", "pkgsnip", "qstnr", "rstd", "salim",
-    "swissmuni", "swissparty", "tocr", "yay")
+  pkgs = c("c2d4u", "pal", "pkgpins", "pkgpurl", "pkgsnip", "plotlee", "qstnr", "rstd",
+    "salim", "swissmuni", "swissparty", "tocr", "yay")
 )
 }
 \arguments{
@@ -17,6 +17,7 @@ update_salims_pkgs(
 \item \code{"pkgpins"}
 \item \code{"pkgpurl"}
 \item \code{"pkgsnip"}
+\item \code{"plotlee"}
 \item \code{"qstnr"}
 \item \code{"rstd"}
 \item \code{"salim"}
