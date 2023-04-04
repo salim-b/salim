@@ -258,6 +258,7 @@ Caveats:
 #'   logical scalar.
 #'
 #' @return A character scalar.
+#' @seealso [gt::vec_fmt_spelled_num()] which spells out integers from 0 to 100 in `r length(setdiff(colnames(gt:::spelled_num), "number"))` different locales.
 #' @family spoken
 #' @export
 write_out_n <- function(n,

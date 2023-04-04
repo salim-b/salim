@@ -31,6 +31,8 @@ A character scalar.
 Write out a count
 }
 \seealso{
+\code{\link[gt:vec_fmt_spelled_num]{gt::vec_fmt_spelled_num()}} which spells out integers from 0 to 100 in 80 different locales.
+
 Other spoken language functions:
 \code{\link{add_definite_article_de}()},
 \code{\link{decline_noun_de}()},
