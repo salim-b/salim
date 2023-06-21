@@ -488,7 +488,6 @@ download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
                                      os = c("linux", "macos", "windows"),
                                      path = "bin/",
                                      overwrite = TRUE) {
-  pal::assert_pkg("zip")
   checkmate::assert_count(release_id,
                           positive = TRUE)
   checkmate::assert_subset(os,
@@ -497,6 +496,8 @@ download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
   checkmate::assert_path_for_output(path,
                                     overwrite = TRUE)
   checkmate::assert_flag(overwrite)
+  rlang::check_installed("waldo",
+                         reason = pal::reason_pkg_required())
   
   path_tmp <- fs::path_temp()
   
@@ -574,7 +575,8 @@ download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
 #' @export
 pandoc_release_id_latest <- function() {
   
-  pal::assert_pkg("gh")
+  rlang::check_installed("gh",
+                         reason = pal::reason_pkg_required())
   
   gh::gh(endpoint = "/repos/{owner}/{repo}/releases/latest", # nolint
          owner = "jgm",
@@ -594,7 +596,8 @@ pandoc_release_id_latest <- function() {
 #' @export
 pandoc_version_latest <- function() {
   
-  pal::assert_pkg("gh")
+  rlang::check_installed("gh",
+                         reason = pal::reason_pkg_required())
   
   gh::gh(endpoint = "/repos/{owner}/{repo}/releases/latest", # nolint
          owner = "jgm",
@@ -618,7 +621,8 @@ pandoc_version_latest <- function() {
 #' @export
 pandoc_releases <- function() {
   
-  pal::assert_pkg("gh")
+  rlang::check_installed("gh",
+                         reason = pal::reason_pkg_required())
   
   gh::gh(endpoint = "/repos/{owner}/{repo}/releases", # nolint
          owner = "jgm",
@@ -648,7 +652,8 @@ pandoc_releases <- function() {
 #' @export
 pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
   
-  pal::assert_pkg("gh")
+  rlang::check_installed("gh",
+                         reason = pal::reason_pkg_required())
   
   gh::gh(endpoint = "/repos/{owner}/{repo}/releases/{release_id}/assets", # nolint
          owner = "jgm",
@@ -758,7 +763,8 @@ lvl_up_rstudio <- function(path_min_vrsn,
                            update_min_vrsn = FALSE) {
   
   checkmate::assert_flag(update_min_vrsn)
-  pal::assert_pkg("rstudioapi")
+  rlang::check_installed("rstudioapi",
+                         reason = pal::reason_pkg_required())
   current_vrsn <- NULL
   
   # skip if RStudio is not running
@@ -813,7 +819,8 @@ lvl_up_quarto <- function(path_min_vrsn,
                           update_min_vrsn = FALSE) {
   
   checkmate::assert_flag(update_min_vrsn)
-  pal::assert_pkg("quarto")
+  rlang::check_installed("quarto",
+                         reason = pal::reason_pkg_required())
   
   if (fs::file_exists(path_min_vrsn)) {
     
@@ -873,7 +880,8 @@ update_salims_pkgs <- function(pkgs = c("c2d4u",
                                         "swissparty",
                                         "tocr",
                                         "yay")) {
-  pal::assert_pkg("remotes")
+  rlang::check_installed("remotes",
+                         reason = pal::reason_pkg_required())
   
   checkmate::assert_subset(x = pkgs,
                            choices = as.character(formals()$pkgs)) %>%
@@ -906,7 +914,8 @@ update_zdaarau_pkgs <- function(pkgs = c("rdb.report",
                                          "fokus",
                                          "rdb",
                                          "swissevote")) {
-  pal::assert_pkg("remotes")
+  rlang::check_installed("remotes",
+                         reason = pal::reason_pkg_required())
   
   checkmate::assert_subset(x = pkgs,
                            choices = as.character(formals()$pkgs)) %>%

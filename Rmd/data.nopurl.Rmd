@@ -3,70 +3,16 @@ editor_options:
   chunk_output_type: console
 ---
 
-NOTES:
+# NOTES
 
--   This file is *not* included in the [source package](https://r-pkgs.org/package-structure-state.html#source-package) because of the [`.nopurl` suffix in the
-    filename](https://rpkg.dev/pkgpurl/reference/purl_rmd.html#-rmd-files-excluded-from-purling).
+-   This file is *not* included in the [source package](https://r-pkgs.org/structure.html#sec-source-package) because of the [`.nopurl` suffix in its
+    filename](https://pkgpurl.rpkg.dev/reference/purl_rmd.html#-rmd-files-excluded-from-purling).
 
 -   The chunks below have to be manually executed in order to regenerate the package data.
 
-# Internal data
+-   When used internally, other than internal data, [exported data](https://r-pkgs.org/data.html#sec-data-data) must always be referred to by its explicit namespace.
 
-NOTES:
-
--   Although the datasets below are saved as ["internal data" in `R/sysdata.rda`](https://r-pkgs.org/data.html#data-sysdata), some of them might still be
-    exported and documented (in the main `.Rmd` document), something [not explicitly
-    mentioned](https://coolbutuseless.github.io/2018/12/10/r-packages-internal-and-external-data/) in the book [R
-    Packages](https://r-pkgs.org/data.html#data-data).
-
-## `pkg_mgr_software`
-
-Define what R-related software is available via Homebrew, Chocolatey and Scoop.
-
-```{r}
-pkg_mgr_software <- list(
-  "Git" = list(brew = list(url = "https://formulae.brew.sh/formula/git",
-                           cmd = "brew install git"),
-               scoop = list(url = "https://scoop.sh/#/apps?q=git",
-                            cmd = "scoop install git"),
-               choco = list(url = "https://community.chocolatey.org/packages/git",
-                            cmd = "choco install git")),
-  "Quarto" = list(brew = list(url = "https://formulae.brew.sh/cask/quarto",
-                              cmd = "brew install --cask quarto")),
-  "R" = list(brew = list(url = "https://formulae.brew.sh/formula/r",
-                         cmd = "brew install r"),
-             scoop = list(url = "https://scoop.sh/#/apps?q=R+statistical+computing",
-                          cmd = "scoop install r"),
-             choco = list(url = "https://community.chocolatey.org/packages/R",
-                          cmd = "choco install r")),
-  "RStudio" = list(brew = list(url = "https://formulae.brew.sh/cask/rstudio",
-                               cmd = "brew install --cask rstudio"),
-                   scoop = list(url = "https://scoop.sh/#/apps?q=rstudio",
-                                cmd = "scoop bucket add extras; scoop install rstudio"),
-                   choco = list(url = "https://community.chocolatey.org/packages/R.Studio",
-                                cmd = "choco install r.studio"))
-)
-```
-
-## Write data
-
-Save all the small data objects as a single internal file `R/sysdata.rda`. Note that when documenting them, they must be explicitly `@export`ed to be available
-to package users.
-
-```{r}
-usethis::use_data(pkg_mgr_software,
-                  internal = TRUE,
-                  overwrite = TRUE,
-                  compress = "xz",
-                  version = 3L)
-```
-
-# Exported data
-
-NOTES:
-
--   When used internally, other than internal data, exported data must always be referred to by its explicit namespace, i.e. e.g.
-    `salim::regex_spelling_normalization`.
+# Define data
 
 ## `regex_spelling_normalization`
 
@@ -92,7 +38,7 @@ regex_spelling_normalization <-
                   replacement = "smartvote")
 ```
 
-## Write data
+# Write data
 
 Save all the bigger data objects to separate files under `data/*.rda`. Note that when documenting them, they mustn't be explicitly `@export`ed since they're
 already automatically exported and thus available to package users.

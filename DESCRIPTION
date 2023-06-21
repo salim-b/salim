@@ -23,7 +23,7 @@ Imports:
     lifecycle (>= 1.0.1),
     lubridate (>= 1.8.0),
     magrittr (>= 1.5),
-    pal (>= 0.0.9092),
+    pal (>= 0.0.9096),
     purrr (>= 0.3.4),
     rlang (>= 0.4.7),
     stringr (>= 1.4.0),
