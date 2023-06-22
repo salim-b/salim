@@ -27,6 +27,7 @@ Other development environment currentness functions:
 \code{\link{lvl_up_quarto}()},
 \code{\link{lvl_up_rstudio}()},
 \code{\link{lvl_up_r}()},
+\code{\link{update_rpkgs}()},
 \code{\link{update_salims_pkgs}()}
 }
 \concept{dev_env}

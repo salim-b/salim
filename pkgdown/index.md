@@ -69,7 +69,7 @@ pkgpurl::lint_rmd()
 
 ## See also
 
--   The [**pal**](https://gitlab.com/salim_b/r/pkgs/pal) package for a collection of more mature convenience/utility functions by the same author.
+-   The [**pal**](https://gitlab.com/rpkg.dev/pal) package for a collection of more mature convenience/utility functions by the same author.
 
 [^1]: This naming convention as well as the very idea to leverage the R Markdown format to author R packages was originally proposed by Yihui Xie. See his excellent [blog post](https://yihui.name/rlp/) for more detailed information about the benefits of literate programming techniques and some practical examples. Note that using `pkgpurl::purl_rmd()` is a less cumbersome alternative to the Makefile approach outlined by him.
 

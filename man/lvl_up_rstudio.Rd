@@ -44,6 +44,7 @@ Example:
 Other development environment currentness functions:
 \code{\link{lvl_up_quarto}()},
 \code{\link{lvl_up_r}()},
+\code{\link{update_rpkgs}()},
 \code{\link{update_salims_pkgs}()},
 \code{\link{update_zdaarau_pkgs}()}
 }

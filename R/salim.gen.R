@@ -857,6 +857,45 @@ lvl_up_quarto <- function(path_min_vrsn,
   invisible(current_vrsn)
 }
 
+#' Update R packages from rpkg.dev
+#'
+#' Installs/updates \R packages from [rpkg.dev](https://gitlab.com/rpkg.dev) to the latest development version.
+#'
+#' @param pkgs R pkgs to be updated. A subset of:
+#'   `r pal::prose_ls_fn_param(fn = "update_rpkgs", param = "pkgs", last_sep = " and ", as_scalar = FALSE) %>% pal::as_md_list()`
+#'
+#' @return `pkgs`, invisibly.
+#' @family dev_env
+#' @export
+update_rpkgs <- function(pkgs = c("pal",
+                                  "pkgpins",
+                                  "pkgpurl",
+                                  "pkgsnip",
+                                  "plotlee",
+                                  "qstnr",
+                                  "rstd",
+                                  "swissmuni",
+                                  "tocr",
+                                  "yay")) {
+  rlang::check_installed("remotes",
+                         reason = pal::reason_pkg_required())
+  
+  checkmate::assert_subset(x = pkgs,
+                           choices = as.character(formals()$pkgs)) %>%
+    purrr::walk(~ {
+      
+      if (pal::is_pkg_cran(.x)) {
+        utils::install.packages(pkgs = .x,
+                                repos = "https://cloud.r-project.org/")
+      } else {
+        remotes::install_gitlab(repo = paste0("rpkg.dev/", .x),
+                                upgrade = FALSE)
+      }
+    })
+  
+  invisible(pkgs)
+}
+
 #' Update Salim B's R packages
 #'
 #' Installs/updates all of [Salim B's R packages](https://gitlab.com/salim_b/r/pkgs) to the latest development version.
@@ -868,18 +907,8 @@ lvl_up_quarto <- function(path_min_vrsn,
 #' @family dev_env
 #' @export
 update_salims_pkgs <- function(pkgs = c("c2d4u",
-                                        "pal",
-                                        "pkgpins",
-                                        "pkgpurl",
-                                        "pkgsnip",
-                                        "plotlee",
-                                        "qstnr",
-                                        "rstd",
                                         "salim",
-                                        "swissmuni",
-                                        "swissparty",
-                                        "tocr",
-                                        "yay")) {
+                                        "swissparty")) {
   rlang::check_installed("remotes",
                          reason = pal::reason_pkg_required())
   

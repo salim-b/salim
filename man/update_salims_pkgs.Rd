@@ -4,27 +4,14 @@
 \alias{update_salims_pkgs}
 \title{Update Salim B's R packages}
 \usage{
-update_salims_pkgs(
-  pkgs = c("c2d4u", "pal", "pkgpins", "pkgpurl", "pkgsnip", "plotlee", "qstnr", "rstd",
-    "salim", "swissmuni", "swissparty", "tocr", "yay")
-)
+update_salims_pkgs(pkgs = c("c2d4u", "salim", "swissparty"))
 }
 \arguments{
 \item{pkgs}{R pkgs to be updated. A subset of:
 \itemize{
 \item \code{"c2d4u"}
-\item \code{"pal"}
-\item \code{"pkgpins"}
-\item \code{"pkgpurl"}
-\item \code{"pkgsnip"}
-\item \code{"plotlee"}
-\item \code{"qstnr"}
-\item \code{"rstd"}
 \item \code{"salim"}
-\item \code{"swissmuni"}
 \item \code{"swissparty"}
-\item \code{"tocr"}
-\item \code{"yay"}
 }}
 }
 \value{
@@ -38,6 +25,7 @@ Other development environment currentness functions:
 \code{\link{lvl_up_quarto}()},
 \code{\link{lvl_up_rstudio}()},
 \code{\link{lvl_up_r}()},
+\code{\link{update_rpkgs}()},
 \code{\link{update_zdaarau_pkgs}()}
 }
 \concept{dev_env}

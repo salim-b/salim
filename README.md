@@ -71,7 +71,7 @@ pkgpurl::lint_rmd()
 
 ## See also
 
--   The [**pal**](https://gitlab.com/salim_b/r/pkgs/pal) package for a collection of more mature convenience/utility functions by the same author.
+-   The [**pal**](https://gitlab.com/rpkg.dev/pal) package for a collection of more mature convenience/utility functions by the same author.
 
 ---
 

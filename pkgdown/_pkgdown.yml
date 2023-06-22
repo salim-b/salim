@@ -46,5 +46,6 @@ reference:
   - lvl_up_r
   - lvl_up_rstudio
   - lvl_up_quarto
+  - update_rpkgs
   - update_salims_pkgs
   - update_zdaarau_pkgs
