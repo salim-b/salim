@@ -22,6 +22,7 @@ Other Pandoc-related functions:
 \code{\link{download_pandoc_binaries}()},
 \code{\link{pandoc_release_assets}()},
 \code{\link{pandoc_release_id_latest}()},
+\code{\link{pandoc_tpl}()},
 \code{\link{pandoc_version_latest}()}
 }
 \concept{pandoc}

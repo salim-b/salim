@@ -460,7 +460,7 @@ decline_noun_de <- function(noun,
 
 #' Regular expression patterns and replacements for spelling normalization
 #'
-#' @format `r pkgsnip::return_label("data")`
+#' @format `r pkgsnip::return_lbl("tibble")`
 #' @seealso
 #' Other regular expression rules: [`yay::regex_text_normalization`] [`yay::regex_file_normalization`]
 #' String normalization functions: [yay::str_normalize()] [yay::str_normalize()]
@@ -591,7 +591,7 @@ pandoc_release_id_latest <- function() {
 #' number via [GitHub's REST API](https://docs.github.com/en/rest/reference/repos#get-the-latest-release) and returns it as a [numeric
 #' version][numeric_version()].
 #'
-#' @return `r pkgsnip::param_label("version_nr")`
+#' @return `r pkgsnip::param_lbl("num_vrsn")`
 #' @family pandoc
 #' @export
 pandoc_version_latest <- function() {
@@ -616,7 +616,7 @@ pandoc_version_latest <- function() {
 #'
 #' Values of the column `release_id` can be used as input to [download_pandoc_binaries()].
 #'
-#' @return `r pkgsnip::param_label("data")`
+#' @return `r pkgsnip::param_lbl("tibble")`
 #' @family pandoc
 #' @export
 pandoc_releases <- function() {
@@ -647,7 +647,7 @@ pandoc_releases <- function() {
 #' @param release_id The GitHub release ID of the desired Pandoc release. Use [pandoc_releases()] to determine the release ID of a specific Pandoc version
 #'   number. An integer scalar.
 #'
-#' @return `r pkgsnip::param_label("data")`
+#' @return `r pkgsnip::param_lbl("tibble")`
 #' @family pandoc
 #' @export
 pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
@@ -669,6 +669,29 @@ pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
                                                        replacement = "linux"),
                                 download_url = .x$browser_download_url)) %>%
     purrr::list_rbind()
+}
+
+#' Download Pandoc template
+#'
+#' Downloads one of our [custom Pandoc templates](https://gitlab.com/salim_b/pandoc/templates) and returns it as a character scalar. The template is cached
+#' using [pal::req_cached()], thus only re-downloaded if the local copy is outdated.
+#'
+#' @param tpl Template to download. One of `r pal::prose_ls_fn_param(param = "tpl", fn = "pandoc_tpl")`.
+#'
+#' @return The template as a character scalar.
+#' @family pandoc
+#' @export
+#' 
+#' @examples
+#' \dontrun{
+#' salim::pandoc_tpl(tpl = "quarto_mod.latex") |>
+#'   brio::write_file(path = "quarto_mod.latex")}
+pandoc_tpl <- function(tpl = "quarto_mod.latex") {
+  
+  tpl <- rlang::arg_match(tpl)
+  
+  (pal::req_cached(url = glue::glue("https://gitlab.com/salim_b/pandoc/templates/-/raw/main/{tpl}?ref_type=heads&inline=false")) |>
+      httr2::resp_body_string())
 }
 
 #' Level up R
@@ -888,7 +911,7 @@ update_rpkgs <- function(pkgs = c("pal",
         utils::install.packages(pkgs = .x,
                                 repos = "https://cloud.r-project.org/")
       } else {
-        remotes::install_gitlab(repo = paste0("rpkg.dev/", .x),
+        remotes::install_gitlab(repo = paste0("rpkg.dev/", .x), # nolint: paste_linter
                                 upgrade = FALSE)
       }
     })
@@ -920,7 +943,7 @@ update_salims_pkgs <- function(pkgs = c("c2d4u",
         utils::install.packages(pkgs = .x,
                                 repos = "https://cloud.r-project.org/")
       } else {
-        remotes::install_gitlab(repo = paste0("salim_b/r/pkgs/", .x),
+        remotes::install_gitlab(repo = paste0("salim_b/r/pkgs/", .x), # nolint: paste_linter
                                 upgrade = FALSE)
       }
     })
@@ -954,7 +977,7 @@ update_zdaarau_pkgs <- function(pkgs = c("rdb.report",
         utils::install.packages(pkgs = .x,
                                 repos = "https://cloud.r-project.org/")
       } else {
-        remotes::install_gitlab(repo = paste0("zdaarau/rpkgs/", .x),
+        remotes::install_gitlab(repo = paste0("zdaarau/rpkgs/", .x), # nolint: paste_linter
                                 upgrade = FALSE)
       }
     })

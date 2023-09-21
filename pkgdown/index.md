@@ -59,7 +59,7 @@ This package borrows a lot of the [Tidyverse](https://www.tidyverse.org/) design
 
 -   Usage of [R's right-hand assignment operator `->`](https://rdrr.io/r/base/assignOps.html) is not allowed[^3].
 
--   R source code is *not* split over several files as [suggested by the TSG](https://style.tidyverse.org/package-files.html) but instead is (as far as possible) kept in the single file [`Rmd/salim.Rmd`](Rmd/salim.Rmd) which is well-structured thanks to its [Markdown support](#r-markdown-format).
+-   R source code is *not* split over several files as [suggested by the TSG](https://style.tidyverse.org/package-files.html) but instead is (as far as possible) kept in the single file [`Rmd/salim.Rmd`](https://gitlab.com/salim_b/r/pkgs/salim/-/tree/master/Rmd/salim.Rmd) which is well-structured thanks to its [Markdown support](#r-markdown-format).
 
 As far as possible, these deviations from the TSG plus some additional restrictions are formally specified in the [lintr configuration file](https://github.com/jimhester/lintr#project-configuration) [`.lintr`](.lintr), so lintr can be used right away to check for formatting issues:
 

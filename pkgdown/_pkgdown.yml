@@ -41,6 +41,7 @@ reference:
   - pandoc_version_latest
   - pandoc_releases
   - pandoc_release_assets
+  - pandoc_tpl
 - title: Development environment currentness
 - contents:
   - lvl_up_r
