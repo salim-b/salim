@@ -14,7 +14,7 @@ Uses \code{\link[gh:gh]{gh::gh()}} to fetch \href{https://pandoc.org/}{Pandoc}'s
 number via \href{https://docs.github.com/en/rest/reference/repos#get-the-latest-release}{GitHub's REST API} and returns it as a \link[=numeric_version]{numeric version}.
 }
 \seealso{
-Other Pandoc-related functions:
+Other Pandoc functions:
 \code{\link{download_pandoc_binaries}()},
 \code{\link{pandoc_release_assets}()},
 \code{\link{pandoc_release_id_latest}()},

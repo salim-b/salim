@@ -29,7 +29,7 @@ number. An integer scalar.}
 Downloads the \link[=pandoc_release_assets]{assets} and extracts the executable program binaries for Linux, macOS and Windows of a certain \link[=pandoc_releases]{Pandoc release}.
 }
 \seealso{
-Other Pandoc-related functions:
+Other Pandoc functions:
 \code{\link{pandoc_release_assets}()},
 \code{\link{pandoc_release_id_latest}()},
 \code{\link{pandoc_releases}()},

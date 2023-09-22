@@ -22,7 +22,7 @@ salim::pandoc_tpl(tpl = "quarto_mod.latex") |>
   brio::write_file(path = "quarto_mod.latex")}
 }
 \seealso{
-Other Pandoc-related functions:
+Other Pandoc functions:
 \code{\link{download_pandoc_binaries}()},
 \code{\link{pandoc_release_assets}()},
 \code{\link{pandoc_release_id_latest}()},

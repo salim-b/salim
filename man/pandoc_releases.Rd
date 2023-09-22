@@ -18,7 +18,7 @@ columns \code{version_nr} and \code{release_id}.
 Values of the column \code{release_id} can be used as input to \code{\link[=download_pandoc_binaries]{download_pandoc_binaries()}}.
 }
 \seealso{
-Other Pandoc-related functions:
+Other Pandoc functions:
 \code{\link{download_pandoc_binaries}()},
 \code{\link{pandoc_release_assets}()},
 \code{\link{pandoc_release_id_latest}()},
