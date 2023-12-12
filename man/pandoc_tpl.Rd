@@ -7,7 +7,8 @@
 pandoc_tpl(tpl = "quarto_mod.latex")
 }
 \arguments{
-\item{tpl}{Template to download. One of \code{"quarto_mod.latex"}.}
+\item{tpl}{Template to download. One of
+\code{"quarto_mod.latex"}.}
 }
 \value{
 The template as a character scalar.

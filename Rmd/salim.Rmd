@@ -567,7 +567,7 @@ should be moved inside the pndc pkg repo, but build-ignored.
 #' release][pandoc_releases].
 #'
 #' @param os The operating system(s) for which Pandoc binaries should be downloaded. Any combination of
-#'   `r pal::prose_ls_fn_param(param = "os", fn = download_pandoc_binaries, last_sep = " and ")`.
+#'   `r pal::fn_param_defaults(param = "os", fn = download_pandoc_binaries) |> pal::wrap_chr("\x60") |> cli::ansi_collapse(last = " and ")`.
 #' @param path The filesystem path to which the binaries are saved to. A [path][fs::fs_path] or something coercible to.
 #' @param overwrite Whether to overwrite existing binaries under `path`.
 #' @inheritParams pandoc_release_assets
@@ -787,7 +787,8 @@ pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
 #' Downloads one of our [custom Pandoc templates](https://gitlab.com/salim_b/pandoc/templates) and returns it as a character scalar. The template is cached
 #' using [pal::req_cached()], thus only re-downloaded if the local copy is outdated.
 #'
-#' @param tpl Template to download. One of `r pal::prose_ls_fn_param(param = "tpl", fn = "pandoc_tpl")`.
+#' @param tpl Template to download. One of
+#'   `r pal::fn_param_defaults(param = "tpl", fn = "pandoc_tpl") |> pal::wrap_chr("\x60") |> cli::ansi_collapse(last = " and ")`.
 #'
 #' @return The template as a character scalar.
 #' @family pandoc
@@ -1014,7 +1015,7 @@ lvl_up_quarto <- function(path_min_vrsn,
 #' Installs/updates \R packages from [rpkg.dev](https://gitlab.com/rpkg.dev) to the latest development version.
 #'
 #' @param pkgs R pkgs to be updated. A subset of:
-#'   `r pal::prose_ls_fn_param(fn = "update_rpkgs", param = "pkgs", last_sep = " and ", as_scalar = FALSE) %>% pal::as_md_list()`
+#'   `r pal::fn_param_defaults(fn = "update_rpkgs", param = "pkgs") |> pal::wrap_chr("\x60") |> pal::as_md_list()`
 #'
 #' @return `pkgs`, invisibly.
 #' @family dev_env
@@ -1057,7 +1058,7 @@ update_rpkgs <- function(pkgs = c("pal",
 #' Installs/updates all of [Salim B's R packages](https://gitlab.com/salim_b/r/pkgs) to the latest development version.
 #'
 #' @param pkgs R pkgs to be updated. A subset of:
-#'   `r pal::prose_ls_fn_param(fn = "update_salims_pkgs", param = "pkgs", last_sep = " and ", as_scalar = FALSE) %>% pal::as_md_list()`
+#'   `r pal::fn_param_defaults(fn = "update_salims_pkgs", param = "pkgs") |> pal::wrap_chr("\x60") |> pal::as_md_list()`
 #'
 #' @return `pkgs`, invisibly.
 #' @family dev_env
@@ -1094,7 +1095,7 @@ update_salims_pkgs <- function(pkgs = c("c2d4u",
 #' version.
 #'
 #' @param pkgs R pkgs to be updated. A subset of:
-#'   `r pal::prose_ls_fn_param(fn = "update_zdaarau_pkgs", param = "pkgs", last_sep = " and ", as_scalar = FALSE) %>% pal::as_md_list()`
+#'   `r pal::fn_param_defaults(fn = "update_zdaarau_pkgs", param = "pkgs") |> pal::wrap_chr("\x60") |> pal::as_md_list()`
 #'
 #' @return `pkgs`, invisibly.
 #' @family dev_env
