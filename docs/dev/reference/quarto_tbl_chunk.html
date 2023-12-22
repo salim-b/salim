@@ -54,7 +54,7 @@
 <span>  <span class="va">tbl_cap</span>,</span>
 <span>  tbl_subcap <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  tbl_colwidths <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  layout_class <span class="op">=</span> <span class="st">"body"</span></span>
+<span>  tbl_column <span class="op">=</span> <span class="st">"body"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -92,7 +92,7 @@ widths based on the markdown text width of cells). <code>"auto"</code> is the de
 </ul></dd>
 
 
-<dt>layout_class</dt>
+<dt>tbl_column</dt>
 <dd><p>Quarto <a href="https://quarto.org/docs/authoring/article-layout.html#available-columns" class="external-link">article layout class</a> for the figure output. Set as
 Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns" class="external-link"><code>tbl-column</code></a> code chunk option. One of</p><ul><li><p><code>"body"</code></p></li>
 <li><p><code>"body-outset"</code></p></li>
@@ -123,14 +123,16 @@ Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Use <a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a> together with <code><a href="https://rdrr.io/r/base/deparse.html" class="external-link">deparse1()</a></code> to convert <span style="R">R</span> expressions to a character scalar:</p>
+    <p>Use <a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a> together with <code><a href="https://rdrr.io/r/base/deparse.html" class="external-link">deparse1()</a></code> to convert <span style="R">R</span> expressions to a character scalar as expected by param <code>body</code>:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/base/deparse.html" class="external-link">deparse1</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a></span><span class="op">(</span><span class="fu">do_something</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>         collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other Quarto functions:
-<code><a href="quarto_fig_chunk.html">quarto_fig_chunk</a>()</code></p></div>
+<code><a href="gen_quarto_snips.html">gen_quarto_snips</a>()</code>,
+<code><a href="quarto_fig_chunk.html">quarto_fig_chunk</a>()</code>,
+<code><a href="read_quarto_chunk_data.html">read_quarto_chunk_data</a>()</code></p></div>
     </div>
 
     <div class="section level2">
@@ -138,11 +140,10 @@ Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">salim</span><span class="fu">::</span><span class="fu">quarto_tbl_chunk</span><span class="op">(</span>body <span class="op">=</span> <span class="st">"knitr::kable(head(cars))"</span>,</span></span>
 <span class="r-in"><span>                        label <span class="op">=</span> <span class="st">"tbl-head-cars"</span>,</span></span>
 <span class="r-in"><span>                        tbl_cap <span class="op">=</span> <span class="st">"Head of dataset `cars`"</span>,</span></span>
-<span class="r-in"><span>                        layout_class <span class="op">=</span> <span class="st">"margin"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>                        tbl_column <span class="op">=</span> <span class="st">"margin"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```{r}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| label: tbl-head-cars</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| tbl-cap:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #|   - Head of dataset `cars`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| tbl-column: margin</span>

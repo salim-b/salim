@@ -25,6 +25,9 @@
     <loc>https://salim.rpkg.dev/dev/reference/download_pandoc_binaries.html</loc>
   </url>
   <url>
+    <loc>https://salim.rpkg.dev/dev/reference/gen_quarto_snips.html</loc>
+  </url>
+  <url>
     <loc>https://salim.rpkg.dev/dev/reference/index.html</loc>
   </url>
   <url>
@@ -68,6 +71,9 @@
   </url>
   <url>
     <loc>https://salim.rpkg.dev/dev/reference/rank_nr.html</loc>
+  </url>
+  <url>
+    <loc>https://salim.rpkg.dev/dev/reference/read_quarto_chunk_data.html</loc>
   </url>
   <url>
     <loc>https://salim.rpkg.dev/dev/reference/regex_spelling_normalization.html</loc>

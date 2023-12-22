@@ -10,7 +10,7 @@ quarto_tbl_chunk(
   tbl_cap,
   tbl_subcap = NULL,
   tbl_colwidths = NULL,
-  layout_class = "body"
+  tbl_column = "body"
 )
 }
 \arguments{
@@ -40,7 +40,7 @@ widths based on the markdown text width of cells). \code{"auto"} is the default 
 \item A numeric vector (e.g. \code{c(40, 30, 30)}): Array of explicit width percentages.
 }}
 
-\item{layout_class}{Quarto \href{https://quarto.org/docs/authoring/article-layout.html#available-columns}{article layout class} for the figure output. Set as
+\item{tbl_column}{Quarto \href{https://quarto.org/docs/authoring/article-layout.html#available-columns}{article layout class} for the figure output. Set as
 Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns}{\code{tbl-column}} code chunk option. One of
 \itemize{
 \item \code{"body"}
@@ -70,7 +70,7 @@ A character scalar.
 Assembles a \href{https://quarto.org/docs/authoring/tables.html#computations}{Quarto knitr table chunk}.
 }
 \details{
-Use \link{substitute} together with \code{\link[=deparse1]{deparse1()}} to convert \R expressions to a character scalar:
+Use \link{substitute} together with \code{\link[=deparse1]{deparse1()}} to convert \R expressions to a character scalar as expected by param \code{body}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{deparse1(expr = substitute(do_something()),
          collapse = "\\n")
@@ -80,11 +80,13 @@ Use \link{substitute} together with \code{\link[=deparse1]{deparse1()}} to conve
 salim::quarto_tbl_chunk(body = "knitr::kable(head(cars))",
                         label = "tbl-head-cars",
                         tbl_cap = "Head of dataset `cars`",
-                        layout_class = "margin") |>
+                        tbl_column = "margin") |>
   cat()
 }
 \seealso{
 Other Quarto functions:
-\code{\link{quarto_fig_chunk}()}
+\code{\link{gen_quarto_snips}()},
+\code{\link{quarto_fig_chunk}()},
+\code{\link{read_quarto_chunk_data}()}
 }
 \concept{quarto}

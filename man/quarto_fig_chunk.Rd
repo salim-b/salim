@@ -9,13 +9,13 @@ quarto_fig_chunk(
   label,
   fig_cap,
   fig_subcap = NULL,
+  fig_column = "body",
   fig_width = NULL,
   fig_height = NULL,
   fig_pos = "H",
   fig_link = NULL,
   out_width = NULL,
-  out_height = NULL,
-  layout_class = "body"
+  out_height = NULL
 )
 }
 \arguments{
@@ -30,28 +30,7 @@ scalar.}
 \item{fig_subcap}{Figure subcaptions. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-subcap}} code chunk option. A
 character vector, or \code{NULL} to omit.}
 
-\item{fig_width}{Width of the plot (in inches), to be used in the graphics device. Set as Quarto's
-\href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-width}} code chunk option. A numeric scalar, or \code{NULL} to omit.}
-
-\item{fig_height}{Height of the plot (in inches), to be used in the graphics device. Set as Quarto's
-\href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-height}} code chunk option. A numeric scalar, or \code{NULL} to omit.}
-
-\item{fig_pos}{LaTeX figure position arrangement to be used in \verb{\\begin\{figure\}[]}. Set as Quarto's
-\href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-pos}} code chunk option. A character scalar, or \code{NULL} to omit. Use \code{"false"} for
-no figure position specifier, which is sometimes necessary with custom figure environments (such as \code{sidewaysfigure}).}
-
-\item{fig_link}{Hyperlink target for the figure. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-link}} code chunk
-option. A character scalar, or \code{NULL} to omit.}
-
-\item{out_width}{Width of the plot in the output document, which can be different from its physical \code{fig_width}, i.e., plots can be scaled in the output
-document. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{out-width}} code chunk option. A character scalar, or \code{NULL}
-to omit.}
-
-\item{out_height}{Height of the plot in the output document, which can be different from its physical \code{fig_height}, i.e., plots can be scaled in the output
-document. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{out-height}} code chunk option. A character scalar, or \code{NULL}
-to omit.}
-
-\item{layout_class}{Quarto \href{https://quarto.org/docs/authoring/article-layout.html#available-columns}{article layout class} for the figure output. Set as
+\item{fig_column}{Quarto \href{https://quarto.org/docs/authoring/article-layout.html#available-columns}{article layout class} for the figure output. Set as
 Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns}{\code{fig-column}} code chunk option. One of
 \itemize{
 \item \code{"body"}
@@ -73,6 +52,27 @@ Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-col
 \item \code{"screen-inset-right"}
 \item \code{"margin"}
 }}
+
+\item{fig_width}{Width of the plot (in inches), to be used in the graphics device. Set as Quarto's
+\href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-width}} code chunk option. A numeric scalar, or \code{NULL} to omit.}
+
+\item{fig_height}{Height of the plot (in inches), to be used in the graphics device. Set as Quarto's
+\href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-height}} code chunk option. A numeric scalar, or \code{NULL} to omit.}
+
+\item{fig_pos}{LaTeX figure position arrangement to be used in \verb{\\begin\{figure\}[]}. Set as Quarto's
+\href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-pos}} code chunk option. A character scalar, or \code{NULL} to omit. Use \code{"false"} for
+no figure position specifier, which is sometimes necessary with custom figure environments (such as \code{sidewaysfigure}).}
+
+\item{fig_link}{Hyperlink target for the figure. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-link}} code chunk
+option. A character scalar, or \code{NULL} to omit.}
+
+\item{out_width}{Width of the plot in the output document, which can be different from its physical \code{fig_width}, i.e., plots can be scaled in the output
+document. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{out-width}} code chunk option. A character scalar, or \code{NULL}
+to omit.}
+
+\item{out_height}{Height of the plot in the output document, which can be different from its physical \code{fig_height}, i.e., plots can be scaled in the output
+document. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{out-height}} code chunk option. A character scalar, or \code{NULL}
+to omit.}
 }
 \value{
 A character scalar.
@@ -81,7 +81,7 @@ A character scalar.
 Assembles a \href{https://quarto.org/docs/authoring/figures.html#computations}{Quarto knitr figure chunk}.
 }
 \details{
-Use \link{substitute} together with \code{\link[=deparse1]{deparse1()}} to convert \R expressions to a character scalar:
+Use \link{substitute} together with \code{\link[=deparse1]{deparse1()}} to convert \R expressions to a character scalar as expected by param \code{body}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{deparse1(expr = substitute(do_something()),
          collapse = "\\n")
@@ -91,11 +91,13 @@ Use \link{substitute} together with \code{\link[=deparse1]{deparse1()}} to conve
 salim::quarto_fig_chunk(body = "plot(cars)",
                         label = "fig-mtcars",
                         fig_cap = "Default plot for dataset `cars`",
-                        layout_class = "page") |>
+                        fig_column = "page") |>
   cat()
 }
 \seealso{
 Other Quarto functions:
-\code{\link{quarto_tbl_chunk}()}
+\code{\link{gen_quarto_snips}()},
+\code{\link{quarto_tbl_chunk}()},
+\code{\link{read_quarto_chunk_data}()}
 }
 \concept{quarto}

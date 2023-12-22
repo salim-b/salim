@@ -37,6 +37,14 @@ as_code_chunk_array <- function(x) {
 }
 ```
 
+### `as_yaml_inline`
+
+```{r}
+as_yaml_inline <- function(x) {
+  yaml::as.yaml(x) |> stringr::str_remove(pattern = "\n$")
+}
+```
+
 ### `pkg_mgr_hint`
 
 ```{r}
@@ -138,16 +146,16 @@ prettify_date <- function(date,
   
   locale <- rlang::arg_match(locale)
 
-  withr::with_locale(new = c("LC_TIME" = pal::when(. = locale,
-                                                   . %in% c("en", "en-US") ~ "C",
-                                                   . %in% c("de", "de-CH") ~ "de_CH.utf8")),
+  withr::with_locale(new = c(LC_TIME = pal::when(. = locale,
+                                                 . %in% c("en", "en-US") ~ "C",
+                                                 . %in% c("de", "de-CH") ~ "de_CH.utf8")),
                      code =
-                       locale %>%
+                       locale |>
                        pal::when(. %in% c("en", "en-US") ~
                                    "%B %d, %Y",
                                  . %in% c("de", "de-CH") ~
                                    "%d. %B %Y",
-                                 ~ cli::cli_abort("Specified {.arg locale} not implemented yet.")) %>%
+                                 ~ cli::cli_abort("Specified {.arg locale} not implemented yet.")) |>
                        format(x = lubridate::as_date(date)))
 }
 ```
@@ -191,16 +199,16 @@ prettify_datetime <- function(datetime,
 
   locale <- rlang::arg_match(locale)
 
-  withr::with_locale(new = c("LC_TIME" = pal::when(. = locale,
-                                                   . %in% c("en", "en-US") ~ "C",
-                                                   . %in% c("de", "de-CH") ~ "de_CH.utf8")),
+  withr::with_locale(new = c(LC_TIME = pal::when(. = locale,
+                                                 . %in% c("en", "en-US") ~ "C",
+                                                 . %in% c("de", "de-CH") ~ "de_CH.utf8")),
                      code =
-                       locale %>%
+                       locale |>
                        pal::when(. %in% c("en", "en-US") ~
                                    "%B %d, %Y, %I:%M %p",
                                  . %in% c("de", "de-CH") ~
                                    "%d. %B %Y, %H:%M Uhr",
-                                 ~ cli::cli_abort("Specified {.arg locale} not implemented yet.")) %>%
+                                 ~ cli::cli_abort("Specified {.arg locale} not implemented yet.")) |>
                        format(x = lubridate::as_datetime(datetime)))
 }
 ```
@@ -788,15 +796,15 @@ pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
          owner = "jgm",
          repo = "pandoc",
          release_id = release_id,
-         .method = "GET") %>%
+         .method = "GET") |>
     purrr::map(~ tibble::tibble(filename = .x$name,
                                 os =
-                                  .x$name %>%
-                                  stringr::str_extract(pattern = "(?i)(linux|macos|windows|\\.deb$)") %>%
-                                  stringr::str_to_lower() %>%
-                                  stringr::str_replace(pattern = "\\.deb",
+                                  .x$name |>
+                                  stringr::str_extract(pattern = "(?i)(linux|macos|windows|\\.deb$)") |>
+                                  stringr::str_to_lower() |>
+                                  stringr::str_replace(pattern = stringr::fixed(".deb"),
                                                        replacement = "linux"),
-                                download_url = .x$browser_download_url)) %>%
+                                download_url = .x$browser_download_url)) |>
     purrr::list_rbind()
 }
 ```
@@ -840,7 +848,7 @@ TODO: Move these fns tod dedicated pkg *qrt*?
 #'
 #' Assembles a [Quarto knitr figure chunk](https://quarto.org/docs/authoring/figures.html#computations).
 #'
-#' Use [substitute] together with [deparse1()] to convert \R expressions to a character scalar:
+#' Use [substitute] together with [deparse1()] to convert \R expressions to a character scalar as expected by param `body`:
 #'
 #' ```r
 #' deparse1(expr = substitute(do_something()),
@@ -854,6 +862,9 @@ TODO: Move these fns tod dedicated pkg *qrt*?
 #'   scalar.
 #' @param fig_subcap Figure subcaptions. Set as Quarto's [`fig-subcap`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A
 #'   character vector, or `NULL` to omit.
+#' @param fig_column Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for the figure output. Set as
+#'   Quarto's [`fig-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. One of
+#'   `r pal::as_md_val_list(qmd_layout_classes)`
 #' @param fig_width Width of the plot (in inches), to be used in the graphics device. Set as Quarto's
 #'   [`fig-width`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A numeric scalar, or `NULL` to omit.
 #' @param fig_height Height of the plot (in inches), to be used in the graphics device. Set as Quarto's
@@ -869,9 +880,6 @@ TODO: Move these fns tod dedicated pkg *qrt*?
 #' @param out_height Height of the plot in the output document, which can be different from its physical `fig_height`, i.e., plots can be scaled in the output
 #'   document. Set as Quarto's [`out-height`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A character scalar, or `NULL`
 #'   to omit.
-#' @param layout_class Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for the figure output. Set as
-#'   Quarto's [`fig-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. One of
-#'   `r pal::as_md_val_list(qmd_layout_classes)`
 #'
 #' @return A character scalar.
 #' @family quarto
@@ -881,19 +889,19 @@ TODO: Move these fns tod dedicated pkg *qrt*?
 #' salim::quarto_fig_chunk(body = "plot(cars)",
 #'                         label = "fig-mtcars",
 #'                         fig_cap = "Default plot for dataset `cars`",
-#'                         layout_class = "page") |>
+#'                         fig_column = "page") |>
 #'   cat()
 quarto_fig_chunk <- function(body,
                              label,
                              fig_cap,
                              fig_subcap = NULL,
+                             fig_column = "body",
                              fig_width = NULL,
                              fig_height = NULL,
                              fig_pos = "H",
                              fig_link = NULL,
                              out_width = NULL,
-                             out_height = NULL,
-                             layout_class = "body") {
+                             out_height = NULL) {
   
   rlang::check_installed(pkg = "yaml",
                          reason = pal::reason_pkg_required())
@@ -908,10 +916,10 @@ quarto_fig_chunk <- function(body,
                               any.missing = FALSE,
                               null.ok = TRUE)
   checkmate::assert_number(fig_width,
-                           lower = 0,
+                           lower = 0.0,
                            null.ok = TRUE)
   checkmate::assert_number(fig_height,
-                           lower = 0,
+                           lower = 0.0,
                            null.ok = TRUE)
   checkmate::assert_string(fig_pos,
                            null.ok = TRUE)
@@ -921,8 +929,8 @@ quarto_fig_chunk <- function(body,
                            null.ok = TRUE)
   checkmate::assert_string(out_height,
                            null.ok = TRUE)
-  layout_class <- rlang::arg_match(arg = layout_class,
-                                   values = qmd_layout_classes)
+  fig_column <- rlang::arg_match(arg = fig_column,
+                                 values = qmd_layout_classes)
   is_fig_cap_scalar <- length(fig_cap) == 1L
   has_fig_subcap <- length(fig_subcap) > 0L
   
@@ -933,21 +941,23 @@ quarto_fig_chunk <- function(body,
   
   # assemble code chunk
   glue::glue(paste0(c("```{{r}}",
-                      "#| label: {yaml::as.yaml(label)}",
+                      "#| label: {as_yaml_inline(label)}",
                       "#| fig-cap:",
                       as_code_chunk_array(fig_cap),
                       "#| fig-subcap:"[has_fig_subcap],
                       fig_subcap,
-                      "#| fig-column: {layout_class}",
-                      "#| fig-width: {yaml::as.yaml(fig_width)}"[!is.null(fig_width)],
-                      "#| fig-height: {yaml::as.yaml(fig_height)}"[!is.null(fig_height)],
+                      "#| fig-column: {fig_column}",
+                      "#| fig-width: {as_yaml_inline(fig_width)}"[!is.null(fig_width)],
+                      "#| fig-height: {as_yaml_inline(fig_height)}"[!is.null(fig_height)],
                       "#| fig-pos: {fig_pos}"[!is.null(fig_pos)],
-                      "#| fig-link: {yaml::as.yaml(fig_link)}"[length(fig_link) > 0L],
-                      "#| out-width: {yaml::as.yaml(out_width)}"[!is.null(out_width)],
-                      "#| out-height: {yaml::as.yaml(out_height)}"[!is.null(out_height)],
+                      "#| fig-link: {as_yaml_inline(fig_link)}"[length(fig_link) > 0L],
+                      "#| out-width: {as_yaml_inline(out_width)}"[!is.null(out_width)],
+                      "#| out-height: {as_yaml_inline(out_height)}"[!is.null(out_height)],
                       "",
                       "{body}",
-                      "```"),
+                      "```",
+                      "",
+                      ""),
                     collapse = "\n"))
 }
 ```
@@ -959,7 +969,7 @@ quarto_fig_chunk <- function(body,
 #'
 #' Assembles a [Quarto knitr table chunk](https://quarto.org/docs/authoring/tables.html#computations).
 #'
-#' Use [substitute] together with [deparse1()] to convert \R expressions to a character scalar:
+#' Use [substitute] together with [deparse1()] to convert \R expressions to a character scalar as expected by param `body`:
 #'
 #' ```r
 #' deparse1(expr = substitute(do_something()),
@@ -973,6 +983,9 @@ quarto_fig_chunk <- function(body,
 #'   scalar.
 #' @param tbl_subcap Table subcaptions. Set as Quarto's [`tbl-subcap`](https://quarto.org/docs/reference/cells/cells-knitr.html#tables) code chunk option. A
 #'   character vector.
+#' @param tbl_column Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for the figure output. Set as
+#'   Quarto's [`tbl-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. One of
+#'   `r pal::as_md_val_list(qmd_layout_classes)`
 #' @param tbl_colwidths Apply explicit table column widths for markdown grid tables and pipe tables that are more than columns characters wide (72 by default).
 #' 
 #'   Some formats (e.g. HTML) do an excellent job automatically sizing table columns and so don’t benefit much from column width specifications. Other formats
@@ -989,9 +1002,6 @@ quarto_fig_chunk <- function(body,
 #'   - `"false"`: Never apply markdown table widths.
 #'  
 #'   - A numeric vector (e.g. `c(40, 30, 30)`): Array of explicit width percentages.
-#' @param layout_class Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for the figure output. Set as
-#'   Quarto's [`tbl-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. One of
-#'   `r pal::as_md_val_list(qmd_layout_classes)`
 #'
 #' @return A character scalar.
 #' @family quarto
@@ -1001,14 +1011,14 @@ quarto_fig_chunk <- function(body,
 #' salim::quarto_tbl_chunk(body = "knitr::kable(head(cars))",
 #'                         label = "tbl-head-cars",
 #'                         tbl_cap = "Head of dataset `cars`",
-#'                         layout_class = "margin") |>
+#'                         tbl_column = "margin") |>
 #'   cat()
 quarto_tbl_chunk <- function(body,
                              label,
                              tbl_cap,
                              tbl_subcap = NULL,
                              tbl_colwidths = NULL,
-                             layout_class = "body") {
+                             tbl_column = "body") {
   
   rlang::check_installed(pkg = "yaml",
                          reason = pal::reason_pkg_required())
@@ -1026,8 +1036,8 @@ quarto_tbl_chunk <- function(body,
   if (!(is.null(tbl_colwidths) || is_str_tbl_colwidths || is_num_tbl_colwidths)) {
     cli::cli_abort('{.arg tbl_colwidths} must be either one of {.val {"auto"}}, {.val {"true"}} or {.val {"false"}}, or a numeric vector.')
   }
-  layout_class <- rlang::arg_match(arg = layout_class,
-                                   values = qmd_layout_classes)
+  tbl_column <- rlang::arg_match(arg = tbl_column,
+                                 values = qmd_layout_classes)
   has_tbl_subcap <- length(tbl_subcap) > 0L
   
   # convert to YAML array
@@ -1037,19 +1047,137 @@ quarto_tbl_chunk <- function(body,
   
   # assemble code chunk
   glue::glue(paste0(c("```{{r}}",
-                      "#| label: {yaml::as.yaml(label)}",
+                      "#| label: {as_yaml_inline(label)}",
                       "#| tbl-cap:",
                       as_code_chunk_array(tbl_cap),
                       "#| tbl-subcap:"[has_tbl_subcap],
                       tbl_subcap,
-                      "#| tbl-column: {layout_class}",
+                      "#| tbl-column: {tbl_column}",
                       "#| tbl-colwidths: {tbl_colwidths}"[is_str_tbl_colwidths],
                       "#| tbl-colwidths:"[is_num_tbl_colwidths],
                       as_code_chunk_array(tbl_colwidths)[is_num_tbl_colwidths],
                       "",
                       "{body}",
-                      "```"),
+                      "```",
+                      "",
+                      ""),
                     collapse = "\n"))
+}
+```
+
+### `gen_quarto_snips`
+
+```{r}
+#' Generate Quarto knitr code chunks from structured data
+#'
+#' Generates Quarto knitr [figure][quarto_fig_chunk] or [table][quarto_tbl_chunk] code chunks from structured `data`.
+#'
+#' The column names of `data` can either correspond to [quarto_fig_chunk()]/[quarto_tbl_chunk()]'s argument names (in [snake
+#' case](https://en.wikipedia.org/wiki/Snake_case)), to [knitr's figure chunk option names](https://yihui.org/knitr/options/#plots) (period-separared) or
+#' directly to Quarto's
+#' [figure](https://quarto.org/docs/reference/cells/cells-knitr.html#figures)/[table](https://quarto.org/docs/reference/cells/cells-knitr.html#tables) code
+#' chunk option names (in [kebab case](https://en.wikipedia.org/wiki/Letter_case#Kebab_case)), they will be converted as needed. Additional column names are
+#' silently ignored.
+#'
+#' The generated `.qmd` files are intended to be included in other Quarto documents via the built-in
+#' [`include`](https://quarto.org/docs/authoring/includes.html) shortcode.
+#'
+#' @param data Input data as returned by [read_quarto_chunk_data()]. A dataframe where column names correspond to chunk options supported by
+#'   [quarto_fig_chunk()] or [quarto_tbl_chunk()], depending on `type`. Columns `body`, `label` and `fig_cap`/`tbl_cap` are mandatory.
+#' @param path Output directory where the generated figure chunk `.qmd` files are to be saved.
+#' @param type Quarto code chunk type. One of `r pal::enum_fn_param_defaults(param = "type", fn = gen_quarto_snips)`.
+#'
+#' @return `data`, invisibly.
+#' @family quarto
+#' @export
+#'
+#' @examples
+#' tmp_path <- fs::path_temp("example-gen_quarto_snips") |> fs::dir_create()
+#' 
+#' tibble::tibble(label = "fig-cars",
+#'                fig_cap = "Today's ({lubridate::today()}) top figure",
+#'                fig_column = "page",
+#'                fig_height = 8L,
+#'                body = "plot(cars)") |>
+#'   tibble::add_row(label = "fig-mtcars",
+#'                   fig_cap = "More cars",
+#'                   fig_column = "screen",
+#'                   fig_height = 8L,
+#'                   body = "plot(mtcars)") |>
+#'   salim::gen_quarto_snips(type = "fig",
+#'                           path = tmp_path)
+#' 
+#' fs::dir_delete(tmp_path)
+gen_quarto_snips <- function(data,
+                             path,
+                             type = c("fig", "tbl")) {
+  
+  type <- rlang::arg_match(type)
+  checkmate::assert_data_frame(data,
+                               any.missing = FALSE,
+                               min.cols = 2L)
+  checkmate::assert_path_for_output(path,
+                                    overwrite = TRUE)
+  fn <- switch(type,
+               fig = quarto_fig_chunk,
+               tbl = quarto_tbl_chunk)
+  data |>
+    # normalize names
+    magrittr::set_colnames(value = stringr::str_replace_all(string = colnames(data),
+                                                            pattern = "[-.]",
+                                                            replacement = "_")) |>
+    # interpolate strings
+    purrr::map(\(x) {
+      if (is.character(x)) {
+        purrr::map_chr(x,
+                       cli::pluralize)
+      } else {
+        x
+      }
+    }) |>
+    # gen files
+    purrr::pwalk(\(...) {
+
+      chunk_opts <- rlang::list2(...)
+      chunk_opts <- chunk_opts[names(chunk_opts) %in% methods::formalArgs(fn)]
+
+      rlang::inject(fn(!!!chunk_opts)) |>
+        brio::write_file(path = fs::path(path, chunk_opts$label,
+                                         ext = "qmd"))
+    })
+  
+  invisible(data)
+}
+```
+
+### `read_quarto_chunk_data`
+
+TODO:
+
+-   Write a JSON schema for the TOML structure and verify with `pal::toml_validate()`. Allow additional keys for max user flexibility.
+
+```{r}
+#' Read in Quarto code chunk data
+#'
+#' Reads in a [TOML](https://toml.io/en/latest) file containing structured figure or table code chunk data, suited to be fed to [gen_quarto_snips()].
+#'
+#' @param path Path to the TOML file containing structured figure or table code chunk data. A character scalar.
+#'
+#' @return `r pkgsnip::return_lbl("tibble")`
+#' @family quarto
+#' @export
+read_quarto_chunk_data <- function(path) {
+  
+  pal::toml_read(input = path) |>
+    purrr::imap(\(val, key) {
+      
+      rlang::inject(tibble::tibble(label = key,
+                                   !!!val)) %>%
+        magrittr::set_colnames(value = stringr::str_replace_all(string = colnames(.),
+                                                                pattern = "[-.]",
+                                                                replacement = "_"))
+    }) |>
+    purrr::list_rbind()
 }
 ```
 
