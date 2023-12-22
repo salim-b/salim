@@ -750,10 +750,10 @@ pandoc_tpl <- function(tpl = "quarto_mod.latex") {
 #' @export
 #'
 #' @examples
-#' salim::quarto_fig_chunk(body = "plot(mtcars)",
+#' salim::quarto_fig_chunk(body = "plot(cars)",
 #'                         label = "fig-mtcars",
-#'                         fig_cap = "Default plot for `mtcars`",
-#'                         layout_class = "screen") |>
+#'                         fig_cap = "Default plot for dataset `cars`",
+#'                         layout_class = "page") |>
 #'   cat()
 quarto_fig_chunk <- function(body,
                              label,

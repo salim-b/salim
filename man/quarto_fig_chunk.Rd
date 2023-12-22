@@ -88,10 +88,10 @@ Use \link{substitute} together with \code{\link[=deparse1]{deparse1()}} to conve
 }\if{html}{\out{</div>}}
 }
 \examples{
-salim::quarto_fig_chunk(body = "plot(mtcars)",
+salim::quarto_fig_chunk(body = "plot(cars)",
                         label = "fig-mtcars",
-                        fig_cap = "Default plot for `mtcars`",
-                        layout_class = "screen") |>
+                        fig_cap = "Default plot for dataset `cars`",
+                        layout_class = "page") |>
   cat()
 }
 \seealso{
