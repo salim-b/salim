@@ -10,9 +10,9 @@ editor_options:
 
 -   The chunks below have to be manually executed in order to regenerate the package data.
 
--   Although the datasets below are saved as ["internal data" in `R/sysdata.rda`](https://r-pkgs.org/data.html#sec-data-sysdata), they can still be
-    exported and documented (by documenting the dataset's quoted name in the main `.Rmd` source file – which only works when the dataset is also `@export`ed),
-    something [not explicitly mentioned](https://coolbutuseless.github.io/2018/12/10/r-packages-internal-and-external-data/) in the book [R
+-   Although the datasets below are saved as ["internal data" in `R/sysdata.rda`](https://r-pkgs.org/data.html#sec-data-sysdata), they can still be exported and
+    documented (by documenting the dataset's quoted name in the main `.Rmd` source file – which only works when the dataset is also `@export`ed), something [not
+    explicitly mentioned](https://coolbutuseless.github.io/2018/12/10/r-packages-internal-and-external-data/) in the book [R
     Packages](https://r-pkgs.org/data.html#sec-data-data). To do so, you first need to manually add the `export()` directive in the NAMESPACE file since
     roxygen2 won't add it automatically.
 
@@ -47,6 +47,18 @@ pkg_mgr_software <- list(
 )
 ```
 
+## `qmd_layout_classes`
+
+```{r}
+qmd_layout_classes <-
+  yay::gh_text_file(path = "src/resources/schema/definitions.yml",
+                    owner = "quarto-dev",
+                    name = "quarto-cli") |>
+  yaml::read_yaml(text = _) |>
+  purrr::keep(\(x) x$id == "page-column") |>
+  purrr::chuck(1L, "enum")
+```
+
 # Write data
 
 Save all the small data objects as a single internal file `R/sysdata.rda`. Note that when documenting them, they must be explicitly `@export`ed to be available
@@ -54,6 +66,7 @@ to package users.
 
 ```{r}
 usethis::use_data(pkg_mgr_software,
+                  qmd_layout_classes,
                   internal = TRUE,
                   overwrite = TRUE,
                   compress = "xz",

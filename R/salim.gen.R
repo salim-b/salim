@@ -19,6 +19,31 @@ utils::globalVariables(names = c(".",
                                  "name",
                                  "version_nr"))
 
+as_yaml_array <- function(...) {
+  
+  rlang::list2(...) %>%
+    purrr::list_flatten() %>%
+    # wrap chr vals in double quotes
+    purrr::map(~ {
+      if (is.character(.x)) {
+        pal::wrap_chr(.x)
+      } else if (is.logical(.x)) {
+        tolower(.x)
+      } else {
+        .x
+      }
+    }) %>%
+    paste0(collapse = ", ") %>%
+    paste0("[", ., "]")
+}
+
+escape_double_quotes <- function(x) {
+  
+  stringr::str_replace_all(string = x,
+                           pattern = '(^|[^\\\\])"',
+                           replacement = '\\1\\\\"')
+}
+
 pkg_mgr_hint <- function(software = names(pkg_mgr_software)) {
   
   software <- rlang::arg_match(software)
@@ -693,6 +718,144 @@ pandoc_tpl <- function(tpl = "quarto_mod.latex") {
   
   (pal::req_cached(url = glue::glue("https://gitlab.com/salim_b/pandoc/templates/-/raw/main/{tpl}?ref_type=heads&inline=false")) |>
       httr2::resp_body_string())
+}
+
+#' Assemble Quarto knitr figure chunk
+#'
+#' Assembles a [Quarto knitr figure chunk](https://quarto.org/docs/authoring/figures.html#computations).
+#'
+#' Use [substitute] together with [deparse1()] to convert \R expressions to a character scalar:
+#'
+#' ```r
+#' deparse1(expr = substitute(do_something()),
+#'          collapse = "\n")
+#' ```
+#'
+#' @param body \R code to insert into the code chunk's body. A character scalar.
+#' @param label Unique code chunk label. Set as Quarto's [`label`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A 
+#'   character scalar that starts with `"fig-"`.
+#' @param fig_cap Figure caption. Set as Quarto's [`fig-cap`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A character
+#'   scalar.
+#' @param fig_subcap Figure subcaptions. Set as Quarto's [`fig-subcap`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A
+#'   character vector.
+#' @param fig_pos LaTeX figure position arrangement to be used in `\begin{figure}[]`. Set as Quarto's
+#'   [`fig-pos`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A character scalar.
+#' @param layout_class Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for the figure output. Set as
+#'   Quarto's [`fig-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. One of
+#'   `r pal::as_md_val_list(qmd_layout_classes)`
+#'
+#' @return A character scalar.
+#' @family quarto
+#' @export
+#'
+#' @examples
+#' salim::quarto_fig_chunk(body = "plot(mtcars)",
+#'                         label = "fig-mtcars",
+#'                         fig_cap = "Default plot for `mtcars`",
+#'                         layout_class = "screen") |>
+#'   cat()
+quarto_fig_chunk <- function(body,
+                             label,
+                             fig_cap,
+                             fig_subcap = NULL,
+                             fig_pos = "H",
+                             layout_class = "body") {
+  
+  checkmate::assert_string(body)
+  checkmate::assert_string(label,
+                           pattern = "^fig-.+")
+  checkmate::assert_string(fig_cap)
+  checkmate::assert_character(fig_subcap,
+                              any.missing = FALSE,
+                              null.ok = TRUE)
+  layout_class <- rlang::arg_match(arg = layout_class,
+                                   values = qmd_layout_classes)
+  has_fig_subcap <- length(fig_subcap) > 0L
+  
+  # escape double quotes in (sub)caption and convert the latter to YAML single-line array
+  fig_cap %<>% escape_double_quotes()
+  fig_subcap %<>% escape_double_quotes()
+  
+  if (has_fig_subcap) fig_subcap %<>% as_yaml_array()
+  
+  # assemble code chunk
+  glue::glue(paste0(c("```{{r}}",
+                      "#| label: {label}",
+                      '#| fig-cap: "{fig_cap}"',
+                      '#| fig-subcap: {fig_subcap}'[has_fig_subcap],
+                      '#| fig-column: {layout_class}',
+                      '#| fig-pos: {fig_pos}',
+                      "",
+                      "{body}",
+                      "```"),
+                    collapse = "\n"))
+}
+
+#' Assemble Quarto knitr table chunk
+#'
+#' Assembles a [Quarto knitr table chunk](https://quarto.org/docs/authoring/tables.html#computations).
+#'
+#' Use [substitute] together with [deparse1()] to convert \R expressions to a character scalar:
+#'
+#' ```r
+#' deparse1(expr = substitute(do_something()),
+#'          collapse = "\n")
+#' ```
+#'
+#' @param body \R code to insert into the code chunk's body. A character scalar.
+#' @param label Unique code chunk label. Set as Quarto's [`label`](https://quarto.org/docs/reference/cells/cells-knitr.html#tables) code chunk option. A 
+#'   character scalar that starts with `"tbl-"`.
+#' @param tbl_cap Table caption. Set as Quarto's [`tbl-cap`](https://quarto.org/docs/reference/cells/cells-knitr.html#tables) code chunk option. A character
+#'   scalar.
+#' @param tbl_subcap Table subcaptions. Set as Quarto's [`tbl-subcap`](https://quarto.org/docs/reference/cells/cells-knitr.html#tables) code chunk option. A
+#'   character vector.
+#' @param layout_class Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for the figure output. Set as
+#'   Quarto's [`tbl-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. One of
+#'   `r pal::as_md_val_list(qmd_layout_classes)`
+#'
+#' @return A character scalar.
+#' @family quarto
+#' @export
+#'
+#' @examples
+#' salim::quarto_tbl_chunk(body = "knitr::kable(head(cars))",
+#'                         label = "tbl-head-cars",
+#'                         tbl_cap = "Head of dataset `cars`",
+#'                         layout_class = "margin") |>
+#'   cat()
+quarto_tbl_chunk <- function(body,
+                             label,
+                             tbl_cap,
+                             tbl_subcap = NULL,
+                             layout_class = "body") {
+  
+  checkmate::assert_string(body)
+  checkmate::assert_string(label,
+                           pattern = "^tbl-.+")
+  checkmate::assert_string(tbl_cap)
+  checkmate::assert_character(tbl_subcap,
+                              any.missing = FALSE,
+                              null.ok = TRUE)
+  layout_class <- rlang::arg_match(arg = layout_class,
+                                   values = qmd_layout_classes)
+  has_tbl_subcap <- length(tbl_subcap) > 0L
+  
+  # escape double quotes in (sub)caption and convert the latter to YAML single-line array
+  tbl_cap %<>% escape_double_quotes()
+  tbl_subcap %<>% escape_double_quotes()
+  
+  if (has_tbl_subcap) tbl_subcap %<>% as_yaml_array()
+  
+  # assemble code chunk
+  glue::glue(paste0(c("```{{r}}",
+                      "#| label: {label}",
+                      '#| tbl-cap: "{tbl_cap}"',
+                      '#| tbl-subcap: {tbl_subcap}'[has_tbl_subcap],
+                      '#| tbl-column: {layout_class}',
+                      "",
+                      "{body}",
+                      "```"),
+                    collapse = "\n"))
 }
 
 #' Level up R
