@@ -20,38 +20,20 @@ utils::globalVariables(names = c(".",
 
 ## Functions
 
-### `as_yaml_array`
-
-Rush job, most probably not fully conformant to the YAML spec...
+### `as_code_chunk_array`
 
 ```{r}
-as_yaml_array <- function(...) {
+as_code_chunk_array <- function(x) {
   
-  rlang::list2(...) %>%
-    purrr::list_flatten() %>%
-    # wrap chr vals in double quotes
-    purrr::map(~ {
-      if (is.character(.x)) {
-        pal::wrap_chr(.x)
-      } else if (is.logical(.x)) {
-        tolower(.x)
-      } else {
-        .x
-      }
-    }) %>%
-    paste0(collapse = ", ") %>%
-    paste0("[", ., "]")
-}
-```
-
-### `escape_double_quotes`
-
-```{r}
-escape_double_quotes <- function(x) {
+  if (length(x) == 1L) {
+    return(paste0("#|   - ", x))
+  }
   
-  stringr::str_replace_all(string = x,
-                           pattern = '(^|[^\\\\])"',
-                           replacement = '\\1\\\\"')
+  yaml::as.yaml(x) |>
+    stringr::str_split_1("\n") %>%
+    magrittr::extract(nchar(.) > 0L) %>%
+    paste0("#|   ", .,
+           collapse = "\n")
 }
 ```
 
@@ -866,9 +848,22 @@ TODO: Move these fns tod dedicated pkg *qrt*?
 #' @param fig_cap Figure caption. Set as Quarto's [`fig-cap`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A character
 #'   scalar.
 #' @param fig_subcap Figure subcaptions. Set as Quarto's [`fig-subcap`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A
-#'   character vector.
+#'   character vector, or `NULL` to omit.
+#' @param fig_width Width of the plot (in inches), to be used in the graphics device. Set as Quarto's
+#'   [`fig-width`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A numeric scalar, or `NULL` to omit.
+#' @param fig_height Height of the plot (in inches), to be used in the graphics device. Set as Quarto's
+#'   [`fig-height`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A numeric scalar, or `NULL` to omit.
 #' @param fig_pos LaTeX figure position arrangement to be used in `\begin{figure}[]`. Set as Quarto's
-#'   [`fig-pos`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A character scalar.
+#'   [`fig-pos`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A character scalar, or `NULL` to omit. Use `"false"` for
+#'   no figure position specifier, which is sometimes necessary with custom figure environments (such as `sidewaysfigure`).
+#' @param fig_link Hyperlink target for the figure. Set as Quarto's [`fig-link`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk
+#'   option. A character scalar, or `NULL` to omit.
+#' @param out_width Width of the plot in the output document, which can be different from its physical `fig_width`, i.e., plots can be scaled in the output
+#'   document. Set as Quarto's [`out-width`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A character scalar, or `NULL`
+#'   to omit.
+#' @param out_height Height of the plot in the output document, which can be different from its physical `fig_height`, i.e., plots can be scaled in the output
+#'   document. Set as Quarto's [`out-height`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A character scalar, or `NULL`
+#'   to omit.
 #' @param layout_class Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for the figure output. Set as
 #'   Quarto's [`fig-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. One of
 #'   `r pal::as_md_val_list(qmd_layout_classes)`
@@ -887,33 +882,64 @@ quarto_fig_chunk <- function(body,
                              label,
                              fig_cap,
                              fig_subcap = NULL,
+                             fig_width = NULL,
+                             fig_height = NULL,
                              fig_pos = "H",
+                             fig_link = NULL,
+                             out_width = NULL,
+                             out_height = NULL,
                              layout_class = "body") {
   
+  rlang::check_installed(pkg = "yaml",
+                         reason = pal::reason_pkg_required())
   checkmate::assert_string(body)
   checkmate::assert_string(label,
                            pattern = "^fig-.+")
-  checkmate::assert_string(fig_cap)
+  checkmate::assert_character(fig_cap,
+                              any.missing = FALSE,
+                              min.len = 1L,
+                              null.ok = TRUE)
   checkmate::assert_character(fig_subcap,
                               any.missing = FALSE,
                               null.ok = TRUE)
+  checkmate::assert_number(fig_width,
+                           lower = 0,
+                           null.ok = TRUE)
+  checkmate::assert_number(fig_height,
+                           lower = 0,
+                           null.ok = TRUE)
+  checkmate::assert_string(fig_pos,
+                           null.ok = TRUE)
+  checkmate::assert_string(fig_link,
+                           null.ok = TRUE)
+  checkmate::assert_string(out_width,
+                           null.ok = TRUE)
+  checkmate::assert_string(out_height,
+                           null.ok = TRUE)
   layout_class <- rlang::arg_match(arg = layout_class,
                                    values = qmd_layout_classes)
+  is_fig_cap_scalar <- length(fig_cap) == 1L
   has_fig_subcap <- length(fig_subcap) > 0L
   
-  # escape double quotes in (sub)caption and convert the latter to YAML single-line array
-  fig_cap %<>% escape_double_quotes()
-  fig_subcap %<>% escape_double_quotes()
-  
-  if (has_fig_subcap) fig_subcap %<>% as_yaml_array()
+  # convert to YAML array
+  if (has_fig_subcap) {
+    fig_subcap %<>% as_code_chunk_array()
+  }
   
   # assemble code chunk
   glue::glue(paste0(c("```{{r}}",
-                      "#| label: {label}",
-                      '#| fig-cap: "{fig_cap}"',
-                      '#| fig-subcap: {fig_subcap}'[has_fig_subcap],
-                      '#| fig-column: {layout_class}',
-                      '#| fig-pos: {fig_pos}',
+                      "#| label: {yaml::as.yaml(label)}",
+                      "#| fig-cap:",
+                      as_code_chunk_array(fig_cap),
+                      "#| fig-subcap:"[has_fig_subcap],
+                      fig_subcap,
+                      "#| fig-column: {layout_class}",
+                      "#| fig-width: {yaml::as.yaml(fig_width)}"[!is.null(fig_width)],
+                      "#| fig-height: {yaml::as.yaml(fig_height)}"[!is.null(fig_height)],
+                      "#| fig-pos: {fig_pos}"[!is.null(fig_pos)],
+                      "#| fig-link: {yaml::as.yaml(fig_link)}"[length(fig_link) > 0L],
+                      "#| out-width: {yaml::as.yaml(out_width)}"[!is.null(out_width)],
+                      "#| out-height: {yaml::as.yaml(out_height)}"[!is.null(out_height)],
                       "",
                       "{body}",
                       "```"),
@@ -942,6 +968,22 @@ quarto_fig_chunk <- function(body,
 #'   scalar.
 #' @param tbl_subcap Table subcaptions. Set as Quarto's [`tbl-subcap`](https://quarto.org/docs/reference/cells/cells-knitr.html#tables) code chunk option. A
 #'   character vector.
+#' @param tbl_colwidths Apply explicit table column widths for markdown grid tables and pipe tables that are more than columns characters wide (72 by default).
+#' 
+#'   Some formats (e.g. HTML) do an excellent job automatically sizing table columns and so don’t benefit much from column width specifications. Other formats
+#'   (e.g. LaTeX) require table column sizes in order to correctly flow longer cell content (this is a major reason why tables > 72 columns wide are assigned
+#'   explicit widths by Pandoc).
+#'   
+#'   This can be specified as:
+#'   
+#'   - `"auto"`: Apply markdown table column widths except when there is a hyperlink in the table (which tends to throw off automatic calculation of column
+#'     widths based on the markdown text width of cells). `"auto"` is the default for HTML output formats.
+#'     
+#'   - `"true"`: Always apply markdown table widths. `"true"` is the default for all non-HTML formats.
+#'  
+#'   - `"false"`: Never apply markdown table widths.
+#'  
+#'   - A numeric vector (e.g. `c(40, 30, 30)`): Array of explicit width percentages.
 #' @param layout_class Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for the figure output. Set as
 #'   Quarto's [`tbl-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. One of
 #'   `r pal::as_md_val_list(qmd_layout_classes)`
@@ -960,8 +1002,11 @@ quarto_tbl_chunk <- function(body,
                              label,
                              tbl_cap,
                              tbl_subcap = NULL,
+                             tbl_colwidths = NULL,
                              layout_class = "body") {
   
+  rlang::check_installed(pkg = "yaml",
+                         reason = pal::reason_pkg_required())
   checkmate::assert_string(body)
   checkmate::assert_string(label,
                            pattern = "^tbl-.+")
@@ -969,22 +1014,33 @@ quarto_tbl_chunk <- function(body,
   checkmate::assert_character(tbl_subcap,
                               any.missing = FALSE,
                               null.ok = TRUE)
+  is_str_tbl_colwidths <- checkmate::test_choice(tbl_colwidths,
+                                                 choices = c("auto", "true", "false"))
+  is_num_tbl_colwidths <- checkmate::test_numeric(tbl_colwidths,
+                                                  min.len = 1L)
+  if (!(is.null(tbl_colwidths) || is_str_tbl_colwidths || is_num_tbl_colwidths)) {
+    cli::cli_abort('{.arg tbl_colwidths} must be either one of {.val {"auto"}}, {.val {"true"}} or {.val {"false"}}, or a numeric vector.')
+  }
   layout_class <- rlang::arg_match(arg = layout_class,
                                    values = qmd_layout_classes)
   has_tbl_subcap <- length(tbl_subcap) > 0L
   
-  # escape double quotes in (sub)caption and convert the latter to YAML single-line array
-  tbl_cap %<>% escape_double_quotes()
-  tbl_subcap %<>% escape_double_quotes()
-  
-  if (has_tbl_subcap) tbl_subcap %<>% as_yaml_array()
+  # convert to YAML array
+  if (has_tbl_subcap) {
+    tbl_subcap %<>% as_code_chunk_array()
+  }
   
   # assemble code chunk
   glue::glue(paste0(c("```{{r}}",
-                      "#| label: {label}",
-                      '#| tbl-cap: "{tbl_cap}"',
-                      '#| tbl-subcap: {tbl_subcap}'[has_tbl_subcap],
-                      '#| tbl-column: {layout_class}',
+                      "#| label: {yaml::as.yaml(label)}",
+                      "#| tbl-cap:",
+                      as_code_chunk_array(tbl_cap),
+                      "#| tbl-subcap:"[has_tbl_subcap],
+                      tbl_subcap,
+                      "#| tbl-column: {layout_class}",
+                      "#| tbl-colwidths: {tbl_colwidths}"[is_str_tbl_colwidths],
+                      "#| tbl-colwidths:"[is_num_tbl_colwidths],
+                      as_code_chunk_array(tbl_colwidths)[is_num_tbl_colwidths],
                       "",
                       "{body}",
                       "```"),

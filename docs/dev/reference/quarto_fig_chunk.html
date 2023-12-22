@@ -53,7 +53,12 @@
 <span>  <span class="va">label</span>,</span>
 <span>  <span class="va">fig_cap</span>,</span>
 <span>  fig_subcap <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fig_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fig_height <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fig_pos <span class="op">=</span> <span class="st">"H"</span>,</span>
+<span>  fig_link <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  out_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  out_height <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  layout_class <span class="op">=</span> <span class="st">"body"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -76,12 +81,40 @@ scalar.</p></dd>
 
 <dt>fig_subcap</dt>
 <dd><p>Figure subcaptions. Set as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#figures" class="external-link"><code>fig-subcap</code></a> code chunk option. A
-character vector.</p></dd>
+character vector, or <code>NULL</code> to omit.</p></dd>
+
+
+<dt>fig_width</dt>
+<dd><p>Width of the plot (in inches), to be used in the graphics device. Set as Quarto's
+<a href="https://quarto.org/docs/reference/cells/cells-knitr.html#figures" class="external-link"><code>fig-width</code></a> code chunk option. A numeric scalar, or <code>NULL</code> to omit.</p></dd>
+
+
+<dt>fig_height</dt>
+<dd><p>Height of the plot (in inches), to be used in the graphics device. Set as Quarto's
+<a href="https://quarto.org/docs/reference/cells/cells-knitr.html#figures" class="external-link"><code>fig-height</code></a> code chunk option. A numeric scalar, or <code>NULL</code> to omit.</p></dd>
 
 
 <dt>fig_pos</dt>
 <dd><p>LaTeX figure position arrangement to be used in <code>\begin{figure}[]</code>. Set as Quarto's
-<a href="https://quarto.org/docs/reference/cells/cells-knitr.html#figures" class="external-link"><code>fig-pos</code></a> code chunk option. A character scalar.</p></dd>
+<a href="https://quarto.org/docs/reference/cells/cells-knitr.html#figures" class="external-link"><code>fig-pos</code></a> code chunk option. A character scalar, or <code>NULL</code> to omit. Use <code>"false"</code> for
+no figure position specifier, which is sometimes necessary with custom figure environments (such as <code>sidewaysfigure</code>).</p></dd>
+
+
+<dt>fig_link</dt>
+<dd><p>Hyperlink target for the figure. Set as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#figures" class="external-link"><code>fig-link</code></a> code chunk
+option. A character scalar, or <code>NULL</code> to omit.</p></dd>
+
+
+<dt>out_width</dt>
+<dd><p>Width of the plot in the output document, which can be different from its physical <code>fig_width</code>, i.e., plots can be scaled in the output
+document. Set as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#figures" class="external-link"><code>out-width</code></a> code chunk option. A character scalar, or <code>NULL</code>
+to omit.</p></dd>
+
+
+<dt>out_height</dt>
+<dd><p>Height of the plot in the output document, which can be different from its physical <code>fig_height</code>, i.e., plots can be scaled in the output
+document. Set as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#figures" class="external-link"><code>out-height</code></a> code chunk option. A character scalar, or <code>NULL</code>
+to omit.</p></dd>
 
 
 <dt>layout_class</dt>
@@ -134,7 +167,9 @@ Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```{r}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| label: fig-mtcars</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #| fig-cap: "Default plot for `mtcars`"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #| fig-cap:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #|   - Default plot for `mtcars`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| fig-column: screen</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| fig-pos: H</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

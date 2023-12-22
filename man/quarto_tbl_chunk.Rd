@@ -9,6 +9,7 @@ quarto_tbl_chunk(
   label,
   tbl_cap,
   tbl_subcap = NULL,
+  tbl_colwidths = NULL,
   layout_class = "body"
 )
 }
@@ -23,6 +24,21 @@ scalar.}
 
 \item{tbl_subcap}{Table subcaptions. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#tables}{\code{tbl-subcap}} code chunk option. A
 character vector.}
+
+\item{tbl_colwidths}{Apply explicit table column widths for markdown grid tables and pipe tables that are more than columns characters wide (72 by default).
+
+Some formats (e.g. HTML) do an excellent job automatically sizing table columns and so don’t benefit much from column width specifications. Other formats
+(e.g. LaTeX) require table column sizes in order to correctly flow longer cell content (this is a major reason why tables > 72 columns wide are assigned
+explicit widths by Pandoc).
+
+This can be specified as:
+\itemize{
+\item \code{"auto"}: Apply markdown table column widths except when there is a hyperlink in the table (which tends to throw off automatic calculation of column
+widths based on the markdown text width of cells). \code{"auto"} is the default for HTML output formats.
+\item \code{"true"}: Always apply markdown table widths. \code{"true"} is the default for all non-HTML formats.
+\item \code{"false"}: Never apply markdown table widths.
+\item A numeric vector (e.g. \code{c(40, 30, 30)}): Array of explicit width percentages.
+}}
 
 \item{layout_class}{Quarto \href{https://quarto.org/docs/authoring/article-layout.html#available-columns}{article layout class} for the figure output. Set as
 Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns}{\code{tbl-column}} code chunk option. One of

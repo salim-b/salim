@@ -53,6 +53,7 @@
 <span>  <span class="va">label</span>,</span>
 <span>  <span class="va">tbl_cap</span>,</span>
 <span>  tbl_subcap <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tbl_colwidths <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  layout_class <span class="op">=</span> <span class="st">"body"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -76,6 +77,19 @@ scalar.</p></dd>
 <dt>tbl_subcap</dt>
 <dd><p>Table subcaptions. Set as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#tables" class="external-link"><code>tbl-subcap</code></a> code chunk option. A
 character vector.</p></dd>
+
+
+<dt>tbl_colwidths</dt>
+<dd><p>Apply explicit table column widths for markdown grid tables and pipe tables that are more than columns characters wide (72 by default).</p>
+<p>Some formats (e.g. HTML) do an excellent job automatically sizing table columns and so don’t benefit much from column width specifications. Other formats
+(e.g. LaTeX) require table column sizes in order to correctly flow longer cell content (this is a major reason why tables &gt; 72 columns wide are assigned
+explicit widths by Pandoc).</p>
+<p>This can be specified as:</p><ul><li><p><code>"auto"</code>: Apply markdown table column widths except when there is a hyperlink in the table (which tends to throw off automatic calculation of column
+widths based on the markdown text width of cells). <code>"auto"</code> is the default for HTML output formats.</p></li>
+<li><p><code>"true"</code>: Always apply markdown table widths. <code>"true"</code> is the default for all non-HTML formats.</p></li>
+<li><p><code>"false"</code>: Never apply markdown table widths.</p></li>
+<li><p>A numeric vector (e.g. <code>c(40, 30, 30)</code>): Array of explicit width percentages.</p></li>
+</ul></dd>
 
 
 <dt>layout_class</dt>
@@ -128,7 +142,9 @@ Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```{r}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| label: tbl-head-cars</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #| tbl-cap: "Head of dataset `cars`"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #| tbl-cap:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #|   - Head of dataset `cars`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| tbl-column: margin</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> knitr::kable(head(cars))</span>
