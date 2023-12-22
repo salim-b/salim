@@ -979,18 +979,26 @@ gen_quarto_snips <- function(data,
   
   type <- rlang::arg_match(type)
   checkmate::assert_data_frame(data,
-                               any.missing = FALSE,
+                               all.missing = FALSE,
                                min.cols = 2L)
   checkmate::assert_path_for_output(path,
                                     overwrite = TRUE)
+  # normalize names
+  data %<>% magrittr::set_colnames(value = stringr::str_replace_all(string = colnames(.),
+                                                                    pattern = "[-.]",
+                                                                    replacement = "_"))
+  
+  if (!("body" %in% colnames(data))) cli::cli_abort("{.arg data} must contain a column {.var body}.")
+  if (!("label" %in% colnames(data))) cli::cli_abort("{.arg data} must contain a column {.var label}.")
+  if (!("fig_cap" %in% colnames(data))) cli::cli_abort("{.arg data} must contain a column {.var fig_cap}.")
+  if (anyNA(data$body)) cli::cli_abort("{.arg data} column {.var body} mustn't contain {.val {NA}} values.")
+  if (anyNA(data$label)) cli::cli_abort("{.arg data} column {.var label} mustn't contain {.val {NA}} values.")
+  if (anyNA(data$fig_cap)) cli::cli_abort("{.arg data} column {.var fig_cap} mustn't contain {.val {NA}} values.")
+  
   fn <- switch(type,
                fig = quarto_fig_chunk,
                tbl = quarto_tbl_chunk)
   data |>
-    # normalize names
-    magrittr::set_colnames(value = stringr::str_replace_all(string = colnames(data),
-                                                            pattern = "[-.]",
-                                                            replacement = "_")) |>
     # interpolate strings
     purrr::map(\(x) {
       if (is.character(x)) {
