@@ -546,6 +546,11 @@ decline_noun_de <- function(noun,
     result %<>% pal::when(stringr::str_detect(string = ., pattern = "(ss|\U00DF|x|z)$") ~ paste0(., "es"),
                           endsWith(., "s") ~ paste0(., "ses"),
                           ~ paste0(., "s"))
+    
+    # decline preceeding adjectives
+  } else if (case %in% c("genitive", "dative")) {
+    result %<>% stringr::str_replace_all(pattern = "e (?!\\s*$)",
+                                         replacement = "en ")
   }
   
   result
