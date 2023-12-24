@@ -981,8 +981,8 @@ gen_quarto_snips <- function(data,
   checkmate::assert_data_frame(data,
                                all.missing = FALSE,
                                min.cols = 2L)
-  checkmate::assert_path_for_output(path,
-                                    overwrite = TRUE)
+  fs::dir_create(path = path)
+  
   # normalize names
   data %<>% magrittr::set_colnames(value = stringr::str_replace_all(string = colnames(.),
                                                                     pattern = "[-.]",
