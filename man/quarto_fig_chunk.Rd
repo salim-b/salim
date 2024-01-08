@@ -45,7 +45,6 @@ Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-col
 \item \code{"screen"}
 \item \code{"screen-left"}
 \item \code{"screen-right"}
-\item \code{"screen-rightcolumn"}
 \item \code{"screen-inset"}
 \item \code{"screen-inset-shaded"}
 \item \code{"screen-inset-left"}
@@ -96,7 +95,7 @@ salim::quarto_fig_chunk(body = "plot(cars)",
 }
 \seealso{
 Other Quarto functions:
-\code{\link{gen_quarto_snips}()},
+\code{\link{quarto_chunks}()},
 \code{\link{quarto_tbl_chunk}()},
 \code{\link{read_quarto_chunk_data}()}
 }

@@ -1,0 +1,29 @@
+[fig-simple]
+label = "fig-simple"
+fig-cap = "A simple figure"
+fig-column = "page"
+fig-height = 8
+out-height = "800px"
+body = "plot(cars)"
+
+[fig-itr]
+itr_vars = [
+  { canton = "aargau", ballot_date = 2023-06-18, lvl = "cantonal", proposal_nr = 1 },
+  { canton = "aargau", ballot_date = 2023-06-18, lvl = "cantonal", proposal_nr = 3 },
+  { canton = "aargau", ballot_date = 2023-06-18, lvl = "federal",  proposal_nr = 2 }
+]
+label = "fig-likert_plot_agreement_arguments_{lvl}_proposal_{proposal_nr}"
+fig-cap = "Agreeement to pro and contra arguments in canton {canton} at {ballot_date}"
+fig-column = "page"
+fig-height = 8
+out-height = "800px"
+body = "insert_plot(id = glue::glue('likert_plot_agreement_arguments_{lvl}_proposal_{proposal_nr}'))"
+
+[fig-itr-r]
+itr_vars_r = "fokus::combos_proposal_main_motives(canton = 'aargau', ballot_date = '2023-06-18')"
+label = "fig-bar_plot_main_motive_{lvl}_{proposal_nr}_{type}"
+fig-cap = "Main motive of the {type} voters to proposal {proposal_nr}"
+fig-column = "page"
+fig-height = 8
+out-height = "800px"
+body = "insert_plot(id = glue::glue('bar_plot_main_motive_{lvl}_{proposal_nr}_{type}'))"

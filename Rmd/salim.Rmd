@@ -1067,96 +1067,175 @@ quarto_tbl_chunk <- function(body,
 }
 ```
 
-### `gen_quarto_snips`
+### `quarto_chunks`
 
 ```{r}
-#' Generate Quarto knitr code chunks from structured data
+#' Generate Quarto knitr code chunk snippets from structured data
 #'
-#' Generates Quarto knitr [figure][quarto_fig_chunk] or [table][quarto_tbl_chunk] code chunks from structured `data`.
-#'
-#' The column names of `data` can either correspond to [quarto_fig_chunk()]/[quarto_tbl_chunk()]'s argument names (in [snake
-#' case](https://en.wikipedia.org/wiki/Snake_case)), to [knitr's figure chunk option names](https://yihui.org/knitr/options/#plots) (period-separared) or
-#' directly to Quarto's
-#' [figure](https://quarto.org/docs/reference/cells/cells-knitr.html#figures)/[table](https://quarto.org/docs/reference/cells/cells-knitr.html#tables) code
-#' chunk option names (in [kebab case](https://en.wikipedia.org/wiki/Letter_case#Kebab_case)), they will be converted as needed. Additional column names are
-#' silently ignored.
+#' Generates Quarto Markdown (`.qmd`) file snippets with knitr [figure][quarto_fig_chunk] or [table][quarto_tbl_chunk] code chunks from structured `data`.
 #'
 #' The generated `.qmd` files are intended to be included in other Quarto documents via the built-in
 #' [`include`](https://quarto.org/docs/authoring/includes.html) shortcode.
 #'
+#' # Input `data`
+#'
+#' All `data` columns of type character are [cli::pluralize()]d, meaning literal curly brackets (`{` and `}`) need to be escaped by doubling them (to `{{` and
+#' `}}`).
+#' 
+#' The column names of `data` can either correspond to [quarto_fig_chunk()]/[quarto_tbl_chunk()]'s argument names (in [snake
+#' case](https://en.wikipedia.org/wiki/Snake_case)), to [knitr's figure chunk option names](https://yihui.org/knitr/options/#plots) (period-separared) or
+#' directly to Quarto's
+#' [figure](https://quarto.org/docs/reference/cells/cells-knitr.html#figures)/[table](https://quarto.org/docs/reference/cells/cells-knitr.html#tables) code
+#' chunk option names (in [kebab case](https://en.wikipedia.org/wiki/Letter_case#Kebab_case)) – they will be converted as needed.
+#' 
+#' Additional column names are silently ignored, except for the optional iteration variable columns `itr_vars` (of type list) and `itr_vars_r` (of type
+#' character).
+#' 
+#' # Iteration variables
+#' 
+#' Specifying iteration variables allows to produce multiple code chunks per `data` row. The iteration variables can be referred to in the other columns via
+#' [cli::pluralize()]'s string interpolation syntax (i.e. R code in curly brackets).
+#' 
+#' The `itr_vars` column must be a list of named lists (or `NULL` for no iteration on the respective rows). The `itr_vars_r` column allows to specify `itr_vars`
+#' as a string of R code (which must yield a list of named lists / `NULL`s when parsed and executed).
+#'
 #' @param data Input data as returned by [read_quarto_chunk_data()]. A dataframe where column names correspond to chunk options supported by
-#'   [quarto_fig_chunk()] or [quarto_tbl_chunk()], depending on `type`. Columns `body`, `label` and `fig_cap`/`tbl_cap` are mandatory.
-#' @param path Output directory where the generated figure chunk `.qmd` files are to be saved.
-#' @param type Quarto code chunk type. One of `r pal::enum_fn_param_defaults(param = "type", fn = gen_quarto_snips)`.
+#'   [quarto_fig_chunk()] or [quarto_tbl_chunk()] plus the optional iteration variable columns `itr_vars` and `itr_vars_r`. Columns `body`, `label` and
+#'   `fig_cap`/`tbl_cap` are mandatory. See section *Input `data`* for details.
+#' @param env Environment to evaluate iterations in (see section *Iteration variables* for details).
 #'
 #' @return `data`, invisibly.
 #' @family quarto
 #' @export
 #'
 #' @examples
-#' tmp_path <- fs::path_temp("example-gen_quarto_snips") |> fs::dir_create()
-#' 
+#' # data row without iterations
 #' tibble::tibble(label = "fig-cars",
 #'                fig_cap = "Today's ({lubridate::today()}) top figure",
 #'                fig_column = "page",
 #'                fig_height = 8L,
 #'                body = "plot(cars)") |>
-#'   tibble::add_row(label = "fig-mtcars",
-#'                   fig_cap = "More cars",
-#'                   fig_column = "screen",
-#'                   fig_height = 8L,
-#'                   body = "plot(mtcars)") |>
-#'   salim::gen_quarto_snips(type = "fig",
-#'                           path = tmp_path)
-#' 
-#' fs::dir_delete(tmp_path)
-gen_quarto_snips <- function(data,
-                             path,
-                             type = c("fig", "tbl")) {
+#'   salim::quarto_chunks()
+#'
+#' # data row with iteration variables specified directly as `itr_vars`
+#' tibble::tibble(itr_vars = list(list(v = "cyl"),
+#'                                list(v = "disp"),
+#'                                list(v = "hp")),
+#'                label = "fig-mpg-by-{v}",
+#'                fig_cap = "Motor Trend Car Road Tests: mpg per {v}",
+#'                fig_column = "screen",
+#'                fig_height = 8L,
+#'                body = "plot(x = mtcars$mpg, y = mtcars${v})") |>
+#'   salim::quarto_chunks()
+#'
+#' # data row with iteration variables specified indirectly as `itr_vars_r` code
+#' tibble::tibble(itr_vars_r = "purrr::map(colnames(mtcars)[5:7], \\(x) list(v = x))",
+#'                label = "fig-mpg-by-{v}",
+#'                fig_cap = "Motor Trend Car Road Tests: mpg per {v}",
+#'                fig_column = "screen",
+#'                fig_height = 8L,
+#'                body = "plot(x = mtcars$mpg, y = mtcars${v})") |>
+#'   salim::quarto_chunks()
+quarto_chunks <- function(data,
+                          env = parent.frame()) {
   
-  type <- rlang::arg_match(type)
   checkmate::assert_data_frame(data,
                                all.missing = FALSE,
                                min.cols = 2L)
-  fs::dir_create(path = path)
-  
   # normalize names
   data %<>% magrittr::set_colnames(value = stringr::str_replace_all(string = colnames(.),
                                                                     pattern = "[-.]",
                                                                     replacement = "_"))
-  
+  # ensure mandatory cols are present
   if (!("body" %in% colnames(data))) cli::cli_abort("{.arg data} must contain a column {.var body}.")
   if (!("label" %in% colnames(data))) cli::cli_abort("{.arg data} must contain a column {.var label}.")
   if (!("fig_cap" %in% colnames(data))) cli::cli_abort("{.arg data} must contain a column {.var fig_cap}.")
+  # ensure mandatory vals aren't NA
   if (anyNA(data$body)) cli::cli_abort("{.arg data} column {.var body} mustn't contain {.val {NA}} values.")
   if (anyNA(data$label)) cli::cli_abort("{.arg data} column {.var label} mustn't contain {.val {NA}} values.")
   if (anyNA(data$fig_cap)) cli::cli_abort("{.arg data} column {.var fig_cap} mustn't contain {.val {NA}} values.")
+  # ensure lbls are unique
+  if (data$label |>
+      # exclude iterated lbls
+      stringr::str_subset(pattern = "\\{[^{].*?\\}",
+                          negate = TRUE) |>
+      anyDuplicated()) {
+    cli::cli_abort("Labels in column {.var label} must be unique.")
+  }
+  # add empty `itr_vars` col if it's missing
+  if (!("itr_vars" %in% colnames(data))) {
+    data %<>% tibble::add_column(itr_vars = rep(x = list(NULL),
+                                                times = nrow(.))) 
+  }
+  # expand `itr_vars_r` to `itr_vars` (one-to-many rows)
+  if ("itr_vars_r" %in% colnames(data)) {
+    
+    data %<>%
+      purrr::pmap(\(itr_vars, itr_vars_r, ...) {
+        
+        if (!is.na(itr_vars_r)) {
+          
+          if (!is.null(itr_vars)) {
+            cli::cli_abort("A {.arg data} row cannot have both {.var itr_vars} and {.var itr_vars_r} set at the same time.")
+          }
+          
+          itr_vars <- eval(parse(text = itr_vars_r),
+                           envir = env)
+        } else {
+          itr_vars <- list(itr_vars)
+        }
+        
+        tibble::tibble(itr_vars = itr_vars,
+                       ...)
+      }) %>%
+      purrr::list_rbind()
+  }
   
-  fn <- switch(type,
-               fig = quarto_fig_chunk,
-               tbl = quarto_tbl_chunk)
+  ## check lbls and itr_vars congruency
+  has_itr_lbl <- stringr::str_detect(string = data$label,
+                                     pattern = "\\{[^{].*?\\}")
+  has_itr_col <- !purrr::map_lgl(data$itr_vars,
+                                 is.null)
+  if (any(has_itr_col & !has_itr_lbl)) {
+    cli::cli_abort("All iterated {.arg data} entries must use variables via glue string interpolation in their {.var label}.")
+  }
+  if (any(has_itr_lbl & !has_itr_col)) {
+    cli::cli_abort("All data entries with a {.arg label} to be iterated must have proper {.var itr_vars} set.")
+  }
+  
   data |>
-    # interpolate strings
-    purrr::map(\(x) {
-      if (is.character(x)) {
-        purrr::map_chr(x,
-                       cli::pluralize)
-      } else {
-        x
+    purrr::pmap(\(...) {
+      
+      args <- rlang::list2(...)
+      
+      # interpolate chunk opts
+      if (!is.null(args$itr_vars)) {
+        
+        if (!rlang::is_named(args$itr_vars)) {
+          cli::cli_abort("Elements of column {.var itr_vars} must be named lists.")
+        }
+        
+        args %<>% purrr::map(\(arg) {
+          if (is.character(arg)) {
+            rlang::inject(cli::pluralize(arg,
+                                         !!!args$itr_vars,
+                                         .envir = env))
+          } else {
+            arg
+          }
+        })
       }
-    }) |>
-    # gen files
-    purrr::pwalk(\(...) {
-
-      chunk_opts <- rlang::list2(...)
-      chunk_opts <- chunk_opts[names(chunk_opts) %in% methods::formalArgs(fn)]
-
-      rlang::inject(fn(!!!chunk_opts)) |>
-        brio::write_file(path = fs::path(path, chunk_opts$label,
-                                         ext = "qmd"))
+      
+      fn <- switch(stringr::str_extract(string = args$label,
+                                        pattern = "^.{3}"),
+                   fig = quarto_fig_chunk,
+                   tbl = quarto_tbl_chunk,
+                   cli::cli_abort("Labels must start with either {.val fig-} or {.val tbl-}."))
+      
+      chunk_opts <- args[names(args) %in% methods::formalArgs(fn)]
+      
+      rlang::list2(!!chunk_opts$label := rlang::inject(fn(!!!chunk_opts)))
     })
-  
-  invisible(data)
 }
 ```
 
@@ -1169,7 +1248,7 @@ TODO:
 ```{r}
 #' Read in Quarto code chunk data
 #'
-#' Reads in a [TOML](https://toml.io/en/latest) file containing structured figure or table code chunk data, suited to be fed to [gen_quarto_snips()].
+#' Reads in a [TOML](https://toml.io/en/latest) file containing structured figure or table code chunk data, suited to be fed to [quarto_chunks()].
 #'
 #' @param path Path to the TOML file containing structured figure or table code chunk data. A character scalar.
 #'

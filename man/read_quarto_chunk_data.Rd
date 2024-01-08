@@ -13,11 +13,11 @@ read_quarto_chunk_data(path)
 A \link[tibble:tbl_df-class]{tibble}.
 }
 \description{
-Reads in a \href{https://toml.io/en/latest}{TOML} file containing structured figure or table code chunk data, suited to be fed to \code{\link[=gen_quarto_snips]{gen_quarto_snips()}}.
+Reads in a \href{https://toml.io/en/latest}{TOML} file containing structured figure or table code chunk data, suited to be fed to \code{\link[=quarto_chunks]{quarto_chunks()}}.
 }
 \seealso{
 Other Quarto functions:
-\code{\link{gen_quarto_snips}()},
+\code{\link{quarto_chunks}()},
 \code{\link{quarto_fig_chunk}()},
 \code{\link{quarto_tbl_chunk}()}
 }

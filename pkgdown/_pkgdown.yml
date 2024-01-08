@@ -46,7 +46,7 @@ reference:
 - contents:
   - quarto_fig_chunk
   - quarto_tbl_chunk
-  - gen_quarto_snips
+  - quarto_chunks
   - read_quarto_chunk_data
 - title: Development environment currentness
 - contents:

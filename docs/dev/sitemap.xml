@@ -25,9 +25,6 @@
     <loc>https://salim.rpkg.dev/dev/reference/download_pandoc_binaries.html</loc>
   </url>
   <url>
-    <loc>https://salim.rpkg.dev/dev/reference/gen_quarto_snips.html</loc>
-  </url>
-  <url>
     <loc>https://salim.rpkg.dev/dev/reference/index.html</loc>
   </url>
   <url>
@@ -62,6 +59,9 @@
   </url>
   <url>
     <loc>https://salim.rpkg.dev/dev/reference/prettify_datetime.html</loc>
+  </url>
+  <url>
+    <loc>https://salim.rpkg.dev/dev/reference/quarto_chunks.html</loc>
   </url>
   <url>
     <loc>https://salim.rpkg.dev/dev/reference/quarto_fig_chunk.html</loc>
