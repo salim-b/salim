@@ -5,12 +5,14 @@ editor_options:
 
 # INTERNAL
 
-## Avoid `R CMD check` notes about undefined global objects used in magrittr pipes
+## Avoid `R CMD check` NOTES about undefined global objects
 
-cf. <https://github.com/tidyverse/magrittr/issues/29#issuecomment-74313262>
+cf. <https://github.com/tidyverse/magrittr/issues/29#issuecomment-74313262>.
 
 ```{r}
 utils::globalVariables(names = c(".",
+                                 ":=",
+                                 # other
                                  "download_url",
                                  "filename",
                                  "id",
