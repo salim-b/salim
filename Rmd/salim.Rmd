@@ -1179,8 +1179,7 @@ read_quarto_chunk_data <- function(path) {
   pal::toml_read(input = path) |>
     purrr::imap(\(val, key) {
       
-      rlang::inject(tibble::tibble(label = key,
-                                   !!!val)) %>%
+      rlang::inject(tibble::tibble(!!!val)) %>%
         magrittr::set_colnames(value = stringr::str_replace_all(string = colnames(.),
                                                                 pattern = "[-.]",
                                                                 replacement = "_"))

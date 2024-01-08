@@ -2,7 +2,7 @@
 # See `README.md#r-markdown-format` for more information on the literate programming approach used applying the R Markdown format.
 
 # salim: A Wild Mix of Functions Serving Various Purposes
-# Copyright (C) 2023 Salim Brüggemann
+# Copyright (C) 2024 Salim Brüggemann
 # 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or any later version.
@@ -1036,8 +1036,7 @@ read_quarto_chunk_data <- function(path) {
   pal::toml_read(input = path) |>
     purrr::imap(\(val, key) {
       
-      rlang::inject(tibble::tibble(label = key,
-                                   !!!val)) %>%
+      rlang::inject(tibble::tibble(!!!val)) %>%
         magrittr::set_colnames(value = stringr::str_replace_all(string = colnames(.),
                                                                 pattern = "[-.]",
                                                                 replacement = "_"))
