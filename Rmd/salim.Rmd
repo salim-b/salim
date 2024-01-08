@@ -1235,7 +1235,8 @@ quarto_chunks <- function(data,
       chunk_opts <- args[names(args) %in% methods::formalArgs(fn)]
       
       rlang::list2(!!chunk_opts$label := rlang::inject(fn(!!!chunk_opts)))
-    })
+    }) |>
+    purrr::list_flatten()
 }
 ```
 

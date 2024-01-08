@@ -109,8 +109,7 @@ as a string of R code (which must yield a list of named lists / <code>NULL</code
 <span class="r-in"><span>               fig_height <span class="op">=</span> <span class="fl">8L</span>,</span></span>
 <span class="r-in"><span>               body <span class="op">=</span> <span class="st">"plot(cars)"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">salim</span><span class="fu">::</span><span class="fu">quarto_chunks</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$`fig-cars`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`fig-cars`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```{r}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| label: fig-cars</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| fig-cap:</span>
@@ -121,7 +120,6 @@ as a string of R code (which must yield a list of named lists / <code>NULL</code
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> plot(cars)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
@@ -135,8 +133,7 @@ as a string of R code (which must yield a list of named lists / <code>NULL</code
 <span class="r-in"><span>               fig_height <span class="op">=</span> <span class="fl">8L</span>,</span></span>
 <span class="r-in"><span>               body <span class="op">=</span> <span class="st">"plot(x = mtcars$mpg, y = mtcars${v})"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">salim</span><span class="fu">::</span><span class="fu">quarto_chunks</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$`fig-mpg-by-cyl`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`fig-mpg-by-cyl`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```{r}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| label: fig-mpg-by-cyl</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| fig-cap:</span>
@@ -149,9 +146,7 @@ as a string of R code (which must yield a list of named lists / <code>NULL</code
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$`fig-mpg-by-disp`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`fig-mpg-by-disp`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```{r}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| label: fig-mpg-by-disp</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| fig-cap:</span>
@@ -164,9 +159,7 @@ as a string of R code (which must yield a list of named lists / <code>NULL</code
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]$`fig-mpg-by-hp`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`fig-mpg-by-hp`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```{r}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| label: fig-mpg-by-hp</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| fig-cap:</span>
@@ -179,7 +172,6 @@ as a string of R code (which must yield a list of named lists / <code>NULL</code
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># data row with iteration variables specified indirectly as `itr_vars_r` code</span></span></span>
 <span class="r-in"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>itr_vars_r <span class="op">=</span> <span class="st">"purrr::map(colnames(mtcars)[5:7], \\(x) list(v = x))"</span>,</span></span>
@@ -189,8 +181,7 @@ as a string of R code (which must yield a list of named lists / <code>NULL</code
 <span class="r-in"><span>               fig_height <span class="op">=</span> <span class="fl">8L</span>,</span></span>
 <span class="r-in"><span>               body <span class="op">=</span> <span class="st">"plot(x = mtcars$mpg, y = mtcars${v})"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">salim</span><span class="fu">::</span><span class="fu">quarto_chunks</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]$`fig-mpg-by-drat`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`fig-mpg-by-drat`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```{r}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| label: fig-mpg-by-drat</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| fig-cap:</span>
@@ -203,9 +194,7 @@ as a string of R code (which must yield a list of named lists / <code>NULL</code
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]$`fig-mpg-by-wt`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`fig-mpg-by-wt`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```{r}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| label: fig-mpg-by-wt</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| fig-cap:</span>
@@ -218,9 +207,7 @@ as a string of R code (which must yield a list of named lists / <code>NULL</code
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]]$`fig-mpg-by-qsec`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`fig-mpg-by-qsec`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```{r}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| label: fig-mpg-by-qsec</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| fig-cap:</span>
@@ -231,7 +218,6 @@ as a string of R code (which must yield a list of named lists / <code>NULL</code
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> plot(x = mtcars$mpg, y = mtcars$qsec)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
