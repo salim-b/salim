@@ -1154,14 +1154,6 @@ quarto_chunks <- function(data,
   if (anyNA(data$body)) cli::cli_abort("{.arg data} column {.var body} mustn't contain {.val {NA}} values.")
   if (anyNA(data$label)) cli::cli_abort("{.arg data} column {.var label} mustn't contain {.val {NA}} values.")
   if (anyNA(data$fig_cap)) cli::cli_abort("{.arg data} column {.var fig_cap} mustn't contain {.val {NA}} values.")
-  # ensure lbls are unique
-  if (data$label |>
-      # exclude iterated lbls
-      stringr::str_subset(pattern = "\\{[^{].*?\\}",
-                          negate = TRUE) |>
-      anyDuplicated()) {
-    cli::cli_abort("Labels in column {.var label} must be unique.")
-  }
   # add empty `itr_vars` col if it's missing
   if (!("itr_vars" %in% colnames(data))) {
     data %<>% tibble::add_column(itr_vars = rep(x = list(NULL),
@@ -1191,16 +1183,24 @@ quarto_chunks <- function(data,
       purrr::list_rbind()
   }
   
-  ## check lbls and itr_vars congruency
+  # ensure lbls are unique
+  ## exclude iterated lbls
+  dupl_lbls <- stringr::str_subset(string = data$label,
+                                   pattern = "\\{[^{].*?\\}",
+                                   negate = TRUE)
+  ix_dupl_lbls <- which(duplicated(dupl_lbls))
+  
+  if (length(ix_dupl_lbls) > 0L) {
+    cli::cli_abort("Labels in column {.var label} must be unique, which the following label{?s} {?is/are} not: {.val {unique(dupl_lbls[ix_dupl_lbls])}}")
+  }
+  
+  ## ensure lbls and itr_vars congruency
   has_itr_lbl <- stringr::str_detect(string = data$label,
                                      pattern = "\\{[^{].*?\\}")
   has_itr_col <- !purrr::map_lgl(data$itr_vars,
                                  is.null)
-  if (any(has_itr_col & !has_itr_lbl)) {
-    cli::cli_abort("All iterated {.arg data} entries must use variables via glue string interpolation in their {.var label}.")
-  }
   if (any(has_itr_lbl & !has_itr_col)) {
-    cli::cli_abort("All data entries with a {.arg label} to be iterated must have proper {.var itr_vars} set.")
+    cli::cli_abort("All {.arg data} rows with a {.arg label} to be iterated must have proper {.var itr_vars} set.")
   }
   
   data |>
