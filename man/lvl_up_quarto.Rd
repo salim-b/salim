@@ -21,8 +21,8 @@ multiple users of the same code (e.g. contributors to a specific Quarto project)
 }
 \seealso{
 Other development environment currentness functions:
-\code{\link{lvl_up_rstudio}()},
 \code{\link{lvl_up_r}()},
+\code{\link{lvl_up_rstudio}()},
 \code{\link{update_rpkgs}()},
 \code{\link{update_salims_pkgs}()},
 \code{\link{update_zdaarau_pkgs}()}

@@ -6,7 +6,8 @@
 \usage{
 update_rpkgs(
   pkgs = c("pal", "pkgpins", "pkgpurl", "pkgsnip", "plotlee", "qstnr", "rstd",
-    "swissmuni", "tocr", "yay")
+    "swissmuni", "tocr", "yay"),
+  from_cran = FALSE
 )
 }
 \arguments{
@@ -23,18 +24,22 @@ update_rpkgs(
 \item \code{"tocr"}
 \item \code{"yay"}
 }}
+
+\item{from_cran}{Whether or not to install \code{pkgs} from a \href{https://en.wikipedia.org/wiki/R_package#Comprehensive_R_Archive_Network_(CRAN)}{CRAN} repository
+if possible. The repository URLs set in the \code{\link[=options]{repos}} \R option are used by default, with fallback to \verb{https://cloud.r-project.org/}. If \code{FALSE},
+the latest \emph{development} versions are always installed, regardless of whether \code{pkgs} are available on CRAN or not.}
 }
 \value{
 \code{pkgs}, invisibly.
 }
 \description{
-Installs/updates \R packages from \href{https://gitlab.com/rpkg.dev}{rpkg.dev} to the latest development version.
+Installs/updates \R packages from \href{https://gitlab.com/rpkg.dev}{rpkg.dev} to the latest (development) version.
 }
 \seealso{
 Other development environment currentness functions:
 \code{\link{lvl_up_quarto}()},
-\code{\link{lvl_up_rstudio}()},
 \code{\link{lvl_up_r}()},
+\code{\link{lvl_up_rstudio}()},
 \code{\link{update_salims_pkgs}()},
 \code{\link{update_zdaarau_pkgs}()}
 }

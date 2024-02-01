@@ -27,11 +27,11 @@ where a masculine noun gets an \code{n} or \code{en} ending attached in the accu
 \seealso{
 Other spoken language functions:
 \code{\link{add_definite_article_de}()},
-\code{\link{definite_article_de_declined}()},
 \code{\link{definite_article_de}()},
+\code{\link{definite_article_de_declined}()},
 \code{\link{n_ify}()},
-\code{\link{prettify_datetime}()},
 \code{\link{prettify_date}()},
+\code{\link{prettify_datetime}()},
 \code{\link{rank_nr}()},
 \code{\link{write_out_n}()}
 }

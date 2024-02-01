@@ -32,10 +32,10 @@ n_ify("This is a absolute disaster, such a error.")
 Other spoken language functions:
 \code{\link{add_definite_article_de}()},
 \code{\link{decline_noun_de}()},
-\code{\link{definite_article_de_declined}()},
 \code{\link{definite_article_de}()},
-\code{\link{prettify_datetime}()},
+\code{\link{definite_article_de_declined}()},
 \code{\link{prettify_date}()},
+\code{\link{prettify_datetime}()},
 \code{\link{rank_nr}()},
 \code{\link{write_out_n}()}
 }

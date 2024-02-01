@@ -33,8 +33,8 @@ salim:::prettify_datetime("2021-12-21T00:00:01Z")
 Other spoken language functions:
 \code{\link{add_definite_article_de}()},
 \code{\link{decline_noun_de}()},
-\code{\link{definite_article_de_declined}()},
 \code{\link{definite_article_de}()},
+\code{\link{definite_article_de_declined}()},
 \code{\link{n_ify}()},
 \code{\link{prettify_date}()},
 \code{\link{rank_nr}()},

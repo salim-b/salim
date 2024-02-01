@@ -75,17 +75,17 @@ pkg_mgr_hint <- function(software = names(pkg_mgr_software)) {
 pkg_mgr_prose <- function(software,
                           pkg_mgrs = c("brew", "scoop", "choco")) {
   pkg_mgr_names <-
-    pkg_mgrs %>%
+    pkg_mgrs |>
     dplyr::case_match("brew" ~ "Homebrew",
                       "scoop" ~ "Scoop",
                       "choco" ~ "Chocolatey")
   
-  pkg_mgr_software %>%
-    purrr::chuck(software) %>%
-    purrr::keep_at(at = pkg_mgrs) %>%
+  pkg_mgr_software |>
+    purrr::chuck(software) |>
+    purrr::keep_at(at = pkg_mgrs) |>
     purrr::map2_chr(.y = pkg_mgr_names,
-                    .f = ~ paste0(.y, " ({.code ", .x$cmd, "})")) %>%
-    pal::prose_ls(last_sep = " or ") %>%
+                    .f = \(x, y) paste0(y, " ({.code ", x$cmd, "})")) |>
+    pal::enum_str(sep2 = " or ") |>
     pal::when(length(.) > 0L ~ paste0(" ", software, " is also available via ", ., "."),
               ~ "")
 }
@@ -373,9 +373,9 @@ write_out_n <- function(n,
 n_ify <- function(x) {
   
   purrr::map_chr(.x = x,
-                 .f = stringr::str_replace_all,
-                 pattern = "(^[Aa]| a)(?= [AaEeOoIi]\\w+)",
-                 replacement = "\\1n")
+                 .f = \(s) stringr::str_replace_all(string = s,
+                                                    pattern = "(^[Aa]| a)(?= [AaEeOoIi]\\w+)",
+                                                    replacement = "\\1n"))
 }
 ```
 
@@ -508,17 +508,17 @@ add_definite_article_de <- function(preposition,
   
   if (gender == "feminine") {
     
-    preposition %>% pal::when(stringr::str_to_lower(.) == "zu" ~ paste0(., "r"),
-                              ~ paste0(., " ", definite_article_de(gender = "feminine",
-                                                                   case = "dative")))
+    preposition |> pal::when(stringr::str_to_lower(.) == "zu" ~ paste0(., "r"),
+                             ~ paste0(., " ", definite_article_de(gender = "feminine",
+                                                                  case = "dative")))
   } else {
     
-    preposition %>% pal::when(stringr::str_to_lower(.) %in% c("bei", "zu") ~ paste0(., "m"),
-                              stringr::str_to_lower(.) %in% c("in", "an") ~ stringr::str_replace(string = .,
-                                                                                                 pattern = "n$",
-                                                                                                 replacement = "m"),
-                              ~ paste0(., " ", definite_article_de(gender = "masculine",
-                                                                   case = "dative")))
+    preposition |> pal::when(stringr::str_to_lower(.) %in% c("bei", "zu") ~ paste0(., "m"),
+                             stringr::str_to_lower(.) %in% c("in", "an") ~ stringr::str_replace(string = .,
+                                                                                                pattern = "n$",
+                                                                                                replacement = "m"),
+                             ~ paste0(., " ", definite_article_de(gender = "masculine",
+                                                                  case = "dative")))
   }
 }
 ```
@@ -625,25 +625,25 @@ download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
   path_tmp <- fs::path_temp()
   
   assets <-
-    pandoc_release_assets(release_id = release_id) %>%
+    pandoc_release_assets(release_id = release_id) |>
     dplyr::filter(stringr::str_detect(string = filename,
-                                      pattern = paste0("(?i)", pal::fuse_regex(os), "(-(amd64|x86_64))?\\.(zip|tar\\.gz)"))) %>%
+                                      pattern = paste0("(?i)", pal::fuse_regex(os), "(-(amd64|x86_64))?\\.(zip|tar\\.gz)"))) |>
     dplyr::mutate(download_path = fs::path(path_tmp, filename))
   
   # download assets to tmp dir
   purrr::walk2(.x = assets$download_url,
                .y = assets$download_path,
-               .f = utils::download.file,
-               method = "auto",
-               mode = "wb",
-               cacheOK = TRUE,
-               quiet = TRUE)
-  
+               .f = \(url, path) utils::download.file(url = url,
+                                                      destfile = path,
+                                                      method = "auto",
+                                                      mode = "wb",
+                                                      cacheOK = TRUE,
+                                                      quiet = TRUE))
   # extract binaries to tmp dir
-  assets %>%
-    dplyr::select(-download_url) %>%
-    as.list() %>%
-    purrr::pwalk(.f = function(filename, os, download_path) {
+  assets |>
+    dplyr::select(-download_url) |>
+    as.list() |>
+    purrr::pwalk(.f = \(filename, os, download_path) {
       
       path_os_tmp <- fs::path(path_tmp, "pandoc", os)
       
@@ -662,7 +662,7 @@ download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
         fs::dir_ls(path = path_os_tmp,
                    type = "file",
                    recurse = TRUE,
-                   all = TRUE) %>%
+                   all = TRUE) |>
           fs::file_move(new_path = path_os_tmp)
       }
       
@@ -672,14 +672,14 @@ download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
       fs::dir_ls(path = path_os_tmp,
                  regexp = "[\\/]pandoc(\\.exe)?$",
                  all = TRUE,
-                 invert = TRUE) %>%
+                 invert = TRUE) |>
         fs::file_delete()
     })
   
   # move binaries to final dir
   fs::dir_create(path = fs::path(path, "pandoc"))
   
-  path_tmp %>%
+  path_tmp |>
     fs::path("pandoc") %T>%
     fs::dir_copy(new_path = fs::path(path, "pandoc"),
                  overwrite = overwrite) %>%
@@ -734,8 +734,8 @@ pandoc_version_latest <- function() {
          owner = "jgm",
          repo = "pandoc",
          .method = "GET") %$%
-    name %>%
-    stringr::str_extract(pattern = "\\d+(\\.\\d+)*") %>%
+    name |>
+    stringr::str_extract(pattern = "\\d+(\\.\\d+)*") |>
     as.numeric_version()
 }
 ```
@@ -763,13 +763,13 @@ pandoc_releases <- function() {
          owner = "jgm",
          repo = "pandoc",
          .method = "GET",
-         .limit = Inf) %>%
-    purrr::map(~ tibble::tibble(version_nr =
-                                  .x$name %>%
-                                  stringr::str_extract(pattern = "\\d+(\\.\\d+)*") %>%
-                                  as.numeric_version(),
-                                release_id = .x$id)) %>%
-    purrr::list_rbind() %>%
+         .limit = Inf) |>
+    purrr::map(\(x) tibble::tibble(version_nr =
+                                     x$name |>
+                                     stringr::str_extract(pattern = "\\d+(\\.\\d+)*") |>
+                                     as.numeric_version(),
+                                   release_id = x$id)) |>
+    purrr::list_rbind() |>
     dplyr::arrange(version_nr)
 }
 ```
@@ -799,14 +799,14 @@ pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
          repo = "pandoc",
          release_id = release_id,
          .method = "GET") |>
-    purrr::map(~ tibble::tibble(filename = .x$name,
-                                os =
-                                  .x$name |>
-                                  stringr::str_extract(pattern = "(?i)(linux|macos|windows|\\.deb$)") |>
-                                  stringr::str_to_lower() |>
-                                  stringr::str_replace(pattern = stringr::fixed(".deb"),
-                                                       replacement = "linux"),
-                                download_url = .x$browser_download_url)) |>
+    purrr::map(\(x) tibble::tibble(filename = x$name,
+                                   os =
+                                     x$name |>
+                                     stringr::str_extract(pattern = "(?i)(linux|macos|windows|\\.deb$)") |>
+                                     stringr::str_to_lower() |>
+                                     stringr::str_replace(pattern = stringr::fixed(".deb"),
+                                                          replacement = "linux"),
+                                   download_url = x$browser_download_url)) |>
     purrr::list_rbind()
 }
 ```
@@ -988,7 +988,8 @@ quarto_fig_chunk <- function(body,
 #' @param tbl_column Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for the figure output. Set as
 #'   Quarto's [`tbl-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. One of
 #'   `r pal::as_md_val_list(qmd_layout_classes)`
-#' @param tbl_colwidths Apply explicit table column widths for markdown grid tables and pipe tables that are more than columns characters wide (72 by default).
+#' @param tbl_colwidths Apply explicit table column widths for Markdown [grid tables](https://pandoc.org/MANUAL.html#extension-grid_tables) and [pipe
+#'   tables](https://pandoc.org/MANUAL.html#extension-pipe_tables) that are more than columns characters wide (72 by default).
 #' 
 #'   Some formats (e.g. HTML) do an excellent job automatically sizing table columns and so don’t benefit much from column width specifications. Other formats
 #'   (e.g. LaTeX) require table column sizes in order to correctly flow longer cell content (this is a major reason why tables > 72 columns wide are assigned
@@ -996,12 +997,12 @@ quarto_fig_chunk <- function(body,
 #'   
 #'   This can be specified as:
 #'   
-#'   - `"auto"`: Apply markdown table column widths except when there is a hyperlink in the table (which tends to throw off automatic calculation of column
-#'     widths based on the markdown text width of cells). `"auto"` is the default for HTML output formats.
+#'   - `"auto"`: Apply Markdown table column widths except when there is a hyperlink in the table (which tends to throw off automatic calculation of column
+#'     widths based on the Markdown text width of cells). `"auto"` is the default for HTML output formats.
 #'     
-#'   - `"true"`: Always apply markdown table widths. `"true"` is the default for all non-HTML formats.
+#'   - `"true"`: Always apply Markdown table widths. `"true"` is the default for all non-HTML formats.
 #'  
-#'   - `"false"`: Never apply markdown table widths.
+#'   - `"false"`: Never apply Markdown table widths.
 #'  
 #'   - A numeric vector (e.g. `c(40, 30, 30)`): Array of explicit width percentages.
 #'
@@ -1300,8 +1301,8 @@ lvl_up_r <- function(path_min_vrsn,
   if (fs::file_exists(path_min_vrsn)) {
     
     min_vrsn <-
-      path_min_vrsn %>%
-      brio::read_lines(n = 1L) %>%
+      path_min_vrsn |>
+      brio::read_lines(n = 1L) |>
       as.package_version()
     
   } else {
@@ -1310,7 +1311,7 @@ lvl_up_r <- function(path_min_vrsn,
   
   current_vrsn <-
     R.Version() %$%
-    glue::glue("{major}.{minor}") %>%
+    glue::glue("{major}.{minor}") |>
     as.package_version()
   
   if (isTRUE(current_vrsn < min_vrsn)) {
@@ -1381,8 +1382,8 @@ lvl_up_rstudio <- function(path_min_vrsn,
     if (fs::file_exists(path_min_vrsn)) {
       
       min_vrsn <-
-        path_min_vrsn %>%
-        brio::read_lines(n = 1L) %>%
+        path_min_vrsn |>
+        brio::read_lines(n = 1L) |>
         as.package_version()
       
     } else {
@@ -1390,7 +1391,7 @@ lvl_up_rstudio <- function(path_min_vrsn,
     }
     
     current_vrsn <-
-      rstudioapi::versionInfo() %>%
+      rstudioapi::versionInfo() |>
       purrr::chuck("version")
     
     if (isTRUE(current_vrsn < min_vrsn)) {
@@ -1437,8 +1438,8 @@ lvl_up_quarto <- function(path_min_vrsn,
   if (fs::file_exists(path_min_vrsn)) {
     
     min_vrsn <-
-      path_min_vrsn %>%
-      brio::read_lines(n = 1L) %>%
+      path_min_vrsn |>
+      brio::read_lines(n = 1L) |>
       as.package_version()
     
   } else {
@@ -1446,10 +1447,10 @@ lvl_up_quarto <- function(path_min_vrsn,
   }
   
   current_vrsn <-
-    quarto::quarto_path() %>%
+    quarto::quarto_path() |>
     system2(args = "--version",
             stdout = TRUE,
-            stderr = TRUE) %>%
+            stderr = TRUE) |>
     as.package_version()
   
   if (isTRUE(current_vrsn < min_vrsn)) {
@@ -1475,10 +1476,13 @@ lvl_up_quarto <- function(path_min_vrsn,
 ```{r}
 #' Update R packages from rpkg.dev
 #'
-#' Installs/updates \R packages from [rpkg.dev](https://gitlab.com/rpkg.dev) to the latest development version.
+#' Installs/updates \R packages from [rpkg.dev](https://gitlab.com/rpkg.dev) to the latest (development) version.
 #'
 #' @param pkgs R pkgs to be updated. A subset of:
 #'   `r pal::fn_param_defaults(fn = "update_rpkgs", param = "pkgs") |> pal::wrap_chr("\x60") |> pal::as_md_list()`
+#' @param from_cran Whether or not to install `pkgs` from a [CRAN](https://en.wikipedia.org/wiki/R_package#Comprehensive_R_Archive_Network_(CRAN)) repository
+#'   if possible. The repository URLs set in the [`repos`][options] \R option are used by default, with fallback to `https://cloud.r-project.org/`. If `FALSE`,
+#'   the latest *development* versions are always installed, regardless of whether `pkgs` are available on CRAN or not.
 #'
 #' @return `pkgs`, invisibly.
 #' @family dev_env
@@ -1492,22 +1496,25 @@ update_rpkgs <- function(pkgs = c("pal",
                                   "rstd",
                                   "swissmuni",
                                   "tocr",
-                                  "yay")) {
+                                  "yay"),
+                         from_cran = FALSE) {
+  
   rlang::check_installed("remotes",
                          reason = pal::reason_pkg_required())
-  
-  checkmate::assert_subset(x = pkgs,
-                           choices = as.character(formals()$pkgs)) %>%
-    purrr::walk(~ {
-      
-      if (pal::is_pkg_cran(.x)) {
-        utils::install.packages(pkgs = .x,
-                                repos = "https://cloud.r-project.org/")
-      } else {
-        remotes::install_gitlab(repo = paste0("rpkg.dev/", .x), # nolint: paste_linter
-                                upgrade = FALSE)
-      }
-    })
+  pkgs <- rlang::arg_match(pkgs,
+                           multiple = TRUE)
+  purrr::walk(pkgs,
+              \(x) {
+                
+                if (pal::is_pkg_cran(x)) {
+                  utils::install.packages(pkgs = x,
+                                          repos = getOption("repos",
+                                                            default = "https://cloud.r-project.org/"))
+                } else {
+                  remotes::install_gitlab(repo = paste0("rpkg.dev/", x), # nolint: paste_linter
+                                          upgrade = FALSE)
+                }
+              })
   
   invisible(pkgs)
 }
@@ -1518,32 +1525,35 @@ update_rpkgs <- function(pkgs = c("pal",
 ```{r}
 #' Update Salim B's R packages
 #'
-#' Installs/updates all of [Salim B's R packages](https://gitlab.com/salim_b/r/pkgs) to the latest development version.
+#' Installs/updates all of [Salim B's R packages](https://gitlab.com/salim_b/r/pkgs) to the latest (development) version.
 #'
+#' @inheritParams update_rpkgs
 #' @param pkgs R pkgs to be updated. A subset of:
 #'   `r pal::fn_param_defaults(fn = "update_salims_pkgs", param = "pkgs") |> pal::wrap_chr("\x60") |> pal::as_md_list()`
 #'
 #' @return `pkgs`, invisibly.
 #' @family dev_env
 #' @export
-update_salims_pkgs <- function(pkgs = c("c2d4u",
-                                        "salim",
-                                        "swissparty")) {
+update_salims_pkgs <- function(pkgs = c("salim",
+                                        "swissparty"),
+                               from_cran = FALSE) {
+  
   rlang::check_installed("remotes",
                          reason = pal::reason_pkg_required())
-  
-  checkmate::assert_subset(x = pkgs,
-                           choices = as.character(formals()$pkgs)) %>%
-    purrr::walk(~ {
-      
-      if (pal::is_pkg_cran(.x)) {
-        utils::install.packages(pkgs = .x,
-                                repos = "https://cloud.r-project.org/")
-      } else {
-        remotes::install_gitlab(repo = paste0("salim_b/r/pkgs/", .x), # nolint: paste_linter
-                                upgrade = FALSE)
-      }
-    })
+  pkgs <- rlang::arg_match(pkgs,
+                           multiple = TRUE)
+  purrr::walk(pkgs,
+              \(x) {
+                
+                if (pal::is_pkg_cran(x)) {
+                  utils::install.packages(pkgs = x,
+                                          repos = getOption("repos",
+                                                            default = "https://cloud.r-project.org/"))
+                } else {
+                  remotes::install_gitlab(repo = paste0("salim_b/r/pkgs/", x), # nolint: paste_linter
+                                          upgrade = FALSE)
+                }
+              })
   
   invisible(pkgs)
 }
@@ -1554,9 +1564,10 @@ update_salims_pkgs <- function(pkgs = c("c2d4u",
 ```{r}
 #' Update R packages from the Centre for Democracy Studies Aarau (ZDA)
 #'
-#' Installs/updates all of the [R packages from the Centre for Democracy Studies Aarau (ZDA)](https://gitlab.com/zdaarau/rpkgs) to the latest development
+#' Installs/updates all of the [R packages from the Centre for Democracy Studies Aarau (ZDA)](https://gitlab.com/zdaarau/rpkgs) to the latest (development)
 #' version.
 #'
+#' @inheritParams update_rpkgs
 #' @param pkgs R pkgs to be updated. A subset of:
 #'   `r pal::fn_param_defaults(fn = "update_zdaarau_pkgs", param = "pkgs") |> pal::wrap_chr("\x60") |> pal::as_md_list()`
 #'
@@ -1566,22 +1577,27 @@ update_salims_pkgs <- function(pkgs = c("c2d4u",
 update_zdaarau_pkgs <- function(pkgs = c("rdb.report",
                                          "fokus",
                                          "rdb",
-                                         "swissevote")) {
+                                         "swissevote"),
+                                from_cran = FALSE) {
+  
   rlang::check_installed("remotes",
                          reason = pal::reason_pkg_required())
+  pkgs <- rlang::arg_match(pkgs,
+                           multiple = TRUE)
+  checkmate::assert_flag(from_cran)
   
-  checkmate::assert_subset(x = pkgs,
-                           choices = as.character(formals()$pkgs)) %>%
-    purrr::walk(~ {
-      
-      if (pal::is_pkg_cran(.x)) {
-        utils::install.packages(pkgs = .x,
-                                repos = "https://cloud.r-project.org/")
-      } else {
-        remotes::install_gitlab(repo = paste0("zdaarau/rpkgs/", .x), # nolint: paste_linter
-                                upgrade = FALSE)
-      }
-    })
+  purrr::walk(pkgs,
+              \(x) {
+                
+                if (from_cran && pal::is_pkg_cran(x)) {
+                  utils::install.packages(pkgs = x,
+                                          repos = getOption("repos",
+                                                            default = "https://cloud.r-project.org/"))
+                } else {
+                  remotes::install_gitlab(repo = paste0("zdaarau/rpkgs/", x), # nolint: paste_linter
+                                          upgrade = FALSE)
+                }
+              })
   
   invisible(pkgs)
 }

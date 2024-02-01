@@ -4,27 +4,30 @@
 \alias{update_salims_pkgs}
 \title{Update Salim B's R packages}
 \usage{
-update_salims_pkgs(pkgs = c("c2d4u", "salim", "swissparty"))
+update_salims_pkgs(pkgs = c("salim", "swissparty"), from_cran = FALSE)
 }
 \arguments{
 \item{pkgs}{R pkgs to be updated. A subset of:
 \itemize{
-\item \code{"c2d4u"}
 \item \code{"salim"}
 \item \code{"swissparty"}
 }}
+
+\item{from_cran}{Whether or not to install \code{pkgs} from a \href{https://en.wikipedia.org/wiki/R_package#Comprehensive_R_Archive_Network_(CRAN)}{CRAN} repository
+if possible. The repository URLs set in the \code{\link[=options]{repos}} \R option are used by default, with fallback to \verb{https://cloud.r-project.org/}. If \code{FALSE},
+the latest \emph{development} versions are always installed, regardless of whether \code{pkgs} are available on CRAN or not.}
 }
 \value{
 \code{pkgs}, invisibly.
 }
 \description{
-Installs/updates all of \href{https://gitlab.com/salim_b/r/pkgs}{Salim B's R packages} to the latest development version.
+Installs/updates all of \href{https://gitlab.com/salim_b/r/pkgs}{Salim B's R packages} to the latest (development) version.
 }
 \seealso{
 Other development environment currentness functions:
 \code{\link{lvl_up_quarto}()},
-\code{\link{lvl_up_rstudio}()},
 \code{\link{lvl_up_r}()},
+\code{\link{lvl_up_rstudio}()},
 \code{\link{update_rpkgs}()},
 \code{\link{update_zdaarau_pkgs}()}
 }

@@ -36,11 +36,11 @@ Write out a count
 Other spoken language functions:
 \code{\link{add_definite_article_de}()},
 \code{\link{decline_noun_de}()},
-\code{\link{definite_article_de_declined}()},
 \code{\link{definite_article_de}()},
+\code{\link{definite_article_de_declined}()},
 \code{\link{n_ify}()},
-\code{\link{prettify_datetime}()},
 \code{\link{prettify_date}()},
+\code{\link{prettify_datetime}()},
 \code{\link{rank_nr}()}
 }
 \concept{spoken}
