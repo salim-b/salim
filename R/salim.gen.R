@@ -858,7 +858,7 @@ quarto_fig_chunk <- function(body,
 #'   Quarto's [`tbl-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. One of
 #'   `r pal::as_md_val_list(qmd_layout_classes)`
 #' @param tbl_colwidths Apply explicit table column widths for Markdown [grid tables](https://pandoc.org/MANUAL.html#extension-grid_tables) and [pipe
-#'   tables](https://pandoc.org/MANUAL.html#extension-pipe_tables) that are more than columns characters wide (72 by default).
+#'   tables](https://pandoc.org/MANUAL.html#extension-pipe_tables) that are more than `columns` characters wide (72 by default).
 #' 
 #'   Some formats (e.g. HTML) do an excellent job automatically sizing table columns and so don’t benefit much from column width specifications. Other formats
 #'   (e.g. LaTeX) require table column sizes in order to correctly flow longer cell content (this is a major reason why tables > 72 columns wide are assigned

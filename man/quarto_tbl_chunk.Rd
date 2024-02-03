@@ -25,7 +25,7 @@ scalar.}
 \item{tbl_subcap}{Table subcaptions. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#tables}{\code{tbl-subcap}} code chunk option. A
 character vector.}
 
-\item{tbl_colwidths}{Apply explicit table column widths for Markdown \href{https://pandoc.org/MANUAL.html#extension-grid_tables}{grid tables} and \href{https://pandoc.org/MANUAL.html#extension-pipe_tables}{pipe tables} that are more than columns characters wide (72 by default).
+\item{tbl_colwidths}{Apply explicit table column widths for Markdown \href{https://pandoc.org/MANUAL.html#extension-grid_tables}{grid tables} and \href{https://pandoc.org/MANUAL.html#extension-pipe_tables}{pipe tables} that are more than \code{columns} characters wide (72 by default).
 
 Some formats (e.g. HTML) do an excellent job automatically sizing table columns and so don’t benefit much from column width specifications. Other formats
 (e.g. LaTeX) require table column sizes in order to correctly flow longer cell content (this is a major reason why tables > 72 columns wide are assigned
