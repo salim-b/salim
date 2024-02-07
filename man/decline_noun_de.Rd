@@ -7,7 +7,8 @@
 decline_noun_de(
   noun,
   gender = c("feminine", "masculine", "neuter"),
-  case = c("nominative", "genitive", "dative", "accusative")
+  case = c("nominative", "genitive", "dative", "accusative"),
+  is_plural = FALSE
 )
 }
 \arguments{
@@ -16,13 +17,15 @@ decline_noun_de(
 \item{gender}{The grammatical gender of the \code{noun}.}
 
 \item{case}{The grammatical case of the \code{noun}.}
+
+\item{is_plural}{Whether or not \code{noun} is a plural.}
 }
 \value{
 A character scalar.
 }
 \description{
-Note that this function currently doesn't support the \href{https://deutsch.lingolia.com/de/grammatik/nomen/deklination/genitiv#a-besonderheiten}{special cases}
-where a masculine noun gets an \code{n} or \code{en} ending attached in the accusative, dative and genitive cases.
+Note that this function is far from covering all grammatical possibilities. I.a. it currently doesn't support the \href{https://deutsch.lingolia.com/de/grammatik/nomen/deklination/genitiv#a-besonderheiten}{special cases} where a masculine noun gets an \code{n} or \code{en} ending attached in
+the accusative, dative and genitive cases.
 }
 \seealso{
 Other spoken language functions:
