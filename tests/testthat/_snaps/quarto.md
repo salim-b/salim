@@ -188,237 +188,123 @@
 
     {
       "type": "list",
-      "attributes": {},
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["fig-likert_plot_agreement_arguments_cantonal_proposal_1", "fig-likert_plot_agreement_arguments_cantonal_proposal_3", "fig-likert_plot_agreement_arguments_federal_proposal_2", "fig-bar_plot_main_motive_cantonal_1_yes", "fig-bar_plot_main_motive_cantonal_1_no", "fig-bar_plot_main_motive_cantonal_3_yes", "fig-bar_plot_main_motive_cantonal_3_no", "fig-bar_plot_main_motive_federal_2_yes", "fig-bar_plot_main_motive_federal_2_no", "fig-simple"]
+        }
+      },
       "value": [
         {
-          "type": "list",
+          "type": "character",
           "attributes": {
-            "names": {
+            "class": {
               "type": "character",
               "attributes": {},
-              "value": ["fig-likert_plot_agreement_arguments_cantonal_proposal_1"]
+              "value": ["glue", "character"]
             }
           },
-          "value": [
-            {
-              "type": "character",
-              "attributes": {
-                "class": {
-                  "type": "character",
-                  "attributes": {},
-                  "value": ["glue", "character"]
-                }
-              },
-              "value": ["```{r}\n#| label: fig-likert_plot_agreement_arguments_cantonal_proposal_1\n#| fig-cap:\n#|   - Agreeement to pro and contra arguments in canton aargau at 2023-06-18\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('likert_plot_agreement_arguments_cantonal_proposal_1'))\n```\n"]
-            }
-          ]
+          "value": ["```{r}\n#| label: fig-likert_plot_agreement_arguments_cantonal_proposal_1\n#| fig-cap:\n#|   - Agreeement to pro and contra arguments in canton aargau at 2023-06-18\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('likert_plot_agreement_arguments_cantonal_proposal_1'))\n```\n"]
         },
         {
-          "type": "list",
+          "type": "character",
           "attributes": {
-            "names": {
+            "class": {
               "type": "character",
               "attributes": {},
-              "value": ["fig-likert_plot_agreement_arguments_cantonal_proposal_3"]
+              "value": ["glue", "character"]
             }
           },
-          "value": [
-            {
-              "type": "character",
-              "attributes": {
-                "class": {
-                  "type": "character",
-                  "attributes": {},
-                  "value": ["glue", "character"]
-                }
-              },
-              "value": ["```{r}\n#| label: fig-likert_plot_agreement_arguments_cantonal_proposal_3\n#| fig-cap:\n#|   - Agreeement to pro and contra arguments in canton aargau at 2023-06-18\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('likert_plot_agreement_arguments_cantonal_proposal_3'))\n```\n"]
-            }
-          ]
+          "value": ["```{r}\n#| label: fig-likert_plot_agreement_arguments_cantonal_proposal_3\n#| fig-cap:\n#|   - Agreeement to pro and contra arguments in canton aargau at 2023-06-18\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('likert_plot_agreement_arguments_cantonal_proposal_3'))\n```\n"]
         },
         {
-          "type": "list",
+          "type": "character",
           "attributes": {
-            "names": {
+            "class": {
               "type": "character",
               "attributes": {},
-              "value": ["fig-likert_plot_agreement_arguments_federal_proposal_2"]
+              "value": ["glue", "character"]
             }
           },
-          "value": [
-            {
-              "type": "character",
-              "attributes": {
-                "class": {
-                  "type": "character",
-                  "attributes": {},
-                  "value": ["glue", "character"]
-                }
-              },
-              "value": ["```{r}\n#| label: fig-likert_plot_agreement_arguments_federal_proposal_2\n#| fig-cap:\n#|   - Agreeement to pro and contra arguments in canton aargau at 2023-06-18\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('likert_plot_agreement_arguments_federal_proposal_2'))\n```\n"]
-            }
-          ]
+          "value": ["```{r}\n#| label: fig-likert_plot_agreement_arguments_federal_proposal_2\n#| fig-cap:\n#|   - Agreeement to pro and contra arguments in canton aargau at 2023-06-18\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('likert_plot_agreement_arguments_federal_proposal_2'))\n```\n"]
         },
         {
-          "type": "list",
+          "type": "character",
           "attributes": {
-            "names": {
+            "class": {
               "type": "character",
               "attributes": {},
-              "value": ["fig-bar_plot_main_motive_cantonal_1_yes"]
+              "value": ["glue", "character"]
             }
           },
-          "value": [
-            {
-              "type": "character",
-              "attributes": {
-                "class": {
-                  "type": "character",
-                  "attributes": {},
-                  "value": ["glue", "character"]
-                }
-              },
-              "value": ["```{r}\n#| label: fig-bar_plot_main_motive_cantonal_1_yes\n#| fig-cap:\n#|   - Main motive of the yes voters to proposal 1\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('bar_plot_main_motive_cantonal_1_yes'))\n```\n"]
-            }
-          ]
+          "value": ["```{r}\n#| label: fig-bar_plot_main_motive_cantonal_1_yes\n#| fig-cap:\n#|   - Main motive of the yes voters to proposal 1\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('bar_plot_main_motive_cantonal_1_yes'))\n```\n"]
         },
         {
-          "type": "list",
+          "type": "character",
           "attributes": {
-            "names": {
+            "class": {
               "type": "character",
               "attributes": {},
-              "value": ["fig-bar_plot_main_motive_cantonal_1_no"]
+              "value": ["glue", "character"]
             }
           },
-          "value": [
-            {
-              "type": "character",
-              "attributes": {
-                "class": {
-                  "type": "character",
-                  "attributes": {},
-                  "value": ["glue", "character"]
-                }
-              },
-              "value": ["```{r}\n#| label: fig-bar_plot_main_motive_cantonal_1_no\n#| fig-cap:\n#|   - Main motive of the no voters to proposal 1\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('bar_plot_main_motive_cantonal_1_no'))\n```\n"]
-            }
-          ]
+          "value": ["```{r}\n#| label: fig-bar_plot_main_motive_cantonal_1_no\n#| fig-cap:\n#|   - Main motive of the no voters to proposal 1\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('bar_plot_main_motive_cantonal_1_no'))\n```\n"]
         },
         {
-          "type": "list",
+          "type": "character",
           "attributes": {
-            "names": {
+            "class": {
               "type": "character",
               "attributes": {},
-              "value": ["fig-bar_plot_main_motive_cantonal_3_yes"]
+              "value": ["glue", "character"]
             }
           },
-          "value": [
-            {
-              "type": "character",
-              "attributes": {
-                "class": {
-                  "type": "character",
-                  "attributes": {},
-                  "value": ["glue", "character"]
-                }
-              },
-              "value": ["```{r}\n#| label: fig-bar_plot_main_motive_cantonal_3_yes\n#| fig-cap:\n#|   - Main motive of the yes voters to proposal 3\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('bar_plot_main_motive_cantonal_3_yes'))\n```\n"]
-            }
-          ]
+          "value": ["```{r}\n#| label: fig-bar_plot_main_motive_cantonal_3_yes\n#| fig-cap:\n#|   - Main motive of the yes voters to proposal 3\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('bar_plot_main_motive_cantonal_3_yes'))\n```\n"]
         },
         {
-          "type": "list",
+          "type": "character",
           "attributes": {
-            "names": {
+            "class": {
               "type": "character",
               "attributes": {},
-              "value": ["fig-bar_plot_main_motive_cantonal_3_no"]
+              "value": ["glue", "character"]
             }
           },
-          "value": [
-            {
-              "type": "character",
-              "attributes": {
-                "class": {
-                  "type": "character",
-                  "attributes": {},
-                  "value": ["glue", "character"]
-                }
-              },
-              "value": ["```{r}\n#| label: fig-bar_plot_main_motive_cantonal_3_no\n#| fig-cap:\n#|   - Main motive of the no voters to proposal 3\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('bar_plot_main_motive_cantonal_3_no'))\n```\n"]
-            }
-          ]
+          "value": ["```{r}\n#| label: fig-bar_plot_main_motive_cantonal_3_no\n#| fig-cap:\n#|   - Main motive of the no voters to proposal 3\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('bar_plot_main_motive_cantonal_3_no'))\n```\n"]
         },
         {
-          "type": "list",
+          "type": "character",
           "attributes": {
-            "names": {
+            "class": {
               "type": "character",
               "attributes": {},
-              "value": ["fig-bar_plot_main_motive_federal_2_yes"]
+              "value": ["glue", "character"]
             }
           },
-          "value": [
-            {
-              "type": "character",
-              "attributes": {
-                "class": {
-                  "type": "character",
-                  "attributes": {},
-                  "value": ["glue", "character"]
-                }
-              },
-              "value": ["```{r}\n#| label: fig-bar_plot_main_motive_federal_2_yes\n#| fig-cap:\n#|   - Main motive of the yes voters to proposal 2\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('bar_plot_main_motive_federal_2_yes'))\n```\n"]
-            }
-          ]
+          "value": ["```{r}\n#| label: fig-bar_plot_main_motive_federal_2_yes\n#| fig-cap:\n#|   - Main motive of the yes voters to proposal 2\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('bar_plot_main_motive_federal_2_yes'))\n```\n"]
         },
         {
-          "type": "list",
+          "type": "character",
           "attributes": {
-            "names": {
+            "class": {
               "type": "character",
               "attributes": {},
-              "value": ["fig-bar_plot_main_motive_federal_2_no"]
+              "value": ["glue", "character"]
             }
           },
-          "value": [
-            {
-              "type": "character",
-              "attributes": {
-                "class": {
-                  "type": "character",
-                  "attributes": {},
-                  "value": ["glue", "character"]
-                }
-              },
-              "value": ["```{r}\n#| label: fig-bar_plot_main_motive_federal_2_no\n#| fig-cap:\n#|   - Main motive of the no voters to proposal 2\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('bar_plot_main_motive_federal_2_no'))\n```\n"]
-            }
-          ]
+          "value": ["```{r}\n#| label: fig-bar_plot_main_motive_federal_2_no\n#| fig-cap:\n#|   - Main motive of the no voters to proposal 2\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\ninsert_plot(id = glue::glue('bar_plot_main_motive_federal_2_no'))\n```\n"]
         },
         {
-          "type": "list",
+          "type": "character",
           "attributes": {
-            "names": {
+            "class": {
               "type": "character",
               "attributes": {},
-              "value": ["fig-simple"]
+              "value": ["glue", "character"]
             }
           },
-          "value": [
-            {
-              "type": "character",
-              "attributes": {
-                "class": {
-                  "type": "character",
-                  "attributes": {},
-                  "value": ["glue", "character"]
-                }
-              },
-              "value": ["```{r}\n#| label: fig-simple\n#| fig-cap:\n#|   - A simple figure\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\nplot(cars)\n```\n"]
-            }
-          ]
+          "value": ["```{r}\n#| label: fig-simple\n#| fig-cap:\n#|   - A simple figure\n#| fig-column: page\n#| fig-height: 8\n#| fig-pos: H\n#| out-height: 800px\n\nplot(cars)\n```\n"]
         }
       ]
     }
