@@ -564,7 +564,7 @@ decline_noun_de <- function(noun,
     
     # decline preceeding adjectives
   } else if (case %in% c("genitive", "dative") || (case == "accusative" && is_plural)) {
-    result %<>% stringr::str_replace_all(pattern = "((?:^|[:blank:])[:lower:]+e)([:blank:])(?!\\s*$)",
+    result %<>% stringr::str_replace_all(pattern = "((?:^|[:blank:])[:alnum:]+e)([:blank:])(?!\\s*$)",
                                          replacement = "\\1n\\2")
   }
   
