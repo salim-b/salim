@@ -12,7 +12,7 @@ decline_noun_de(
 )
 }
 \arguments{
-\item{noun}{The noun to decline. A character scalar.}
+\item{noun}{The noun to decline, optionally with preceding adjective(s), in (indefinite) nominative. A character scalar.}
 
 \item{gender}{The grammatical gender of the \code{noun}.}
 

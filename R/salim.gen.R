@@ -448,7 +448,7 @@ add_definite_article_de <- function(preposition,
 #' cases](https://deutsch.lingolia.com/de/grammatik/nomen/deklination/genitiv#a-besonderheiten) where a masculine noun gets an `n` or `en` ending attached in
 #' the accusative, dative and genitive cases.
 #'
-#' @param noun The noun to decline. A character scalar.
+#' @param noun The noun to decline, optionally with preceding adjective(s), in (indefinite) nominative. A character scalar.
 #' @param gender The grammatical gender of the `noun`.
 #' @param case The grammatical case of the `noun`.
 #' @param is_plural Whether or not `noun` is a plural.
