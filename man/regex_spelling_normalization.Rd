@@ -18,7 +18,8 @@ Regular expression patterns and replacements for spelling normalization
 salim::regex_spelling_normalization |> tidyr::unnest_longer(col = pattern)
 }
 \seealso{
-Other regular expression rules: \code{\link[yay:regex_text_normalization]{yay::regex_text_normalization}} \code{\link[yay:regex_file_normalization]{yay::regex_file_normalization}}
-String normalization functions: \code{\link[yay:str_normalize]{yay::str_normalize()}} \code{\link[yay:str_normalize]{yay::str_normalize()}}
+Other regular expression rules: \code{\link[yay:regex_text_normalization]{yay::regex_text_normalization}}, \code{\link[yay:regex_file_normalization]{yay::regex_file_normalization}}
+
+String normalization functions: \code{\link[yay:str_normalize]{yay::str_normalize()}}, \code{\link[yay:str_normalize_file]{yay::str_normalize_file()}}
 }
 \keyword{datasets}

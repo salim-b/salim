@@ -586,8 +586,9 @@ decline_noun_de <- function(noun,
 #'
 #' @format `r pkgsnip::return_lbl("tibble")`
 #' @seealso
-#' Other regular expression rules: [`yay::regex_text_normalization`] [`yay::regex_file_normalization`]
-#' String normalization functions: [yay::str_normalize()] [yay::str_normalize()]
+#' Other regular expression rules: [`yay::regex_text_normalization`], [`yay::regex_file_normalization`]
+#' 
+#' String normalization functions: [yay::str_normalize()], [yay::str_normalize_file()]
 #'
 #' @examples
 #' # unnest the pattern column
