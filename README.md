@@ -67,7 +67,7 @@ As far as possible, these deviations from the TSG plus some additional restricti
 
 ## See also
 
--   The [**pal**](https://gitlab.com/rpkg.dev/pal) package for a collection of more mature convenience/utility functions by the same author.
+-   The [**pal**](https://pal.rpkg.dev/) package for a collection of more mature convenience/utility functions by the same author.
 
 ---
 
