@@ -1409,7 +1409,7 @@ lvl_up_rstudio <- function(path_min_vrsn,
       
       cli::cli_alert_warning(paste0(
         "Your version of {.pkg RStudio} is out of date. Please update to version {.val {min_vrsn}} or above. The latest version is available at ",
-        "{.url https://rstudio.com/products/rstudio/download/#download}.", pkg_mgr_hint("RStudio")
+        "{.url https://posit.co/download/rstudio-desktop/}.", pkg_mgr_hint("RStudio")
       ))
     }
     
