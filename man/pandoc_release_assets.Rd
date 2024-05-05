@@ -4,11 +4,14 @@
 \alias{pandoc_release_assets}
 \title{List Pandoc release assets}
 \usage{
-pandoc_release_assets(release_id = pandoc_release_id_latest())
+pandoc_release_assets(
+  release_id = yay::gh_release_latest(owner = "jgm", name = "pandoc")$id
+)
 }
 \arguments{
-\item{release_id}{The GitHub release ID of the desired Pandoc release. Use \code{\link[=pandoc_releases]{pandoc_releases()}} to determine the release ID of a specific Pandoc version
-number. An integer scalar.}
+\item{release_id}{The GitHub release identifier of the desired Pandoc release. Use
+\code{\link[yay:gh_releases]{yay::gh_releases(owner = "jgm", name = "pandoc")}} to determine the release identifier of a specific Pandoc version number. An
+integer scalar.}
 }
 \value{
 A \link[tibble:tbl_df-class]{tibble}.
@@ -17,11 +20,10 @@ A \link[tibble:tbl_df-class]{tibble}.
 Uses \code{\link[gh:gh]{gh::gh()}} to fetch filenames, corresponding operating systems and download URLs of a specific \href{https://docs.github.com/repositories/releasing-projects-on-github}{GitHub release} of \href{https://pandoc.org/}{Pandoc} via \href{https://docs.github.com/en/rest/reference/repos#list-release-assets}{GitHub's REST API} and returns them as a \link[tibble:tbl_df-class]{tibble}.
 }
 \seealso{
+GitHub release functions: \code{\link[yay:gh_releases]{yay::gh_releases()}}, \code{\link[yay:gh_release_latest]{yay::gh_release_latest()}}
+
 Other Pandoc functions:
 \code{\link{download_pandoc_binaries}()},
-\code{\link{pandoc_release_id_latest}()},
-\code{\link{pandoc_releases}()},
-\code{\link{pandoc_tpl}()},
-\code{\link{pandoc_version_latest}()}
+\code{\link{pandoc_tpl}()}
 }
 \concept{pandoc}

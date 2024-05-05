@@ -5,15 +5,16 @@
 \title{Download Pandoc release}
 \usage{
 download_pandoc_binaries(
-  release_id = pandoc_release_id_latest(),
+  release_id = yay::gh_release_latest(owner = "jgm", name = "pandoc")$id,
   os = c("linux", "macos", "windows"),
   path = "bin/",
   overwrite = TRUE
 )
 }
 \arguments{
-\item{release_id}{The GitHub release ID of the desired Pandoc release. Use \code{\link[=pandoc_releases]{pandoc_releases()}} to determine the release ID of a specific Pandoc version
-number. An integer scalar.}
+\item{release_id}{The GitHub release identifier of the desired Pandoc release. Use
+\code{\link[yay:gh_releases]{yay::gh_releases(owner = "jgm", name = "pandoc")}} to determine the release identifier of a specific Pandoc version number. An
+integer scalar.}
 
 \item{os}{The operating system(s) for which Pandoc binaries should be downloaded. Any combination of
 \code{"linux"}, \code{"macos"} and \code{"windows"}.}
@@ -26,14 +27,13 @@ number. An integer scalar.}
 \code{path} invisibly.
 }
 \description{
-Downloads the \link[=pandoc_release_assets]{assets} and extracts the executable program binaries for Linux, macOS and Windows of a certain \link[=pandoc_releases]{Pandoc release}.
+Downloads the \link[=pandoc_release_assets]{assets} and extracts the executable program binaries for Linux, macOS and Windows of the specified Pandoc release.
 }
 \seealso{
+GitHub release functions: \code{\link[yay:gh_releases]{yay::gh_releases()}}, \code{\link[yay:gh_release_latest]{yay::gh_release_latest()}}
+
 Other Pandoc functions:
 \code{\link{pandoc_release_assets}()},
-\code{\link{pandoc_release_id_latest}()},
-\code{\link{pandoc_releases}()},
-\code{\link{pandoc_tpl}()},
-\code{\link{pandoc_version_latest}()}
+\code{\link{pandoc_tpl}()}
 }
 \concept{pandoc}

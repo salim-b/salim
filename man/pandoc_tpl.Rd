@@ -25,9 +25,6 @@ salim::pandoc_tpl(tpl = "quarto_mod.latex") |>
 \seealso{
 Other Pandoc functions:
 \code{\link{download_pandoc_binaries}()},
-\code{\link{pandoc_release_assets}()},
-\code{\link{pandoc_release_id_latest}()},
-\code{\link{pandoc_releases}()},
-\code{\link{pandoc_version_latest}()}
+\code{\link{pandoc_release_assets}()}
 }
 \concept{pandoc}

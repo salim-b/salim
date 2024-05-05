@@ -502,32 +502,33 @@ decline_noun_de <- function(noun,
 
 #' Download Pandoc release
 #'
-#' Downloads the [assets][pandoc_release_assets] and extracts the executable program binaries for Linux, macOS and Windows of a certain [Pandoc
-#' release][pandoc_releases].
+#' Downloads the [assets][pandoc_release_assets] and extracts the executable program binaries for Linux, macOS and Windows of the specified Pandoc release.
 #'
+#' @inheritParams pandoc_release_assets
 #' @param os The operating system(s) for which Pandoc binaries should be downloaded. Any combination of
 #'   `r pal::fn_param_defaults(param = "os", fn = download_pandoc_binaries) |> pal::wrap_chr("\x60") |> cli::ansi_collapse(last = " and ")`.
 #' @param path The filesystem path to which the binaries are saved to. A [path][fs::fs_path] or something coercible to.
 #' @param overwrite Whether to overwrite existing binaries under `path`.
-#' @inheritParams pandoc_release_assets
 #'
 #' @return `path` invisibly.
 #' @family pandoc
+#' @seealso GitHub release functions: [yay::gh_releases()], [yay::gh_release_latest()]
 #' @export
-download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
+download_pandoc_binaries <- function(release_id = yay::gh_release_latest(owner = "jgm",
+                                                                         name = "pandoc")$id,
                                      os = c("linux", "macos", "windows"),
                                      path = "bin/",
                                      overwrite = TRUE) {
-  checkmate::assert_count(release_id,
-                          positive = TRUE)
+  rlang::check_installed("yay",
+                         reason = pal::reason_pkg_required())
+  rlang::check_installed("waldo",
+                         reason = pal::reason_pkg_required())
   checkmate::assert_subset(os,
                            choices = eval(formals()$os),
                            empty.ok = FALSE)
   checkmate::assert_path_for_output(path,
                                     overwrite = TRUE)
   checkmate::assert_flag(overwrite)
-  rlang::check_installed("waldo",
-                         reason = pal::reason_pkg_required())
   
   path_tmp <- fs::path_temp()
   
@@ -595,95 +596,28 @@ download_pandoc_binaries <- function(release_id = pandoc_release_id_latest(),
   invisible(path)
 }
 
-#' Get latest Pandoc release ID
-#'
-#' Uses [gh::gh()] to fetch [Pandoc](https://pandoc.org/)'s latest [GitHub release](https://docs.github.com/repositories/releasing-projects-on-github) ID via 
-#' [GitHub's REST API](https://docs.github.com/en/rest/reference/repos#get-the-latest-release).
-#'
-#' @return An integer scalar.
-#' @family pandoc
-#' @export
-pandoc_release_id_latest <- function() {
-  
-  rlang::check_installed("gh",
-                         reason = pal::reason_pkg_required())
-  
-  gh::gh(endpoint = "/repos/{owner}/{repo}/releases/latest", # nolint
-         owner = "jgm",
-         repo = "pandoc",
-         .method = "GET") %$%
-    id
-}
-
-#' Get latest Pandoc release version number
-#'
-#' Uses [gh::gh()] to fetch [Pandoc](https://pandoc.org/)'s latest [GitHub release](https://docs.github.com/repositories/releasing-projects-on-github) version
-#' number via [GitHub's REST API](https://docs.github.com/en/rest/reference/repos#get-the-latest-release) and returns it as a [numeric
-#' version][numeric_version()].
-#'
-#' @return `r pkgsnip::param_lbl("num_vrsn")`
-#' @family pandoc
-#' @export
-pandoc_version_latest <- function() {
-  
-  rlang::check_installed("gh",
-                         reason = pal::reason_pkg_required())
-  
-  gh::gh(endpoint = "/repos/{owner}/{repo}/releases/latest", # nolint
-         owner = "jgm",
-         repo = "pandoc",
-         .method = "GET") %$%
-    name |>
-    stringr::str_extract(pattern = "\\d+(\\.\\d+)*") |>
-    as.numeric_version()
-}
-
-#' List all available Pandoc releases
-#'
-#' Uses [gh::gh()] to fetch all available [GitHub releases](https://docs.github.com/repositories/releasing-projects-on-github) of [Pandoc](https://pandoc.org/)
-#' via [GitHub's REST API](https://docs.github.com/en/rest/reference/repos#list-releases) and returns them as a [tibble][tibble::tbl_df] containing the two
-#' columns `version_nr` and `release_id`.
-#'
-#' Values of the column `release_id` can be used as input to [download_pandoc_binaries()].
-#'
-#' @return `r pkgsnip::param_lbl("tibble")`
-#' @family pandoc
-#' @export
-pandoc_releases <- function() {
-  
-  rlang::check_installed("gh",
-                         reason = pal::reason_pkg_required())
-  
-  gh::gh(endpoint = "/repos/{owner}/{repo}/releases", # nolint
-         owner = "jgm",
-         repo = "pandoc",
-         .method = "GET",
-         .limit = Inf) |>
-    purrr::map(\(x) tibble::tibble(version_nr =
-                                     x$name |>
-                                     stringr::str_extract(pattern = "\\d+(\\.\\d+)*") |>
-                                     as.numeric_version(),
-                                   release_id = x$id)) |>
-    purrr::list_rbind() |>
-    dplyr::arrange(version_nr)
-}
-
 #' List Pandoc release assets
 #'
 #' Uses [gh::gh()] to fetch filenames, corresponding operating systems and download URLs of a specific [GitHub
 #' release](https://docs.github.com/repositories/releasing-projects-on-github) of [Pandoc](https://pandoc.org/) via [GitHub's REST
 #' API](https://docs.github.com/en/rest/reference/repos#list-release-assets) and returns them as a [tibble][tibble::tbl_df].
 #'
-#' @param release_id The GitHub release ID of the desired Pandoc release. Use [pandoc_releases()] to determine the release ID of a specific Pandoc version
-#'   number. An integer scalar.
+#' @param release_id The GitHub release identifier of the desired Pandoc release. Use
+#'   [`yay::gh_releases(owner = "jgm", name = "pandoc")`][yay::gh_releases] to determine the release identifier of a specific Pandoc version number. An
+#'   integer scalar.
 #'
 #' @return `r pkgsnip::param_lbl("tibble")`
 #' @family pandoc
+#' @seealso GitHub release functions: [yay::gh_releases()], [yay::gh_release_latest()]
 #' @export
-pandoc_release_assets <- function(release_id = pandoc_release_id_latest()) {
-  
+pandoc_release_assets <- function(release_id = yay::gh_release_latest(owner = "jgm",
+                                                                      name = "pandoc")$id) {
+  rlang::check_installed("yay",
+                         reason = pal::reason_pkg_required())
   rlang::check_installed("gh",
                          reason = pal::reason_pkg_required())
+  checkmate::assert_count(release_id,
+                          positive = TRUE)
   
   gh::gh(endpoint = "/repos/{owner}/{repo}/releases/{release_id}/assets", # nolint
          owner = "jgm",
@@ -1037,7 +971,11 @@ quarto_chunks <- function(data,
     data %<>%
       purrr::pmap(\(itr_vars, itr_vars_r, ...) {
         
-        if (!is.na(itr_vars_r)) {
+        if (is.na(itr_vars_r)) {
+          
+          itr_vars <- list(itr_vars)
+          
+        } else {
           
           if (!is.null(itr_vars)) {
             cli::cli_abort("A {.arg data} row cannot have both {.var itr_vars} and {.var itr_vars_r} set at the same time.")
@@ -1045,8 +983,6 @@ quarto_chunks <- function(data,
           
           itr_vars <- eval(parse(text = itr_vars_r),
                            envir = env)
-        } else {
-          itr_vars <- list(itr_vars)
         }
         
         tibble::tibble(itr_vars = itr_vars,
