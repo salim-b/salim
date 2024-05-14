@@ -12,7 +12,7 @@ License: AGPL (>= 3)
 URL: https://salim.rpkg.dev, https://gitlab.com/salim_b/r/pkgs/salim
 BugReports: https://gitlab.com/salim_b/r/pkgs/salim/issues
 Depends: 
-    R (>= 4.1)
+    R (>= 4.2)
 Imports: 
     brio (>= 1.1.3),
     checkmate (>= 2.0.0),
