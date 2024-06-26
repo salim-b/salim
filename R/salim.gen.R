@@ -942,6 +942,7 @@ quarto_tbl_chunk <- function(body,
 #'                fig_height = 8L,
 #'                body = "plot(x = mtcars$mpg, y = mtcars${v})") |>
 #'   salim::quarto_chunks()
+# nolint start: cyclocomp_linter
 quarto_chunks <- function(data,
                           env = parent.frame()) {
   
@@ -1046,6 +1047,7 @@ quarto_chunks <- function(data,
     }) |>
     purrr::list_flatten()
 }
+# nolint end
 
 #' Read in Quarto code chunk data
 #'
