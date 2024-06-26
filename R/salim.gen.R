@@ -1270,7 +1270,9 @@ lvl_up_quarto <- function(path_min_vrsn,
 #' @return `pkgs`, invisibly.
 #' @family dev_env
 #' @export
-update_rpkgs <- function(pkgs = c("pal",
+update_rpkgs <- function(pkgs = c("nocodb",
+                                  "pal",
+                                  "pkgdown.tpl",
                                   "pkgpins",
                                   "pkgpurl",
                                   "pkgsnip",

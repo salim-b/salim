@@ -1,87 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://salim.rpkg.dev/dev/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/index.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/add_definite_article_de.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/decline_noun_de.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/definite_article_de.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/definite_article_de_declined.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/download_pandoc_binaries.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/lvl_up_quarto.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/lvl_up_r.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/lvl_up_rstudio.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/n_ify.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/pandoc_release_assets.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/pandoc_tpl.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/prettify_date.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/prettify_datetime.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/quarto_chunks.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/quarto_fig_chunk.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/quarto_tbl_chunk.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/rank_nr.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/read_quarto_chunk_data.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/regex_spelling_normalization.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/salim-package.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/update_rpkgs.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/update_salims_pkgs.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/update_zdaarau_pkgs.html</loc>
-  </url>
-  <url>
-    <loc>https://salim.rpkg.dev/dev/reference/write_out_n.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://salim.rpkg.dev/dev/LICENSE.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/authors.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/index.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/add_definite_article_de.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/decline_noun_de.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/definite_article_de.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/definite_article_de_declined.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/download_pandoc_binaries.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/index.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/lvl_up_quarto.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/lvl_up_r.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/lvl_up_rstudio.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/n_ify.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/pandoc_release_assets.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/pandoc_tpl.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/prettify_date.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/prettify_datetime.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/quarto_chunks.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/quarto_fig_chunk.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/quarto_tbl_chunk.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/rank_nr.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/read_quarto_chunk_data.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/regex_spelling_normalization.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/salim-package.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/update_rpkgs.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/update_salims_pkgs.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/update_zdaarau_pkgs.html</loc></url>
+<url><loc>https://salim.rpkg.dev/dev/reference/write_out_n.html</loc></url>
 </urlset>
+
