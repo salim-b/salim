@@ -33,19 +33,19 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ggplot2_theme_html</span><span class="op">(</span></span>
-<span>  .color_text_html <span class="op">=</span> <span class="st">"#343a40"</span>,</span>
-<span>  .color_bg_html <span class="op">=</span> <span class="st">"#f2f2f2"</span>,</span>
-<span>  .color_grid_html <span class="op">=</span> <span class="st">"#d9d9d9"</span>,</span>
+<span>  .color_text <span class="op">=</span> <span class="fu">pal</span><span class="fu">::</span><span class="fu"><a href="https://pal.rpkg.dev/reference/pkg_config_val.html" class="external-link">pkg_config_val</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"plot_color_body"</span>, pkg <span class="op">=</span> <span class="va">this_pkg</span><span class="op">)</span>,</span>
+<span>  .color_bg <span class="op">=</span> <span class="fu">pal</span><span class="fu">::</span><span class="fu"><a href="https://pal.rpkg.dev/reference/pkg_config_val.html" class="external-link">pkg_config_val</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"plot_color_bg"</span>, pkg <span class="op">=</span> <span class="va">this_pkg</span><span class="op">)</span>,</span>
+<span>  .color_grid <span class="op">=</span> <span class="fu">pal</span><span class="fu">::</span><span class="fu"><a href="https://pal.rpkg.dev/reference/pkg_config_val.html" class="external-link">pkg_config_val</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"plot_color_grid"</span>, pkg <span class="op">=</span> <span class="va">this_pkg</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-<dl><dt id="arg--color-text-html">.color_text_html<a class="anchor" aria-label="anchor" href="#arg--color-text-html"></a></dt>
+<dl><dt id="arg--color-text">.color_text<a class="anchor" aria-label="anchor" href="#arg--color-text"></a></dt>
 <dd><p>Text color to use for all text elements (<code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">ggplot2::element_text()</a></code>) when the knitr output format is HTML.</p></dd>
-<dt id="arg--color-bg-html">.color_bg_html<a class="anchor" aria-label="anchor" href="#arg--color-bg-html"></a></dt>
+<dt id="arg--color-bg">.color_bg<a class="anchor" aria-label="anchor" href="#arg--color-bg"></a></dt>
 <dd><p>Background color to use when the knitr output format is HTML.</p></dd>
-<dt id="arg--color-grid-html">.color_grid_html<a class="anchor" aria-label="anchor" href="#arg--color-grid-html"></a></dt>
+<dt id="arg--color-grid">.color_grid<a class="anchor" aria-label="anchor" href="#arg--color-grid"></a></dt>
 <dd><p>Grid color to use when the knitr output format is HTML.</p></dd>
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Further arguments passed on to <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code> when the knitr output format is HTML.</p></dd>
@@ -56,12 +56,14 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>ggplot2_theme_html()</code> must be evaluated during <a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knitting</a> to work properly.</p>
+    <p>Note that <code>ggplot2_theme_html()</code> must be evaluated <em>during</em> <a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knitting</a> to work properly.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other ggplot2:
-<code><a href="ggplot2_geom_defaults.html">ggplot2_geom_defaults</a>()</code></p></div>
+    <div class="dont-index"><p>Other plot theming functions:
+<code><a href="ggplot2_geom_defaults.html">ggplot2_geom_defaults</a>()</code>,
+<code><a href="ggplot2_theme.html">ggplot2_theme</a>()</code>,
+<code><a href="plotly_layout.html">plotly_layout</a>()</code></p></div>
     </div>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
