@@ -658,8 +658,6 @@ ggplot2_geom_defaults <- function(family) {
   
   rlang::check_installed("ggplot2",
                          reason = pal::reason_pkg_required())
-  rlang::check_installed("ggrepel",
-                         reason = pal::reason_pkg_required())
   
   ggplot2::update_geom_defaults(geom = "text",
                                 new = list(family = family))

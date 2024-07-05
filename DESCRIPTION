@@ -35,7 +35,6 @@ Imports:
     xfun (>= 0.16)
 Suggests: 
     ggplot2 (>= 3.5.1),
-    ggrepel (>= 0.9.5),
     gh (>= 1.2.0),
     knitr (>= 1.47),
     pkgdown.tpl (>= 0.0.9000),
