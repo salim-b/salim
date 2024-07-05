@@ -24,7 +24,7 @@ Use \code{\link[stringi:stri_datetime_format]{stringi::stri_datetime_format()}} 
 }\if{html}{\out{</div>}}
 }
 \details{
-Note that this might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...
+Note that \code{prettify_date()} might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...
 }
 \examples{
 salim:::prettify_date("2021-12-21")
