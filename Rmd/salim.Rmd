@@ -11,7 +11,6 @@ cf. <https://github.com/tidyverse/magrittr/issues/29#issuecomment-74313262>.
 
 ```{r}
 utils::globalVariables(names = c(".",
-                                 ":=",
                                  # other
                                  "download_url",
                                  "filename",
