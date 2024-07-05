@@ -24,6 +24,11 @@ reference:
   - download_pandoc_binaries
   - pandoc_release_assets
   - pandoc_tpl
+- title: ggplot2
+- contents:
+  - ggplot2_geom_defaults
+  - ggplot2_theme
+  - ggplot2_theme_html
 - title: Development environment currentness
 - contents:
   - lvl_up_r

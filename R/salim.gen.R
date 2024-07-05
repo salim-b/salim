@@ -641,6 +641,143 @@ pandoc_tpl <- function(tpl = "quarto_mod.latex") {
       httr2::resp_body_string())
 }
 
+#' Set common ggplot2 geom defaults
+#'
+#' Sets common ggplot2 geom default settings (currently only font `family`). Convenience wrapper around [ggplot2::update_geom_defaults()].
+#'
+#' Note that `ggplot2_geom_defaults()` must be invoked *before* plots are created to have any effect.
+#'
+#' @param family Font family to use in text geoms.
+#'
+#' @return `NULL`, invisibly.
+#' @family ggplot2
+#' @export
+ggplot2_geom_defaults <- function(family) {
+  
+  ggplot2::update_geom_defaults(geom = "text",
+                                new = list(family = family))
+  
+  if (pal::is_pkg_installed(pkg = "ggrepel")) {
+    ggplot2::update_geom_defaults(geom = ggrepel::GeomTextRepel,
+                                  new = list(family = family))
+  }
+}
+
+#' Apply common theme to ggplot2 chart
+#'
+#' Applies common [theming][ggplot2::theme] to a [ggplot2][ggplot2::ggplot2-package] chart. It's based on [ggplot2::theme_minimal()].
+#'
+#' @inheritParams ggplot2::theme_minimal
+#' @inheritParams ggplot2::theme
+#' @param axis.title.x,axis.title.y Labels of axes ([ggplot2::element_text()]). Specify all axes' labels (`axis.title`), labels by plane (using `axis.title.x`
+#'   or `axis.title.y`), or individually for each axis (using `axis.title.x.bottom`, `axis.title.x.top`, `axis.title.y.left`, `axis.title.y.right`).
+#'   `axis.title.*.*` inherits from `axis.title.*` which inherits from `axis.title`, which in turn inherits from `text`.
+#' @param legend.spacing Spacing between legends (`unit`). `legend.spacing.x` & `legend.spacing.y` inherit from `legend.spacing` or can be specified separately.
+#' @param ... Further arguments passed on to [ggplot2::theme()].
+#'
+#' @return An object of class [`theme`][ggplot2::theme].
+#' @family plot
+#' @export
+#'
+#' @examples
+#' ggplot2::ggplot(data = mtcars,
+#'                 mapping = ggplot2::aes(x = mpg,
+#'                                        y = cyl)) +
+#'   ggplot2::geom_point() +
+#'   salim::ggplot2_theme(base_size = 12)
+# nolint start: object_name_linter.
+ggplot2_theme <- function(base_size = 11L,
+                          base_family = "",
+                          base_line_size = base_size / 22L,
+                          base_rect_size = base_size / 22L,
+                          axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 20L, r = 0L, b = 0L, l = 0L),
+                                                               inherit.blank = TRUE),
+                          axis.title.y = ggplot2::element_text(margin = ggplot2::margin(t = 0L, r = 20L, b = 0L, l = 0L),
+                                                               inherit.blank = TRUE),
+                          legend.box.margin = ggplot2::margin(),
+                          legend.box.spacing = ggplot2::element_blank(),
+                          legend.margin = ggplot2::margin(),
+                          legend.position = "bottom",
+                          legend.spacing = grid::unit(x = 0.0,
+                                                      units = "npc"),
+                          plot.margin = ggplot2::margin(),
+                          ...) {
+  
+  ggplot2::theme_minimal(base_size = base_size,
+                         base_family = base_family,
+                         base_line_size = base_line_size,
+                         base_rect_size = base_rect_size) +
+    ggplot2::theme(axis.title.x = axis.title.x,
+                   axis.title.y = axis.title.y,
+                   legend.box.margin = legend.box.margin,
+                   legend.box.spacing = legend.box.spacing,
+                   legend.margin = legend.margin,
+                   legend.position = legend.position,
+                   legend.spacing = legend.spacing,
+                   plot.margin = plot.margin,
+                   ...)
+}
+# nolint end
+
+#' Add common HTML-specific theme to ggplot2 chart
+#'
+#' Dynamically adds common HTML-specific [theming][ggplot2::theme] to a [ggplot2][ggplot2::ggplot2-package] chart, i.e. it depends on the current [knitr output
+#' format][knitr::pandoc_to]) whether the additional HTML-specific theming is actually added or not.
+#'
+#' `ggplot2_theme_html()` must be evaluated during [knitting][knitr::knit] to work properly.
+#'
+#' @param .color_text_html Text color to use for all text elements ([ggplot2::element_text()]) when the knitr output format [is HTML][knitr::is_html_output()].
+#' @param .color_bg_html Background color to use when the knitr output format [is HTML][knitr::is_html_output()].
+#' @param .color_grid_html Grid color to use when the knitr output format [is HTML][knitr::is_html_output()].
+#' @param ... Further arguments passed on to [ggplot2::theme()] when the knitr output format [is HTML][knitr::is_html_output()].
+#'
+#' @return An object of class [`theme`][ggplot2::theme].
+#' @family ggplot2
+#' @export
+#'
+#' @examples
+#' ggplot2::ggplot(data = mtcars,
+#'                 mapping = ggplot2::aes(x = mpg,
+#'                                        y = cyl)) +
+#'   ggplot2::geom_point() +
+#'   salim::ggplot2_theme() +
+#'   salim::ggplot2_theme_html()
+ggplot2_theme_html <- function(.color_text_html = "#343a40",
+                               .color_bg_html = "#f2f2f2",
+                               .color_grid_html = "#d9d9d9",
+                               ...) {
+  
+  checkmate::assert_string(.color_text_html)
+  checkmate::assert_string(.color_bg_html)
+  checkmate::assert_string(.color_grid_html)
+  
+  result <- ggplot2::theme()
+  
+  if (knitr::is_html_output()) {
+    
+    result <- result + ggplot2::theme(line = ggplot2::element_line(color = .color_text_html,
+                                                                   inherit.blank = TRUE),
+                                      rect = ggplot2::element_rect(color = .color_text_html,
+                                                                   inherit.blank = TRUE),
+                                      text = ggplot2::element_text(color = .color_text_html,
+                                                                   inherit.blank = TRUE),
+                                      legend.background     = ggplot2::element_rect(fill = .color_bg_html,
+                                                                                    color = NA_character_),
+                                      legend.box.background = ggplot2::element_rect(fill = .color_bg_html,
+                                                                                    color = NA_character_),
+                                      legend.key            = ggplot2::element_rect(fill = .color_bg_html,
+                                                                                    color = NA_character_),
+                                      panel.background      = ggplot2::element_rect(fill = .color_bg_html,
+                                                                                    color = NA_character_),
+                                      panel.grid            = ggplot2::element_line(color = .color_grid_html),
+                                      plot.background       = ggplot2::element_rect(fill = .color_bg_html,
+                                                                                    color = NA_character_),
+                                      ...)
+  }
+  
+  result
+}
+
 #' Level up R
 #'
 #' Checks whether the installed R version is >= a cached reference version. Intended to level up the R version in use between multiple users of the same code

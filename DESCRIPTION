@@ -19,8 +19,11 @@ Imports:
     cli (>= 3.2.0),
     dplyr (>= 1.1.0),
     fs (>= 1.5.0),
+    ggplot2 (>= 3.5.1),
     glue (>= 1.6.2),
+    grid (>= 4.4.1),
     httr2 (>= 0.2.3),
+    knitr (>= 1.47),
     lifecycle (>= 1.0.1),
     lubridate (>= 1.8.0),
     magrittr (>= 1.5),
@@ -33,6 +36,7 @@ Imports:
     withr (>= 2.5.0),
     xfun (>= 0.16)
 Suggests: 
+    ggrepel (>= 0.9.5),
     gh (>= 1.2.0),
     pkgdown.tpl (>= 0.0.9000),
     pkgsnip (>= 0.0.9037),
