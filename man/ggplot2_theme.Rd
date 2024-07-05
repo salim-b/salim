@@ -66,4 +66,10 @@ ggplot2::ggplot(data = mtcars,
   ggplot2::geom_point() +
   salim::ggplot2_theme(base_size = 12)
 }
-\concept{plot}
+\seealso{
+Other plot theming functions:
+\code{\link{ggplot2_geom_defaults}()},
+\code{\link{ggplot2_theme_html}()},
+\code{\link{plotly_layout}()}
+}
+\concept{plot_theme}

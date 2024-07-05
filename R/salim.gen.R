@@ -56,6 +56,8 @@ pkg_mgr_prose <- function(software,
               ~ "")
 }
 
+this_pkg <- utils::packageName()
+
 #' Prettify date
 #'
 #' @description
@@ -650,7 +652,7 @@ pandoc_tpl <- function(tpl = "quarto_mod.latex") {
 #' @param family Font family to use in text geoms.
 #'
 #' @return `NULL`, invisibly.
-#' @family ggplot2
+#' @family plot_theme
 #' @export
 ggplot2_geom_defaults <- function(family) {
   
@@ -681,7 +683,7 @@ ggplot2_geom_defaults <- function(family) {
 #' @param ... Further arguments passed on to [ggplot2::theme()].
 #'
 #' @return An object of class [`theme`][ggplot2::theme].
-#' @family plot
+#' @family plot_theme
 #' @export
 #'
 #' @examples
@@ -732,15 +734,15 @@ ggplot2_theme <- function(base_size = 11L,
 #' Dynamically adds common HTML-specific [theming][ggplot2::theme] to a [ggplot2][ggplot2::ggplot2-package] chart, i.e. it depends on the current [knitr output
 #' format][knitr::pandoc_to]) whether the additional HTML-specific theming is actually added or not.
 #'
-#' `ggplot2_theme_html()` must be evaluated during [knitting][knitr::knit] to work properly.
+#' Note that `ggplot2_theme_html()` must be evaluated *during* [knitting][knitr::knit] to work properly.
 #'
-#' @param .color_text_html Text color to use for all text elements ([ggplot2::element_text()]) when the knitr output format [is HTML][knitr::is_html_output()].
-#' @param .color_bg_html Background color to use when the knitr output format [is HTML][knitr::is_html_output()].
-#' @param .color_grid_html Grid color to use when the knitr output format [is HTML][knitr::is_html_output()].
+#' @param .color_text Text color to use for all text elements ([ggplot2::element_text()]) when the knitr output format [is HTML][knitr::is_html_output()].
+#' @param .color_bg Background color to use when the knitr output format [is HTML][knitr::is_html_output()].
+#' @param .color_grid Grid color to use when the knitr output format [is HTML][knitr::is_html_output()].
 #' @param ... Further arguments passed on to [ggplot2::theme()] when the knitr output format [is HTML][knitr::is_html_output()].
 #'
 #' @return An object of class [`theme`][ggplot2::theme].
-#' @family ggplot2
+#' @family plot_theme
 #' @export
 #'
 #' @examples
@@ -750,14 +752,17 @@ ggplot2_theme <- function(base_size = 11L,
 #'   ggplot2::geom_point() +
 #'   salim::ggplot2_theme() +
 #'   salim::ggplot2_theme_html()
-ggplot2_theme_html <- function(.color_text_html = "#343a40",
-                               .color_bg_html = "#f2f2f2",
-                               .color_grid_html = "#d9d9d9",
+ggplot2_theme_html <- function(.color_text = pal::pkg_config_val(key = "plot_color_body",
+                                                                 pkg = this_pkg),
+                               .color_bg = pal::pkg_config_val(key = "plot_color_bg",
+                                                               pkg = this_pkg),
+                               .color_grid = pal::pkg_config_val(key = "plot_color_grid",
+                                                                 pkg = this_pkg),
                                ...) {
   
-  checkmate::assert_string(.color_text_html)
-  checkmate::assert_string(.color_bg_html)
-  checkmate::assert_string(.color_grid_html)
+  checkmate::assert_string(.color_text)
+  checkmate::assert_string(.color_bg)
+  checkmate::assert_string(.color_grid)
   rlang::check_installed("ggplot2",
                          reason = pal::reason_pkg_required())
   rlang::check_installed("knitr",
@@ -767,27 +772,71 @@ ggplot2_theme_html <- function(.color_text_html = "#343a40",
   
   if (knitr::is_html_output()) {
     
-    result <- result + ggplot2::theme(line = ggplot2::element_line(color = .color_text_html,
+    result <- result + ggplot2::theme(line = ggplot2::element_line(color = .color_text,
                                                                    inherit.blank = TRUE),
-                                      rect = ggplot2::element_rect(color = .color_text_html,
+                                      rect = ggplot2::element_rect(color = .color_text,
                                                                    inherit.blank = TRUE),
-                                      text = ggplot2::element_text(color = .color_text_html,
+                                      text = ggplot2::element_text(color = .color_text,
                                                                    inherit.blank = TRUE),
-                                      legend.background     = ggplot2::element_rect(fill = .color_bg_html,
+                                      legend.background     = ggplot2::element_rect(fill = .color_bg,
                                                                                     color = NA_character_),
-                                      legend.box.background = ggplot2::element_rect(fill = .color_bg_html,
+                                      legend.box.background = ggplot2::element_rect(fill = .color_bg,
                                                                                     color = NA_character_),
-                                      legend.key            = ggplot2::element_rect(fill = .color_bg_html,
+                                      legend.key            = ggplot2::element_rect(fill = .color_bg,
                                                                                     color = NA_character_),
-                                      panel.background      = ggplot2::element_rect(fill = .color_bg_html,
+                                      panel.background      = ggplot2::element_rect(fill = .color_bg,
                                                                                     color = NA_character_),
-                                      panel.grid            = ggplot2::element_line(color = .color_grid_html),
-                                      plot.background       = ggplot2::element_rect(fill = .color_bg_html,
+                                      panel.grid            = ggplot2::element_line(color = .color_grid),
+                                      plot.background       = ggplot2::element_rect(fill = .color_bg,
                                                                                     color = NA_character_),
                                       ...)
   }
   
   result
+}
+
+#' Apply common layout to Plotly chart
+#'
+#' Applies common [layout][plotly::layout] configuration to a [Plotly][plotly::plot_ly] chart.
+#'
+#' @inheritParams plotlee::simplify_trace_ids
+#' @param font [Global font](https://plotly.com/r/reference/layout/#layout-font). Fonts used in traces and other layout components inherit from the global font.
+#' @param paper_bgcolor [Background color of the paper](https://plotly.com/r/reference/layout/#layout-paper_bgcolor) where the graph is drawn.
+#' @param plot_bgcolor [Background color of the plotting area](https://plotly.com/r/reference/layout/#layout-plot_bgcolor) in-between x and y axes.
+#' @param xaxis [X-axis configuration](https://plotly.com/r/reference/layout/#layout-xaxis).
+#' @param yaxis [Y-axis configuration](https://plotly.com/r/reference/layout/#layout-yaxis).
+#' @param ... Further [layout configuration](https://plotly.com/r/reference/layout/) arguments.
+#'
+#' @return `r pkgsnip::return_lbl("plotly_obj")`
+#' @family plot_theme
+#' @export
+#'
+#' @examples
+#' plotly::plot_ly(data = mtcars,
+#'                 type = "bar",
+#'                 x = ~mpg) |>
+#'   salim::plotly_layout()
+plotly_layout <- function(p,
+                          font = list(color = pal::pkg_config_val(key = "plot_color_body",
+                                                                  pkg = this_pkg)),
+                          paper_bgcolor = pal::pkg_config_val(key = "plot_color_bg",
+                                                              pkg = this_pkg),
+                          plot_bgcolor  = paper_bgcolor,
+                          xaxis = list(gridcolor = pal::pkg_config_val(key = "plot_color_grid",
+                                                                       pkg = this_pkg)),
+                          yaxis = list(gridcolor = pal::pkg_config_val(key = "plot_color_grid",
+                                                                       pkg = this_pkg)),
+                          ...) {
+  
+  rlang::check_installed("plotly",
+                         reason = pal::reason_pkg_required())
+  plotly::layout(p = p,
+                 font = font,
+                 paper_bgcolor = paper_bgcolor,
+                 plot_bgcolor  = plot_bgcolor,
+                 xaxis = xaxis,
+                 yaxis = yaxis,
+                 ...)
 }
 
 #' Level up R

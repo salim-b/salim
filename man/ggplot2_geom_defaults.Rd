@@ -19,7 +19,9 @@ Sets common ggplot2 geom default settings (currently only font \code{family}). C
 Note that \code{ggplot2_geom_defaults()} must be invoked \emph{before} plots are created to have any effect.
 }
 \seealso{
-Other ggplot2: 
-\code{\link{ggplot2_theme_html}()}
+Other plot theming functions:
+\code{\link{ggplot2_theme}()},
+\code{\link{ggplot2_theme_html}()},
+\code{\link{plotly_layout}()}
 }
-\concept{ggplot2}
+\concept{plot_theme}

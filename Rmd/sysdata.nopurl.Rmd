@@ -18,6 +18,29 @@ editor_options:
 
 # Define data
 
+## `pkg_config`
+
+```{r}
+pkg_config <-
+  tibble::tibble(key = character(),
+                 default_value = list(),
+                 default_value_dynamic = character(),
+                 require = logical(),
+                 description = character()) |>
+  tibble::add_row(key = "plot_color_body",
+                  default_value = list("#343a40"),
+                  description = paste0("Body color for plot theming functions."),
+                  require = TRUE) |>
+  tibble::add_row(key = "plot_color_bg",
+                  default_value = list("#f2f2f2"),
+                  description = paste0("Background color for plot theming functions."),
+                  require = TRUE) |>
+  tibble::add_row(key = "plot_color_grid",
+                  default_value = list("#d9d9d9"),
+                  description = paste0("Grid color for plot theming functions."),
+                  require = TRUE)
+```
+
 ## `pkg_mgr_software`
 
 Define what R-related software is available via Homebrew, Chocolatey and Scoop.
@@ -53,7 +76,8 @@ Save all the small data objects as a single internal file `R/sysdata.rda`. Note 
 to package users.
 
 ```{r}
-usethis::use_data(pkg_mgr_software,
+usethis::use_data(pkg_config,
+                  pkg_mgr_software,
                   internal = TRUE,
                   overwrite = TRUE,
                   compress = "xz",

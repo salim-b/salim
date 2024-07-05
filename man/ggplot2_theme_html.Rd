@@ -5,18 +5,18 @@
 \title{Add common HTML-specific theme to ggplot2 chart}
 \usage{
 ggplot2_theme_html(
-  .color_text_html = "#343a40",
-  .color_bg_html = "#f2f2f2",
-  .color_grid_html = "#d9d9d9",
+  .color_text = pal::pkg_config_val(key = "plot_color_body", pkg = this_pkg),
+  .color_bg = pal::pkg_config_val(key = "plot_color_bg", pkg = this_pkg),
+  .color_grid = pal::pkg_config_val(key = "plot_color_grid", pkg = this_pkg),
   ...
 )
 }
 \arguments{
-\item{.color_text_html}{Text color to use for all text elements (\code{\link[ggplot2:element]{ggplot2::element_text()}}) when the knitr output format \link[knitr:output_type]{is HTML}.}
+\item{.color_text}{Text color to use for all text elements (\code{\link[ggplot2:element]{ggplot2::element_text()}}) when the knitr output format \link[knitr:output_type]{is HTML}.}
 
-\item{.color_bg_html}{Background color to use when the knitr output format \link[knitr:output_type]{is HTML}.}
+\item{.color_bg}{Background color to use when the knitr output format \link[knitr:output_type]{is HTML}.}
 
-\item{.color_grid_html}{Grid color to use when the knitr output format \link[knitr:output_type]{is HTML}.}
+\item{.color_grid}{Grid color to use when the knitr output format \link[knitr:output_type]{is HTML}.}
 
 \item{...}{Further arguments passed on to \code{\link[ggplot2:theme]{ggplot2::theme()}} when the knitr output format \link[knitr:output_type]{is HTML}.}
 }
@@ -27,7 +27,7 @@ An object of class \code{\link[ggplot2:theme]{theme}}.
 Dynamically adds common HTML-specific \link[ggplot2:theme]{theming} to a \link[ggplot2:ggplot2-package]{ggplot2} chart, i.e. it depends on the current \link[knitr:output_type]{knitr output format}) whether the additional HTML-specific theming is actually added or not.
 }
 \details{
-\code{ggplot2_theme_html()} must be evaluated during \link[knitr:knit]{knitting} to work properly.
+Note that \code{ggplot2_theme_html()} must be evaluated \emph{during} \link[knitr:knit]{knitting} to work properly.
 }
 \examples{
 ggplot2::ggplot(data = mtcars,
@@ -38,7 +38,9 @@ ggplot2::ggplot(data = mtcars,
   salim::ggplot2_theme_html()
 }
 \seealso{
-Other ggplot2: 
-\code{\link{ggplot2_geom_defaults}()}
+Other plot theming functions:
+\code{\link{ggplot2_geom_defaults}()},
+\code{\link{ggplot2_theme}()},
+\code{\link{plotly_layout}()}
 }
-\concept{ggplot2}
+\concept{plot_theme}
