@@ -654,6 +654,11 @@ pandoc_tpl <- function(tpl = "quarto_mod.latex") {
 #' @export
 ggplot2_geom_defaults <- function(family) {
   
+  rlang::check_installed("ggplot2",
+                         reason = pal::reason_pkg_required())
+  rlang::check_installed("ggrepel",
+                         reason = pal::reason_pkg_required())
+  
   ggplot2::update_geom_defaults(geom = "text",
                                 new = list(family = family))
   
@@ -703,6 +708,9 @@ ggplot2_theme <- function(base_size = 11L,
                           plot.margin = ggplot2::margin(),
                           ...) {
   
+  rlang::check_installed("ggplot2",
+                         reason = pal::reason_pkg_required())
+  
   ggplot2::theme_minimal(base_size = base_size,
                          base_family = base_family,
                          base_line_size = base_line_size,
@@ -750,6 +758,10 @@ ggplot2_theme_html <- function(.color_text_html = "#343a40",
   checkmate::assert_string(.color_text_html)
   checkmate::assert_string(.color_bg_html)
   checkmate::assert_string(.color_grid_html)
+  rlang::check_installed("ggplot2",
+                         reason = pal::reason_pkg_required())
+  rlang::check_installed("knitr",
+                         reason = pal::reason_pkg_required())
   
   result <- ggplot2::theme()
   
