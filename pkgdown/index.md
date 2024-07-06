@@ -23,6 +23,19 @@ remotes::install_gitlab(repo = "salim_b/r/pkgs/salim")
 
 The (function) reference is found [here](reference).
 
+## Package configuration
+
+Some of salim's functionality is controlled via package-specific global configuration which can either be set via [R options](https://rdrr.io/r/base/options.html) or [environment variables](https://en.wikipedia.org/wiki/Environment_variable) (the former take precedence). This configuration includes:
+
+::: table-wide
+  **Description**                                                                                  **R option**               **Environment variable**     **Default value**
+  ------------------------------------------------------------------------------------------------ -------------------------- ---------------------------- -------------------
+  Body font family for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming).   `salim.font_family_body`   `R_SALIM_FONT_FAMILY_BODY`   `"Alegreya Sans"`
+  Body color for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming).         `salim.plot_color_body`    `R_SALIM_PLOT_COLOR_BODY`    `"#343a40"`
+  Background color for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming).   `salim.plot_color_bg`      `R_SALIM_PLOT_COLOR_BG`      `"#f2f2f2"`
+  Grid color for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming).         `salim.plot_color_grid`    `R_SALIM_PLOT_COLOR_GRID`    `"#d9d9d9"`
+:::
+
 ## Development
 
 ### R Markdown format
