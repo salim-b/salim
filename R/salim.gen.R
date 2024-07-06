@@ -677,6 +677,9 @@ ggplot2_geom_defaults <- function(family) {
 #' @param axis.title.x,axis.title.y Labels of axes ([ggplot2::element_text()]). Specify all axes' labels (`axis.title`), labels by plane (using `axis.title.x`
 #'   or `axis.title.y`), or individually for each axis (using `axis.title.x.bottom`, `axis.title.x.top`, `axis.title.y.left`, `axis.title.y.right`).
 #'   `axis.title.*.*` inherits from `axis.title.*` which inherits from `axis.title`, which in turn inherits from `text`.
+#' @param axis.text Tick labels along axes ([ggplot2::element_text()]). Specify all axis tick labels (`axis.text`), tick labels by plane (using `axis.text.x` or
+#'   `axis.text.y`), or individually for each axis (using `axis.text.x.bottom`, `axis.text.x.top`, `axis.text.y.left`, `axis.text.y.right`). `axis.text.*.*`
+#'   inherits from `axis.text.*` which inherits from `axis.text`, which in turn inherits from `text`.
 #' @param legend.spacing Spacing between legends (`unit`). `legend.spacing.x` & `legend.spacing.y` inherit from `legend.spacing` or can be specified separately.
 #' @param ... Further arguments passed on to [ggplot2::theme()].
 #'
@@ -703,6 +706,8 @@ ggplot2_theme <- function(base_size = 11L,
                                                                inherit.blank = TRUE),
                           axis.title.y = ggplot2::element_text(margin = ggplot2::margin(t = 0L, r = 20L, b = 0L, l = 0L),
                                                                inherit.blank = TRUE),
+                          axis.text = ggplot2::element_text(color = "#000",
+                                                            inherit.blank = TRUE),
                           legend.box.margin = ggplot2::margin(),
                           legend.box.spacing = ggplot2::element_blank(),
                           legend.margin = ggplot2::margin(),
@@ -721,6 +726,7 @@ ggplot2_theme <- function(base_size = 11L,
                          base_rect_size = base_rect_size) +
     ggplot2::theme(axis.title.x = axis.title.x,
                    axis.title.y = axis.title.y,
+                   axis.text = axis.text,
                    legend.box.margin = legend.box.margin,
                    legend.box.spacing = legend.box.spacing,
                    legend.margin = legend.margin,

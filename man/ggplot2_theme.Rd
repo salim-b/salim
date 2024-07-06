@@ -13,6 +13,7 @@ ggplot2_theme(
     l = 0L), inherit.blank = TRUE),
   axis.title.y = ggplot2::element_text(margin = ggplot2::margin(t = 0L, r = 20L, b = 0L,
     l = 0L), inherit.blank = TRUE),
+  axis.text = ggplot2::element_text(color = "#000", inherit.blank = TRUE),
   legend.box.margin = ggplot2::margin(),
   legend.box.spacing = ggplot2::element_blank(),
   legend.margin = ggplot2::margin(),
@@ -34,6 +35,10 @@ ggplot2_theme(
 \item{axis.title.x, axis.title.y}{Labels of axes (\code{\link[ggplot2:element]{ggplot2::element_text()}}). Specify all axes' labels (\code{axis.title}), labels by plane (using \code{axis.title.x}
 or \code{axis.title.y}), or individually for each axis (using \code{axis.title.x.bottom}, \code{axis.title.x.top}, \code{axis.title.y.left}, \code{axis.title.y.right}).
 \verb{axis.title.*.*} inherits from \verb{axis.title.*} which inherits from \code{axis.title}, which in turn inherits from \code{text}.}
+
+\item{axis.text}{Tick labels along axes (\code{\link[ggplot2:element]{ggplot2::element_text()}}). Specify all axis tick labels (\code{axis.text}), tick labels by plane (using \code{axis.text.x} or
+\code{axis.text.y}), or individually for each axis (using \code{axis.text.x.bottom}, \code{axis.text.x.top}, \code{axis.text.y.left}, \code{axis.text.y.right}). \verb{axis.text.*.*}
+inherits from \verb{axis.text.*} which inherits from \code{axis.text}, which in turn inherits from \code{text}.}
 
 \item{legend.box.margin}{margins around the full legend area, as specified
 using \code{\link[ggplot2:margin]{margin()}}}
