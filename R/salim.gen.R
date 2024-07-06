@@ -789,6 +789,8 @@ ggplot2_theme_html <- function(.color_text = pal::pkg_config_val(key = "plot_col
                                                                    inherit.blank = TRUE),
                                       text = ggplot2::element_text(color = .color_text,
                                                                    inherit.blank = TRUE),
+                                      axis.text = ggplot2::element_text(color = .color_text,
+                                                                        inherit.blank = TRUE),
                                       legend.background     = ggplot2::element_rect(fill = .color_bg,
                                                                                     color = NA_character_),
                                       legend.box.background = ggplot2::element_rect(fill = .color_bg,
