@@ -685,6 +685,9 @@ ggplot2_geom_defaults <- function(family) {
 #' @export
 #'
 #' @examples
+#' sysfonts::font_add_google(name = "Alegreya Sans")
+#' showtext::showtext_auto()
+#'
 #' ggplot2::ggplot(data = mtcars,
 #'                 mapping = ggplot2::aes(x = mpg,
 #'                                        y = cyl)) +
@@ -692,7 +695,8 @@ ggplot2_geom_defaults <- function(family) {
 #'   salim::ggplot2_theme(base_size = 12)
 # nolint start: object_name_linter.
 ggplot2_theme <- function(base_size = 11L,
-                          base_family = "",
+                          base_family = pal::pkg_config_val(key = "font_family_body",
+                                                            pkg = this_pkg),
                           base_line_size = base_size / 22L,
                           base_rect_size = base_size / 22L,
                           axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 20L, r = 0L, b = 0L, l = 0L),
@@ -744,6 +748,9 @@ ggplot2_theme <- function(base_size = 11L,
 #' @export
 #'
 #' @examples
+#' sysfonts::font_add_google(name = "Alegreya Sans")
+#' showtext::showtext_auto()
+#'
 #' ggplot2::ggplot(data = mtcars,
 #'                 mapping = ggplot2::aes(x = mpg,
 #'                                        y = cyl)) +
@@ -813,10 +820,13 @@ ggplot2_theme_html <- function(.color_text = pal::pkg_config_val(key = "plot_col
 #' plotly::plot_ly(data = mtcars,
 #'                 type = "bar",
 #'                 x = ~mpg) |>
-#'   salim::plotly_layout()
+#'   salim::plotly_layout(font = list(color = pal::pkg_config_val(key = "plot_color_body",
+#'                                                                pkg = "salim")))
 plotly_layout <- function(p,
                           font = list(color = pal::pkg_config_val(key = "plot_color_body",
-                                                                  pkg = this_pkg)),
+                                                                  pkg = this_pkg),
+                                      family = pal::pkg_config_val(key = "font_family_body",
+                                                                   pkg = this_pkg)),
                           paper_bgcolor = pal::pkg_config_val(key = "plot_color_bg",
                                                               pkg = this_pkg),
                           plot_bgcolor  = paper_bgcolor,

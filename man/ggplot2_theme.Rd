@@ -6,7 +6,7 @@
 \usage{
 ggplot2_theme(
   base_size = 11L,
-  base_family = "",
+  base_family = pal::pkg_config_val(key = "font_family_body", pkg = this_pkg),
   base_line_size = base_size/22L,
   base_rect_size = base_size/22L,
   axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 20L, r = 0L, b = 0L,
@@ -60,6 +60,9 @@ An object of class \code{\link[ggplot2:theme]{theme}}.
 Applies common \link[ggplot2:theme]{theming} to a \link[ggplot2:ggplot2-package]{ggplot2} chart. It's based on \code{\link[ggplot2:ggtheme]{ggplot2::theme_minimal()}}.
 }
 \examples{
+sysfonts::font_add_google(name = "Alegreya Sans")
+showtext::showtext_auto()
+
 ggplot2::ggplot(data = mtcars,
                 mapping = ggplot2::aes(x = mpg,
                                        y = cyl)) +

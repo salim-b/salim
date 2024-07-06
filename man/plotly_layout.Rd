@@ -6,7 +6,8 @@
 \usage{
 plotly_layout(
   p,
-  font = list(color = pal::pkg_config_val(key = "plot_color_body", pkg = this_pkg)),
+  font = list(color = pal::pkg_config_val(key = "plot_color_body", pkg = this_pkg),
+    family = pal::pkg_config_val(key = "font_family_body", pkg = this_pkg)),
   paper_bgcolor = pal::pkg_config_val(key = "plot_color_bg", pkg = this_pkg),
   plot_bgcolor = paper_bgcolor,
   xaxis = list(gridcolor = pal::pkg_config_val(key = "plot_color_grid", pkg = this_pkg)),
@@ -39,7 +40,8 @@ Applies common \link[plotly:layout]{layout} configuration to a \link[plotly:plot
 plotly::plot_ly(data = mtcars,
                 type = "bar",
                 x = ~mpg) |>
-  salim::plotly_layout()
+  salim::plotly_layout(font = list(color = pal::pkg_config_val(key = "plot_color_body",
+                                                               pkg = "salim")))
 }
 \seealso{
 Other plot theming functions:

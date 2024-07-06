@@ -30,6 +30,9 @@ Dynamically adds common HTML-specific \link[ggplot2:theme]{theming} to a \link[g
 Note that \code{ggplot2_theme_html()} must be evaluated \emph{during} \link[knitr:knit]{knitting} to work properly.
 }
 \examples{
+sysfonts::font_add_google(name = "Alegreya Sans")
+showtext::showtext_auto()
+
 ggplot2::ggplot(data = mtcars,
                 mapping = ggplot2::aes(x = mpg,
                                        y = cyl)) +

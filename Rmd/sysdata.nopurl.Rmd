@@ -27,6 +27,10 @@ pkg_config <-
                  default_value_dynamic = character(),
                  require = logical(),
                  description = character()) |>
+  tibble::add_row(key = "font_family_body",
+                  default_value = list("Alegreya Sans"),
+                  description = paste0("Body font family for plot theming functions."),
+                  require = TRUE) |>
   tibble::add_row(key = "plot_color_body",
                   default_value = list("#343a40"),
                   description = paste0("Body color for plot theming functions."),
