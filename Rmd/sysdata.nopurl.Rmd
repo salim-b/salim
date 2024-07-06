@@ -29,19 +29,19 @@ pkg_config <-
                  description = character()) |>
   tibble::add_row(key = "font_family_body",
                   default_value = list("Alegreya Sans"),
-                  description = paste0("Body font family for plot theming functions."),
+                  description = paste0("Body font family for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming)."),
                   require = TRUE) |>
   tibble::add_row(key = "plot_color_body",
                   default_value = list("#343a40"),
-                  description = paste0("Body color for plot theming functions."),
+                  description = paste0("Body color for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming)."),
                   require = TRUE) |>
   tibble::add_row(key = "plot_color_bg",
                   default_value = list("#f2f2f2"),
-                  description = paste0("Background color for plot theming functions."),
+                  description = paste0("Background color for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming)."),
                   require = TRUE) |>
   tibble::add_row(key = "plot_color_grid",
                   default_value = list("#d9d9d9"),
-                  description = paste0("Grid color for plot theming functions."),
+                  description = paste0("Grid color for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming)."),
                   require = TRUE)
 ```
 
