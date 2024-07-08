@@ -739,8 +739,8 @@ ggplot2_theme <- function(base_size = 11L,
 
 #' Add common HTML-specific theme to ggplot2 chart
 #'
-#' Dynamically adds common HTML-specific [theming][ggplot2::theme] to a [ggplot2][ggplot2::ggplot2-package] chart, i.e. it depends on the current [knitr output
-#' format][knitr::pandoc_to]) whether the additional HTML-specific theming is actually added or not.
+#' Dynamically adds common HTML-specific [theming][ggplot2::theme] to a [ggplot2][ggplot2::ggplot2-package] chart. It depends on the current [knitr output
+#' format][knitr::pandoc_to] whether the additional HTML-specific theming is actually added or not.
 #'
 #' Note that `ggplot2_theme_html()` must be evaluated *during* [knitting][knitr::knit] to work properly.
 #'

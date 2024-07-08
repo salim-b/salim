@@ -24,7 +24,7 @@ ggplot2_theme_html(
 An object of class \code{\link[ggplot2:theme]{theme}}.
 }
 \description{
-Dynamically adds common HTML-specific \link[ggplot2:theme]{theming} to a \link[ggplot2:ggplot2-package]{ggplot2} chart, i.e. it depends on the current \link[knitr:output_type]{knitr output format}) whether the additional HTML-specific theming is actually added or not.
+Dynamically adds common HTML-specific \link[ggplot2:theme]{theming} to a \link[ggplot2:ggplot2-package]{ggplot2} chart. It depends on the current \link[knitr:output_type]{knitr output format} whether the additional HTML-specific theming is actually added or not.
 }
 \details{
 Note that \code{ggplot2_theme_html()} must be evaluated \emph{during} \link[knitr:knit]{knitting} to work properly.
