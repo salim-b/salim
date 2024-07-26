@@ -8,6 +8,18 @@
 \description{
 salim includes a diverse mix of functions which have not found their home in a more suitable place yet. The package kinda serves as an incubator for not yet fully matured code and thus will most probably never be made available through CRAN.
 }
+\section{Package configuration}{
+
+
+Some of salim's functionality is controlled via package-specific global configuration which can either be set via \href{https://rdrr.io/r/base/options.html}{R options} or \href{https://en.wikipedia.org/wiki/Environment_variable}{environment variables} (the former take precedence). This configuration includes:\tabular{llll}{
+   \strong{Description} \tab \strong{R option} \tab \strong{Environment variable} \tab \strong{Default value} \cr
+   Body font family for \href{https://salim.rpkg.dev/reference/#plot-theming}{plot theming functions}. \tab \code{salim.font_family_body} \tab \code{R_SALIM_FONT_FAMILY_BODY} \tab \code{"Alegreya Sans"} \cr
+   Body color for \href{https://salim.rpkg.dev/reference/#plot-theming}{plot theming functions}. \tab \code{salim.plot_color_body} \tab \code{R_SALIM_PLOT_COLOR_BODY} \tab \code{"#343a40"} \cr
+   Background color for \href{https://salim.rpkg.dev/reference/#plot-theming}{plot theming functions}. \tab \code{salim.plot_color_bg} \tab \code{R_SALIM_PLOT_COLOR_BG} \tab \code{"#f2f2f2"} \cr
+   Grid color for \href{https://salim.rpkg.dev/reference/#plot-theming}{plot theming functions}. \tab \code{salim.plot_color_grid} \tab \code{R_SALIM_PLOT_COLOR_GRID} \tab \code{"#d9d9d9"} \cr
+}
+}
+
 \seealso{
 Useful links:
 \itemize{
