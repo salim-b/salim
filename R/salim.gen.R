@@ -26,11 +26,11 @@ pkg_mgr_hint <- function(software = names(pkg_mgr_software)) {
   
   result <- ""
   
-  if (xfun::is_macos()) {
+  if (checkmate::test_os(os = "mac")) {
     result %<>% paste0(pkg_mgr_prose(software = software,
                                      pkg_mgrs = "brew"))
     
-  } else if (xfun::is_windows()) {
+  } else if (checkmate::test_os(os = "windows")) {
     result %<>% paste0(pkg_mgr_prose(software = software,
                                      pkg_mgrs = c("scoop", "choco")))
   }
