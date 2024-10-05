@@ -33,6 +33,7 @@ Other spoken language functions:
 \code{\link{definite_article_de}()},
 \code{\link{definite_article_de_declined}()},
 \code{\link{n_ify}()},
+\code{\link{phrase_datetime}()},
 \code{\link{prettify_date}()},
 \code{\link{prettify_datetime}()},
 \code{\link{rank_nr}()},

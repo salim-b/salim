@@ -5,6 +5,7 @@ reference:
 - title: Spoken language
 - subtitle: Multi-language
 - contents:
+  - phrase_datetime
   - prettify_date
   - prettify_datetime
   - rank_nr

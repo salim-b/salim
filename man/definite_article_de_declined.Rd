@@ -32,6 +32,7 @@ Other spoken language functions:
 \code{\link{decline_noun_de}()},
 \code{\link{definite_article_de}()},
 \code{\link{n_ify}()},
+\code{\link{phrase_datetime}()},
 \code{\link{prettify_date}()},
 \code{\link{prettify_datetime}()},
 \code{\link{rank_nr}()},
