@@ -58,6 +58,56 @@ pkg_mgr_prose <- function(software,
 
 this_pkg <- utils::packageName()
 
+#' Phrase date(time)s
+#'
+#' Formats date(time)s as strings according to the specified `locale` and `format`s, applying some typographic tweaks. A convenience wrapper around
+#' [stringi::stri_datetime_format()].
+#'
+#' @inheritParams stringi::stri_datetime_format
+#' @param x Date(s) or datetime(s) to format. A [date][base::Date], [datetime][base::DateTimeClasses], factor or character vector.
+#' @param format Format string(s) defining how to phrase `x`. Possible values include
+#'   `r c("date", "time") |> purrr::map(\(x) paste(x, c("short", "medium", "long", "full"), sep = "_")) |> unlist() |> pal::as_md_vals() |> pal::enum_str()`.
+#'   See [stringi::stri_datetime_format()] for details.
+#'
+#' @return A character vector of the same length as `x`.
+#' @family spoken
+#' @export
+#'
+#' @examples
+#' salim::phrase_datetime(lubridate::today())
+#' 
+#' salim::phrase_datetime(x = c(lubridate::today(),
+#'                              lubridate::now()),
+#'                        format = c("date_full",
+#'                                   "time_full"),
+#'                        locale = "de-CH")
+phrase_datetime <- function(x,
+                            format = "date_long",
+                            locale = "en") {
+  
+  result <- stringi::stri_datetime_format(time = x,
+                                          format = format,
+                                          locale = locale)
+  
+  # use non-break space to sep day from month
+  ix_date <- startsWith(format, "date_")
+  
+  if (length(ix_date) > 0L) {
+    result[ix_date] %<>% pal::when(startsWith(locale, "en") ~ stringr::str_replace(string = .[ix_date],
+                                                                                   pattern = "(\\w+)\\s+(\\d+)",
+                                                                                   replacement = "\\1\u00a0\\2"),
+                                   startsWith(locale, "de") ~ stringr::str_replace(string = .[ix_date],
+                                                                                   pattern = "(\\d+\\.)\\s+",
+                                                                                   replacement = "\\1\u00a0"),
+                                   startsWith(locale, "fr") ~ stringr::str_replace(string = .[ix_date],
+                                                                                   pattern = "(\\d+)\\s+",
+                                                                                   replacement = "\\1\u00a0"),
+                                   ~ .)
+  }
+  
+  result
+}
+
 #' Prettify date
 #'
 #' @description

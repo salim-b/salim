@@ -28,6 +28,7 @@ Imports:
     pal (>= 0.0.9101),
     purrr (>= 0.3.4),
     rlang (>= 0.4.7),
+    stringi (>= 1.8.4),
     stringr (>= 1.4.0),
     tibble (>= 3.0.4),
     utils,
