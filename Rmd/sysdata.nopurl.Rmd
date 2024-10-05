@@ -27,21 +27,27 @@ pkg_config <-
                  default_value_dynamic = character(),
                  require = logical(),
                  description = character()) |>
+  tibble::add_row(key = "lang",
+                  default_value = list("en"),
+                  description = paste0("Language identifier according to [ISO 639-1](https://en.wikipedia.org/wiki/ISO_639-1) or [ISO ",
+                                       "639-3](https://en.wikipedia.org/wiki/ISO_639-3) with an optional country identifier separated by a hyphen (`-`). For ",
+                                       "example `\"fr\"` or `\"de-CH\"`."),
+                  require = FALSE) |>
   tibble::add_row(key = "font_family_body",
                   default_value = list("Alegreya Sans"),
-                  description = paste0("Body font family for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming)."),
+                  description = "Body font family for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming).",
                   require = TRUE) |>
   tibble::add_row(key = "plot_color_body",
                   default_value = list("#343a40"),
-                  description = paste0("Body color for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming)."),
+                  description = "Body color for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming).",
                   require = TRUE) |>
   tibble::add_row(key = "plot_color_bg",
                   default_value = list("#f2f2f2"),
-                  description = paste0("Background color for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming)."),
+                  description = "Background color for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming).",
                   require = TRUE) |>
   tibble::add_row(key = "plot_color_grid",
                   default_value = list("#d9d9d9"),
-                  description = paste0("Grid color for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming)."),
+                  description = "Grid color for [plot theming functions](https://salim.rpkg.dev/reference/#plot-theming).",
                   require = TRUE)
 ```
 

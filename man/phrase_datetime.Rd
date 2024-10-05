@@ -4,7 +4,11 @@
 \alias{phrase_datetime}
 \title{Phrase date(time)s}
 \usage{
-phrase_datetime(x, format = "date_long", locale = "en")
+phrase_datetime(
+  x,
+  format = "date_long",
+  lang = pal::pkg_config_val(key = "lang", pkg = this_pkg)
+)
 }
 \arguments{
 \item{x}{Date(s) or datetime(s) to format. A \link[base:Dates]{date}, \link[base:DateTimeClasses]{datetime}, factor or character vector.}
@@ -13,15 +17,14 @@ phrase_datetime(x, format = "date_long", locale = "en")
 \code{"date_short"}, \code{"date_medium"}, \code{"date_long"}, \code{"date_full"}, \code{"time_short"}, \code{"time_medium"}, \code{"time_long"} and \code{"time_full"}.
 See \code{\link[stringi:stri_datetime_format]{stringi::stri_datetime_format()}} for details.}
 
-\item{locale}{\code{NULL} or \code{''} for the default locale,
-or a single string with locale identifier; a non-Gregorian calendar
-may be specified by setting the \code{@calendar=name} keyword}
+\item{lang}{Identifier of the language to phrase \code{x} in according to \href{https://en.wikipedia.org/wiki/ISO_639-1}{ISO 639-1} or
+\href{https://en.wikipedia.org/wiki/ISO_639-3}{ISO 639-3} with an optional country identifier separated by a hyphen (\code{-}). A character scalar.}
 }
 \value{
 A character vector of the same length as \code{x}.
 }
 \description{
-Formats date(time)s as strings according to the specified \code{locale} and \code{format}s, applying some typographic tweaks. A convenience wrapper around
+Formats date(time)s as strings according to the specified \code{format}s and \code{lang}, applying some typographic tweaks. A convenience wrapper around
 \code{\link[stringi:stri_datetime_format]{stringi::stri_datetime_format()}}.
 }
 \examples{
@@ -31,7 +34,7 @@ salim::phrase_datetime(x = c(lubridate::today(),
                              lubridate::now()),
                        format = c("date_full",
                                   "time_full"),
-                       locale = "de-CH")
+                       lang = "de-CH")
 }
 \seealso{
 Other spoken language functions:
