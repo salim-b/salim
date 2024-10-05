@@ -7,7 +7,7 @@
 phrase_datetime(
   x,
   format = "date_long",
-  lang = pal::pkg_config_val(key = "lang", pkg = this_pkg)
+  locale = pal::pkg_config_val(key = "locale", pkg = this_pkg)
 )
 }
 \arguments{
@@ -17,14 +17,15 @@ phrase_datetime(
 \code{"date_short"}, \code{"date_medium"}, \code{"date_long"}, \code{"date_full"}, \code{"time_short"}, \code{"time_medium"}, \code{"time_long"} and \code{"time_full"}.
 See \code{\link[stringi:stri_datetime_format]{stringi::stri_datetime_format()}} for details.}
 
-\item{lang}{Identifier of the language to phrase \code{x} in according to \href{https://en.wikipedia.org/wiki/ISO_639-1}{ISO 639-1} or
-\href{https://en.wikipedia.org/wiki/ISO_639-3}{ISO 639-3} with an optional country identifier separated by a hyphen (\code{-}). A character scalar.}
+\item{locale}{\code{NULL} or \code{''} for the default locale,
+or a single string with locale identifier; a non-Gregorian calendar
+may be specified by setting the \code{@calendar=name} keyword}
 }
 \value{
 A character vector of the same length as \code{x}.
 }
 \description{
-Formats date(time)s as strings according to the specified \code{format}s and \code{lang}, applying some typographic tweaks. A convenience wrapper around
+Formats date(time)s as strings according to the specified \code{format}s and \code{locale}, applying some typographic tweaks. A convenience wrapper around
 \code{\link[stringi:stri_datetime_format]{stringi::stri_datetime_format()}}.
 }
 \examples{
@@ -34,7 +35,7 @@ salim::phrase_datetime(x = c(lubridate::today(),
                              lubridate::now()),
                        format = c("date_full",
                                   "time_full"),
-                       lang = "de-CH")
+                       locale = "de-CH")
 }
 \seealso{
 Other spoken language functions:

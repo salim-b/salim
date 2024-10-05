@@ -27,11 +27,11 @@ pkg_config <-
                  default_value_dynamic = character(),
                  require = logical(),
                  description = character()) |>
-  tibble::add_row(key = "lang",
+  tibble::add_row(key = "locale",
                   default_value = list("en"),
-                  description = paste0("Language identifier according to [ISO 639-1](https://en.wikipedia.org/wiki/ISO_639-1) or [ISO ",
-                                       "639-3](https://en.wikipedia.org/wiki/ISO_639-3) with an optional country identifier separated by a hyphen (`-`). For ",
-                                       "example `\"fr\"` or `\"de-CH\"`."),
+                  description = paste0("Locale identifier consisting of a [ISO 639-1](https://en.wikipedia.org/wiki/ISO_639-1) or [ISO ",
+                                       "639-3](https://en.wikipedia.org/wiki/ISO_639-3) language code plus an optional country identifier separated by a ",
+                                       "hyphen (`-`). For example `\"fr\"` or `\"de-CH\"`."),
                   require = FALSE) |>
   tibble::add_row(key = "font_family_body",
                   default_value = list("Alegreya Sans"),
