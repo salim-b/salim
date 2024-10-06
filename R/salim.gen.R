@@ -83,8 +83,7 @@ this_pkg <- utils::packageName()
 #'                        locale = "de-CH")
 phrase_datetime <- function(x,
                             format = "date_long",
-                            locale = pal::pkg_config_val(key = "locale",
-                                                         pkg = this_pkg)) {
+                            locale = pal::pkg_config_val("locale")) {
   result <- stringi::stri_datetime_format(time = x,
                                           format = format,
                                           locale = locale)
@@ -748,8 +747,7 @@ ggplot2_geom_defaults <- function(family) {
 #'   salim::ggplot2_theme(base_size = 12)
 # nolint start: object_name_linter.
 ggplot2_theme <- function(base_size = 11L,
-                          base_family = pal::pkg_config_val(key = "font_family_body",
-                                                            pkg = this_pkg),
+                          base_family = pal::pkg_config_val("font_family_body"),
                           base_line_size = base_size / 22L,
                           base_rect_size = base_size / 22L,
                           axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 20L, r = 0L, b = 0L, l = 0L),
@@ -813,12 +811,9 @@ ggplot2_theme <- function(base_size = 11L,
 #'   ggplot2::geom_point() +
 #'   salim::ggplot2_theme() +
 #'   salim::ggplot2_theme_html()
-ggplot2_theme_html <- function(.color_text = pal::pkg_config_val(key = "plot_color_body",
-                                                                 pkg = this_pkg),
-                               .color_bg = pal::pkg_config_val(key = "plot_color_bg",
-                                                               pkg = this_pkg),
-                               .color_grid = pal::pkg_config_val(key = "plot_color_grid",
-                                                                 pkg = this_pkg),
+ggplot2_theme_html <- function(.color_text = pal::pkg_config_val("plot_color_body"),
+                               .color_bg = pal::pkg_config_val("plot_color_bg"),
+                               .color_grid = pal::pkg_config_val("plot_color_grid"),
                                ...) {
   
   checkmate::assert_string(.color_text)
@@ -881,17 +876,12 @@ ggplot2_theme_html <- function(.color_text = pal::pkg_config_val(key = "plot_col
 #'   salim::plotly_layout(font = list(color = pal::pkg_config_val(key = "plot_color_body",
 #'                                                                pkg = "salim")))
 plotly_layout <- function(p,
-                          font = list(color = pal::pkg_config_val(key = "plot_color_body",
-                                                                  pkg = this_pkg),
-                                      family = pal::pkg_config_val(key = "font_family_body",
-                                                                   pkg = this_pkg)),
-                          paper_bgcolor = pal::pkg_config_val(key = "plot_color_bg",
-                                                              pkg = this_pkg),
+                          font = list(color = pal::pkg_config_val("plot_color_body"),
+                                      family = pal::pkg_config_val("font_family_body")),
+                          paper_bgcolor = pal::pkg_config_val("plot_color_bg"),
                           plot_bgcolor  = paper_bgcolor,
-                          xaxis = list(gridcolor = pal::pkg_config_val(key = "plot_color_grid",
-                                                                       pkg = this_pkg)),
-                          yaxis = list(gridcolor = pal::pkg_config_val(key = "plot_color_grid",
-                                                                       pkg = this_pkg)),
+                          xaxis = list(gridcolor = pal::pkg_config_val("plot_color_grid")),
+                          yaxis = list(gridcolor = pal::pkg_config_val("plot_color_grid")),
                           ...) {
   
   rlang::check_installed("plotly",
