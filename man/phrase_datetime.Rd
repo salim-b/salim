@@ -7,7 +7,7 @@
 phrase_datetime(
   x,
   format = "date_long",
-  locale = pal::pkg_config_val(key = "locale", pkg = this_pkg)
+  locale = pal::pkg_config_val("locale")
 )
 }
 \arguments{

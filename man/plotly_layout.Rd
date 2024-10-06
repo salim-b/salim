@@ -6,12 +6,12 @@
 \usage{
 plotly_layout(
   p,
-  font = list(color = pal::pkg_config_val(key = "plot_color_body", pkg = this_pkg),
-    family = pal::pkg_config_val(key = "font_family_body", pkg = this_pkg)),
-  paper_bgcolor = pal::pkg_config_val(key = "plot_color_bg", pkg = this_pkg),
+  font = list(color = pal::pkg_config_val("plot_color_body"), family =
+    pal::pkg_config_val("font_family_body")),
+  paper_bgcolor = pal::pkg_config_val("plot_color_bg"),
   plot_bgcolor = paper_bgcolor,
-  xaxis = list(gridcolor = pal::pkg_config_val(key = "plot_color_grid", pkg = this_pkg)),
-  yaxis = list(gridcolor = pal::pkg_config_val(key = "plot_color_grid", pkg = this_pkg)),
+  xaxis = list(gridcolor = pal::pkg_config_val("plot_color_grid")),
+  yaxis = list(gridcolor = pal::pkg_config_val("plot_color_grid")),
   ...
 )
 }
