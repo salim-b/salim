@@ -28,7 +28,7 @@ pkg_config <-
                  require = logical(),
                  description = character()) |>
   tibble::add_row(key = "locale",
-                  default_value = list("en"),
+                  default_value = list("en-US"),
                   description = paste0("Locale identifier consisting of a [ISO 639-1](https://en.wikipedia.org/wiki/ISO_639-1) or [ISO ",
                                        "639-3](https://en.wikipedia.org/wiki/ISO_639-3) language code plus an optional country identifier separated by a ",
                                        "hyphen (`-`). For example `\"fr\"` or `\"de-CH\"`."),
