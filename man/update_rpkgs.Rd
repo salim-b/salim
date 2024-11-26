@@ -5,14 +5,15 @@
 \title{Update R packages from rpkg.dev}
 \usage{
 update_rpkgs(
-  pkgs = c("nocodb", "pal", "pkgdown.tpl", "pkgpins", "pkgpurl", "pkgsnip", "plotlee",
-    "qstnr", "rstd", "swissmuni", "tocr", "yay"),
+  pkgs = c("gitlab", "nocodb", "pal", "pkgdown.tpl", "pkgpins", "pkgpurl", "pkgsnip",
+    "plotlee", "qstnr", "quappo", "rstd", "swissmuni", "tocr", "yay"),
   from_cran = FALSE
 )
 }
 \arguments{
 \item{pkgs}{R pkgs to be updated. A subset of:
 \itemize{
+\item \code{"gitlab"}
 \item \code{"nocodb"}
 \item \code{"pal"}
 \item \code{"pkgdown.tpl"}
@@ -21,6 +22,7 @@ update_rpkgs(
 \item \code{"pkgsnip"}
 \item \code{"plotlee"}
 \item \code{"qstnr"}
+\item \code{"quappo"}
 \item \code{"rstd"}
 \item \code{"swissmuni"}
 \item \code{"tocr"}
