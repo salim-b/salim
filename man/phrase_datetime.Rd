@@ -4,11 +4,7 @@
 \alias{phrase_datetime}
 \title{Phrase date(time)s}
 \usage{
-phrase_datetime(
-  x,
-  format = "date_long",
-  locale = pal::pkg_config_val("locale")
-)
+phrase_datetime(x, format = "date_long", locale = funky::config_val("locale"))
 }
 \arguments{
 \item{x}{Date(s) or datetime(s) to format. A \link[base:Dates]{date}, \link[base:DateTimeClasses]{datetime}, factor or character vector.}

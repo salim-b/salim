@@ -6,7 +6,7 @@
 \usage{
 ggplot2_theme(
   base_size = 11L,
-  base_family = pal::pkg_config_val("font_family_body"),
+  base_family = funky::config_val("font_family_body"),
   base_line_size = base_size/22L,
   base_rect_size = base_size/22L,
   axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 20L, r = 0L, b = 0L,

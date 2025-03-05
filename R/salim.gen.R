@@ -2,7 +2,7 @@
 # See `README.md#r-markdown-format` for more information on the literate programming approach used applying the R Markdown format.
 
 # salim: A Wild Mix of Functions Serving Various Purposes
-# Copyright (C) 2024 Salim Brüggemann
+# Copyright (C) 2025 Salim Brüggemann
 # 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or any later version.
@@ -83,7 +83,7 @@ this_pkg <- utils::packageName()
 #'                        locale = "de-CH")
 phrase_datetime <- function(x,
                             format = "date_long",
-                            locale = pal::pkg_config_val("locale")) {
+                            locale = funky::config_val("locale")) {
   result <- stringi::stri_datetime_format(time = x,
                                           format = format,
                                           locale = locale)
@@ -747,7 +747,7 @@ ggplot2_geom_defaults <- function(family) {
 #'   salim::ggplot2_theme(base_size = 12)
 # nolint start: object_name_linter.
 ggplot2_theme <- function(base_size = 11L,
-                          base_family = pal::pkg_config_val("font_family_body"),
+                          base_family = funky::config_val("font_family_body"),
                           base_line_size = base_size / 22L,
                           base_rect_size = base_size / 22L,
                           axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 20L, r = 0L, b = 0L, l = 0L),
@@ -811,9 +811,9 @@ ggplot2_theme <- function(base_size = 11L,
 #'   ggplot2::geom_point() +
 #'   salim::ggplot2_theme() +
 #'   salim::ggplot2_theme_html()
-ggplot2_theme_html <- function(.color_text = pal::pkg_config_val("plot_color_body"),
-                               .color_bg = pal::pkg_config_val("plot_color_bg"),
-                               .color_grid = pal::pkg_config_val("plot_color_grid"),
+ggplot2_theme_html <- function(.color_text = funky::config_val("plot_color_body"),
+                               .color_bg = funky::config_val("plot_color_bg"),
+                               .color_grid = funky::config_val("plot_color_grid"),
                                ...) {
   
   checkmate::assert_string(.color_text)
@@ -873,15 +873,15 @@ ggplot2_theme_html <- function(.color_text = pal::pkg_config_val("plot_color_bod
 #' plotly::plot_ly(data = mtcars,
 #'                 type = "bar",
 #'                 x = ~mpg) |>
-#'   salim::plotly_layout(font = list(color = pal::pkg_config_val(key = "plot_color_body",
-#'                                                                pkg = "salim")))
+#'   salim::plotly_layout(font = list(color = funky::config_val(key = "plot_color_body",
+#'                                                              pkg = "salim")))
 plotly_layout <- function(p,
-                          font = list(color = pal::pkg_config_val("plot_color_body"),
-                                      family = pal::pkg_config_val("font_family_body")),
-                          paper_bgcolor = pal::pkg_config_val("plot_color_bg"),
+                          font = list(color = funky::config_val("plot_color_body"),
+                                      family = funky::config_val("font_family_body")),
+                          paper_bgcolor = funky::config_val("plot_color_bg"),
                           plot_bgcolor  = paper_bgcolor,
-                          xaxis = list(gridcolor = pal::pkg_config_val("plot_color_grid")),
-                          yaxis = list(gridcolor = pal::pkg_config_val("plot_color_grid")),
+                          xaxis = list(gridcolor = funky::config_val("plot_color_grid")),
+                          yaxis = list(gridcolor = funky::config_val("plot_color_grid")),
                           ...) {
   
   rlang::check_installed("plotly",

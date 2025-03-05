@@ -5,9 +5,9 @@
 \title{Add common HTML-specific theme to ggplot2 chart}
 \usage{
 ggplot2_theme_html(
-  .color_text = pal::pkg_config_val("plot_color_body"),
-  .color_bg = pal::pkg_config_val("plot_color_bg"),
-  .color_grid = pal::pkg_config_val("plot_color_grid"),
+  .color_text = funky::config_val("plot_color_body"),
+  .color_bg = funky::config_val("plot_color_bg"),
+  .color_grid = funky::config_val("plot_color_grid"),
   ...
 )
 }

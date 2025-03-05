@@ -19,6 +19,7 @@ Imports:
     cli (>= 3.2.0),
     dplyr (>= 1.1.0),
     fs (>= 1.5.0),
+    funky (>= 0.0.9000),
     glue (>= 1.6.2),
     grid (>= 4.4.1),
     httr2 (>= 0.2.3),
@@ -51,6 +52,7 @@ Suggests:
     yay (>= 0.0.9013),
     zip (>= 2.1.1)
 Remotes:
+    gitlab::rpkg.dev/funky,
     gitlab::rpkg.dev/pal,
     gitlab::rpkg.dev/pkgsnip,
     gitlab::rpkg.dev/yay
