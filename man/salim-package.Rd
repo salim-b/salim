@@ -26,7 +26,7 @@ Useful links:
 \itemize{
   \item \url{https://salim.rpkg.dev}
   \item \url{https://gitlab.com/salim_b/r/pkgs/salim}
-  \item Report bugs at \url{https://gitlab.com/salim_b/r/pkgs/salim/issues}
+  \item Report bugs at \url{https://gitlab.com/salim_b/r/pkgs/salim/-/issues}
 }
 
 }
