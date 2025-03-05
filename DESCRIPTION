@@ -10,7 +10,7 @@ Description: salim includes a diverse mix of functions which have not
     most probably never be made available through CRAN.
 License: AGPL (>= 3)
 URL: https://salim.rpkg.dev, https://gitlab.com/salim_b/r/pkgs/salim
-BugReports: https://gitlab.com/salim_b/r/pkgs/salim/issues
+BugReports: https://gitlab.com/salim_b/r/pkgs/salim/-/issues
 Depends: 
     R (>= 4.2)
 Imports: 
