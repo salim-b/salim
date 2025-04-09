@@ -106,6 +106,7 @@ this_pkg <- utils::packageName()
 phrase_datetime <- function(x,
                             format = "date_long",
                             locale = funky::config_val("locale")) {
+  
   result <- stringi::stri_datetime_format(time = x,
                                           format = format,
                                           locale = locale)
@@ -127,124 +128,6 @@ phrase_datetime <- function(x,
   }
   
   result
-}
-```
-
-#### `prettify_date`
-
-DEPRECATED: `stringi::stri_datetime_format(format = c("date_short", "date_medium", "date_long", "date_full"), locale = "de-CH")` is superior in every regard!
-
-TODO:
-
--   This fn somehow acts very strangely during FOKUS questionnaire generation: Although we use `salim::prettify_date(ballot_date, locale = 'de')`, it results in
-    `October 18, 2020`, i.e. doesn't even use the proper format string.
-
-NOTES:
-
--   Relevant SO question: [What is a reliable way of getting allowed locale names in
-    R?](https://stackoverflow.com/questions/20960821/what-is-a-reliable-way-of-getting-allowed-locale-names-in-r)
-
--   Base R's conversion specifiers like `%Y` are documented in `?strptime`.
-
-```{r}
-#' Prettify date
-#'
-#' @description
-#' `r lifecycle::badge("deprecated")`
-#' 
-#' Use [stringi::stri_datetime_format()] instead:
-#' 
-#' ```r
-#' stringi::stri_datetime_format(format = c("date_short", "date_medium", "date_long", "date_full"),
-#'                               locale = "en")
-#' ```
-#'
-#' @details
-#' Note that `prettify_date()` might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...
-#'
-#' @param date Date to be prettified. A [date][base::Date] or something coercible to.
-#' @param locale Locale the date should be prettified for. Currently only `"en"`/`"en-US"` and `"de"`/`"de-CH"` are implemented.
-#'
-#' @return A character scalar.
-#' @family spoken
-#' @keywords internal
-#'
-#' @examples
-#' salim:::prettify_date("2021-12-21")
-prettify_date <- function(date,
-                          locale = c("en", "de", "en-US", "de-CH")) {
-
-  lifecycle::deprecate_warn(when = "0.0.9015",
-                            what = "prettify_date()",
-                            details = paste0('Use the more powerful and more robust `stringi::stri_datetime_format(format = c("date_short", "date_medium", ',
-                                             '"date_long", "date_full"), locale = "en")` function instead.'))
-  
-  locale <- rlang::arg_match(locale)
-
-  withr::with_locale(new = c(LC_TIME = pal::when(. = locale,
-                                                 . %in% c("en", "en-US") ~ "C",
-                                                 . %in% c("de", "de-CH") ~ "de_CH.utf8")),
-                     code =
-                       locale |>
-                       pal::when(. %in% c("en", "en-US") ~
-                                   "%B %d, %Y",
-                                 . %in% c("de", "de-CH") ~
-                                   "%d. %B %Y",
-                                 ~ cli::cli_abort("Specified {.arg locale} not implemented yet.")) |>
-                       format(x = lubridate::as_date(date)))
-}
-```
-
-#### `prettify_datetime`
-
-DEPRECATED, see above.
-
-```{r}
-#' Prettify datetime
-#'
-#' @description
-#' `r lifecycle::badge("deprecated")`
-#' 
-#' Use [stringi::stri_datetime_format()] instead:
-#' 
-#' ```r
-#' stringi::stri_datetime_format(format = c("datetime_short", "datetime_medium", "datetime_long", "datetime_full"),
-#'                               locale = "en")
-#' ```
-#'
-#' @details
-#' Note that `prettify_datetime()` might only work on (Ubuntu) Linux in the current form since locales are one bitchy hell of a PITA...
-#'
-#' @param datetime Datetime to be prettified. A [datetime][base::DateTimeClasses] or something coercible to.
-#' @param locale Locale the datetime should be prettified for. Currently only `"en"`/`"en-US"` and `"de"`/`"de-CH"` are implemented.
-#'
-#' @return A character scalar.
-#' @family spoken
-#' @keywords internal
-#'
-#' @examples
-#' salim:::prettify_datetime("2021-12-21T00:00:01Z")
-prettify_datetime <- function(datetime,
-                              locale = c("en", "de", "en-US", "de-CH")) {
-
-  lifecycle::deprecate_warn(when = "0.0.9015",
-                            what = "prettify_datetime()",
-                            details = paste0('Use the more powerful and more robust `stringi::stri_datetime_format(format = c("datetime_short", ',
-                                             '"datetime_medium", "datetime_long", "datetime_full"), locale = "en")` function instead.'))
-
-  locale <- rlang::arg_match(locale)
-
-  withr::with_locale(new = c(LC_TIME = pal::when(. = locale,
-                                                 . %in% c("en", "en-US") ~ "C",
-                                                 . %in% c("de", "de-CH") ~ "de_CH.utf8")),
-                     code =
-                       locale |>
-                       pal::when(. %in% c("en", "en-US") ~
-                                   "%B %d, %Y, %I:%M %p",
-                                 . %in% c("de", "de-CH") ~
-                                   "%d. %B %Y, %H:%M Uhr",
-                                 ~ cli::cli_abort("Specified {.arg locale} not implemented yet.")) |>
-                       format(x = lubridate::as_datetime(datetime)))
 }
 ```
 
