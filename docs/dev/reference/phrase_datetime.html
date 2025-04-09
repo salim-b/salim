@@ -88,15 +88,27 @@ may be specified by setting the <code>@calendar=name</code> keyword</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">salim</span><span class="fu">::</span><span class="fu">phrase_datetime</span><span class="op">(</span><span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "April 9, 2025"</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">salim</span><span class="fu">::</span><span class="fu">phrase_datetime</span><span class="op">(</span><span class="st">"2020-02-20"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "February 20, 2020"</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">salim</span><span class="fu">::</span><span class="fu">phrase_datetime</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                             <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">now</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span><span class="fu">salim</span><span class="fu">::</span><span class="fu">phrase_datetime</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="fl">0L</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                       format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"date_full"</span>,</span></span>
 <span class="r-in"><span>                                  <span class="st">"time_full"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                       locale <span class="op">=</span> <span class="st">"de-CH"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Mittwoch, 9. April 2025"               "02:00:00 Mitteleuropäische Sommerzeit"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Donnerstag, 1. Januar 1970"            "01:00:00 Mitteleuropäische Normalzeit"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># note that character input is internally converted to a datetime using `as.POSIXct()` with the</span></span></span>
+<span class="r-in"><span><span class="co"># default `format` which ignores possible time components:</span></span></span>
+<span class="r-in"><span><span class="fu">salim</span><span class="fu">::</span><span class="fu">phrase_datetime</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"2020-02-20T13:13:13Z"</span>,</span></span>
+<span class="r-in"><span>                       format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"date_full"</span>,</span></span>
+<span class="r-in"><span>                                  <span class="st">"time_full"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Thursday, February 20, 2020"                "12:00:00 AM Central European Standard Time"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># hence it's recommended to directly provide input as datetimes:</span></span></span>
+<span class="r-in"><span><span class="fu">salim</span><span class="fu">::</span><span class="fu">phrase_datetime</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">clock</span><span class="fu">::</span><span class="fu"><a href="https://clock.r-lib.org/reference/date-time-parse.html" class="external-link">date_time_parse_RFC_3339</a></span><span class="op">(</span><span class="st">"2020-02-20T13:13:13Z"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                       format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"date_full"</span>,</span></span>
+<span class="r-in"><span>                                  <span class="st">"time_full"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Thursday, February 20, 2020"               "2:13:13 PM Central European Standard Time"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

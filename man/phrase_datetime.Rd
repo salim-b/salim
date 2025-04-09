@@ -25,13 +25,23 @@ Formats date(time)s as strings according to the specified \code{format}s and \co
 \code{\link[stringi:stri_datetime_format]{stringi::stri_datetime_format()}}.
 }
 \examples{
-salim::phrase_datetime(lubridate::today())
+salim::phrase_datetime("2020-02-20")
 
-salim::phrase_datetime(x = c(lubridate::today(),
-                             lubridate::now()),
+salim::phrase_datetime(x = as.POSIXct(0L),
                        format = c("date_full",
                                   "time_full"),
                        locale = "de-CH")
+
+# note that character input is internally converted to a datetime using `as.POSIXct()` with the
+# default `format` which ignores possible time components:
+salim::phrase_datetime(x = "2020-02-20T13:13:13Z",
+                       format = c("date_full",
+                                  "time_full"))
+
+# hence it's recommended to directly provide input as datetimes:
+salim::phrase_datetime(x = clock::date_time_parse_RFC_3339("2020-02-20T13:13:13Z"),
+                       format = c("date_full",
+                                  "time_full"))
 }
 \seealso{
 Other spoken language functions:

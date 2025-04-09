@@ -24,7 +24,6 @@ Imports:
     grid (>= 4.4.1),
     httr2 (>= 0.2.3),
     lifecycle (>= 1.0.1),
-    lubridate (>= 1.8.0),
     magrittr (>= 1.5),
     pal (>= 0.0.9102),
     purrr (>= 0.3.4),
@@ -33,9 +32,9 @@ Imports:
     stringr (>= 1.4.0),
     tibble (>= 3.0.4),
     utils,
-    withr (>= 2.5.0),
     xfun (>= 0.16)
 Suggests: 
+    clock (>= 0.7.3),
     ggplot2 (>= 3.5.1),
     ggrepel (>= 0.9.5),
     gh (>= 1.2.0),
