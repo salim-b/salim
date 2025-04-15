@@ -15,7 +15,7 @@ The template as a character scalar.
 }
 \description{
 Downloads one of our \href{https://gitlab.com/salim_b/pandoc/templates}{custom Pandoc templates} and returns it as a character scalar. The template is cached
-using \code{\link[pal:req_cached]{pal::req_cached()}}, thus only re-downloaded if the local copy is outdated.
+using \code{\link[pal:http_get_cached]{pal::http_get_cached()}}, thus only re-downloaded if the local copy is outdated.
 }
 \examples{
 \dontrun{

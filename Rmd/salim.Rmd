@@ -676,7 +676,7 @@ pandoc_release_assets <- function(release_id = yay::gh_release_latest(owner = "j
 #' Download Pandoc template
 #'
 #' Downloads one of our [custom Pandoc templates](https://gitlab.com/salim_b/pandoc/templates) and returns it as a character scalar. The template is cached
-#' using [pal::req_cached()], thus only re-downloaded if the local copy is outdated.
+#' using [pal::http_get_cached()], thus only re-downloaded if the local copy is outdated.
 #'
 #' @param tpl Template to download. One of
 #'   `r pal::fn_param_defaults(param = "tpl", fn = "pandoc_tpl") |> pal::wrap_chr("\x60") |> cli::ansi_collapse(last = " and ")`.
@@ -693,7 +693,7 @@ pandoc_tpl <- function(tpl = "quarto_mod.latex") {
   
   tpl <- rlang::arg_match(tpl)
   
-  (pal::req_cached(url = glue::glue("https://gitlab.com/salim_b/pandoc/templates/-/raw/main/{tpl}?ref_type=heads&inline=false")) |>
+  (pal::http_get_cached(url = glue::glue("https://gitlab.com/salim_b/pandoc/templates/-/raw/main/{tpl}?ref_type=heads&inline=false")) |>
       httr2::resp_body_string())
 }
 ```
