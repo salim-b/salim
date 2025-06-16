@@ -7,6 +7,7 @@
 update_rpkgs(
   pkgs = c("gitlab", "nocodb", "pal", "pkgdown.tpl", "pkgpins", "pkgpurl", "pkgsnip",
     "plotlee", "qstnr", "quappo", "rstd", "swissmuni", "tocr", "yay"),
+  dependencies = TRUE,
   from_cran = FALSE
 )
 }
@@ -28,6 +29,9 @@ update_rpkgs(
 \item \code{"tocr"}
 \item \code{"yay"}
 }}
+
+\item{dependencies}{Whether or not to also install uninstalled packages which \code{pkgs} depend on/link to/import/suggest (and so on recursively). See
+\code{\link[=install.packages]{install.packages()}} for details.}
 
 \item{from_cran}{Whether or not to install \code{pkgs} from a \href{https://en.wikipedia.org/wiki/R_package#Comprehensive_R_Archive_Network_(CRAN)}{CRAN} repository
 if possible. The repository URLs set in the \code{\link[=options]{repos}} \R option are used by default, with fallback to \verb{https://cloud.r-project.org/}. If \code{FALSE},

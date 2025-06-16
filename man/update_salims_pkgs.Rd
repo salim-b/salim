@@ -4,7 +4,11 @@
 \alias{update_salims_pkgs}
 \title{Update Salim B's R packages}
 \usage{
-update_salims_pkgs(pkgs = c("salim", "swissparty"), from_cran = FALSE)
+update_salims_pkgs(
+  pkgs = c("salim", "swissparty"),
+  dependencies = TRUE,
+  from_cran = FALSE
+)
 }
 \arguments{
 \item{pkgs}{R pkgs to be updated. A subset of:
@@ -12,6 +16,9 @@ update_salims_pkgs(pkgs = c("salim", "swissparty"), from_cran = FALSE)
 \item \code{"salim"}
 \item \code{"swissparty"}
 }}
+
+\item{dependencies}{Whether or not to also install uninstalled packages which \code{pkgs} depend on/link to/import/suggest (and so on recursively). See
+\code{\link[=install.packages]{install.packages()}} for details.}
 
 \item{from_cran}{Whether or not to install \code{pkgs} from a \href{https://en.wikipedia.org/wiki/R_package#Comprehensive_R_Archive_Network_(CRAN)}{CRAN} repository
 if possible. The repository URLs set in the \code{\link[=options]{repos}} \R option are used by default, with fallback to \verb{https://cloud.r-project.org/}. If \code{FALSE},

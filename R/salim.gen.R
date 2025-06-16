@@ -1004,6 +1004,8 @@ lvl_up_quarto <- function(path_min_vrsn,
 #'
 #' @param pkgs R pkgs to be updated. A subset of:
 #'   `r pal::fn_param_defaults(fn = "update_rpkgs", param = "pkgs") |> pal::wrap_chr("\x60") |> pal::as_md_list()`
+#' @param dependencies Whether or not to also install uninstalled packages which `pkgs` depend on/link to/import/suggest (and so on recursively). See
+#'   [install.packages()] for details.
 #' @param from_cran Whether or not to install `pkgs` from a [CRAN](https://en.wikipedia.org/wiki/R_package#Comprehensive_R_Archive_Network_(CRAN)) repository
 #'   if possible. The repository URLs set in the [`repos`][options] \R option are used by default, with fallback to `https://cloud.r-project.org/`. If `FALSE`,
 #'   the latest *development* versions are always installed, regardless of whether `pkgs` are available on CRAN or not.
@@ -1025,21 +1027,26 @@ update_rpkgs <- function(pkgs = c("gitlab",
                                   "swissmuni",
                                   "tocr",
                                   "yay"),
+                         dependencies = TRUE,
                          from_cran = FALSE) {
   
   rlang::check_installed("remotes",
                          reason = pal::reason_pkg_required())
   pkgs <- rlang::arg_match(pkgs,
                            multiple = TRUE)
+  checkmate::assert_flag(from_cran)
+  
   purrr::walk(pkgs,
               \(x) {
                 
-                if (pal::is_pkg_cran(x)) {
+                if (from_cran && pal::is_pkg_cran(x)) {
                   utils::install.packages(pkgs = x,
                                           repos = getOption("repos",
-                                                            default = "https://cloud.r-project.org/"))
+                                                            default = "https://cloud.r-project.org/"),
+                                          dependencies = dependencies)
                 } else {
                   remotes::install_gitlab(repo = paste0("rpkg.dev/", x), # nolint: paste_linter
+                                          dependencies = dependencies,
                                           upgrade = FALSE)
                 }
               })
@@ -1060,21 +1067,26 @@ update_rpkgs <- function(pkgs = c("gitlab",
 #' @export
 update_salims_pkgs <- function(pkgs = c("salim",
                                         "swissparty"),
+                               dependencies = TRUE,
                                from_cran = FALSE) {
   
   rlang::check_installed("remotes",
                          reason = pal::reason_pkg_required())
   pkgs <- rlang::arg_match(pkgs,
                            multiple = TRUE)
+  checkmate::assert_flag(from_cran)
+  
   purrr::walk(pkgs,
               \(x) {
                 
-                if (pal::is_pkg_cran(x)) {
+                if (from_cran && pal::is_pkg_cran(x)) {
                   utils::install.packages(pkgs = x,
                                           repos = getOption("repos",
-                                                            default = "https://cloud.r-project.org/"))
+                                                            default = "https://cloud.r-project.org/"),
+                                          dependencies = dependencies)
                 } else {
                   remotes::install_gitlab(repo = paste0("salim_b/r/pkgs/", x), # nolint: paste_linter
+                                          dependencies = dependencies,
                                           upgrade = FALSE)
                 }
               })
@@ -1098,6 +1110,7 @@ update_zdaarau_pkgs <- function(pkgs = c("rdb.report",
                                          "fokus",
                                          "rdb",
                                          "swissevote"),
+                                dependencies = TRUE,
                                 from_cran = FALSE) {
   
   rlang::check_installed("remotes",
@@ -1112,9 +1125,11 @@ update_zdaarau_pkgs <- function(pkgs = c("rdb.report",
                 if (from_cran && pal::is_pkg_cran(x)) {
                   utils::install.packages(pkgs = x,
                                           repos = getOption("repos",
-                                                            default = "https://cloud.r-project.org/"))
+                                                            default = "https://cloud.r-project.org/"),
+                                          dependencies = dependencies)
                 } else {
                   remotes::install_gitlab(repo = paste0("zdaarau/rpkgs/", x), # nolint: paste_linter
+                                          dependencies = dependencies,
                                           upgrade = FALSE)
                 }
               })
